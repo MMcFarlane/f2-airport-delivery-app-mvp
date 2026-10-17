@@ -1,6 +1,6 @@
 # Phase 2 — Data boundary
 
-Status: Not started.
+Status: Done. Time window and pricing live in `src/domain/`. SQLite, the fixture seed, and `createDataSource()` live in `src/data/`. Hooks in `src/hooks/` are the only callers.
 
 Depends on [01-theme.md](01-theme.md).
 

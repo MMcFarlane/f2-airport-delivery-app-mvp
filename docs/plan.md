@@ -115,9 +115,9 @@ Browse stays the active tab on the three list screens. Orders stays active on Or
 
 | Phase | File | Status |
 | --- | --- | --- |
-| 0. Repo and shell | [phases/00-repo-and-shell.md](phases/00-repo-and-shell.md) | Repo cloned. Expo app not started. |
-| 1. Theme | [phases/01-theme.md](phases/01-theme.md) | Not started |
-| 2. Data boundary | [phases/02-data-boundary.md](phases/02-data-boundary.md) | Not started |
+| 0. Repo and shell | [phases/00-repo-and-shell.md](phases/00-repo-and-shell.md) | Done |
+| 1. Theme | [phases/01-theme.md](phases/01-theme.md) | Done |
+| 2. Data boundary | [phases/02-data-boundary.md](phases/02-data-boundary.md) | Done |
 | 2b. Places seed | [phases/02b-places-seed.md](phases/02b-places-seed.md) | Not started |
 | 3. Trip and time window | [phases/03-trip-and-time-window.md](phases/03-trip-and-time-window.md) | Not started |
 | 3b. SkyLink | [phases/03b-skylink.md](phases/03b-skylink.md) | Not started |

@@ -1,6 +1,6 @@
 # Phase 1 — Theme
 
-Status: Not started.
+Status: Done. Tokens live in `src/theme/`. Shared screen, buttons, chips, restaurant card, menu card, and the tab bar are on the Home sample.
 
 Depends on [00-repo-and-shell.md](00-repo-and-shell.md).
 
