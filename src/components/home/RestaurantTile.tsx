@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { colors, radii, space, type } from '@/src/theme';
+import { markInk, markNeedsBorder } from '@/src/theme/contrast';
 
 type RestaurantTileProps = {
   initials: string;
@@ -23,8 +24,8 @@ export function RestaurantTile({
   minutes,
   onPress,
 }: RestaurantTileProps) {
-  const ink = initialsColor(markColor);
-  const lightMark = ink === colors.ink && isNearWhite(markColor);
+  const ink = markInk(markColor);
+  const lightMark = markNeedsBorder(markColor);
 
   return (
     <Pressable
@@ -49,24 +50,6 @@ export function RestaurantTile({
       </View>
     </Pressable>
   );
-}
-
-function initialsColor(hex: string): string {
-  return luminance(hex) > 0.62 ? colors.ink : colors.surface;
-}
-
-function isNearWhite(hex: string): boolean {
-  return luminance(hex) > 0.92;
-}
-
-function luminance(hex: string): number {
-  const raw = hex.replace('#', '');
-  if (raw.length !== 6) return 1;
-  const red = Number.parseInt(raw.slice(0, 2), 16);
-  const green = Number.parseInt(raw.slice(2, 4), 16);
-  const blue = Number.parseInt(raw.slice(4, 6), 16);
-  if (Number.isNaN(red) || Number.isNaN(green) || Number.isNaN(blue)) return 1;
-  return (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
 }
 
 const styles = StyleSheet.create({

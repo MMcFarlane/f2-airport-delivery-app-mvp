@@ -12,6 +12,7 @@ type FeaturedTileProps = {
   imageColor: string;
   tooLate?: boolean;
   adding?: boolean;
+  fill?: boolean;
   onAdd?: () => void;
 };
 
@@ -23,12 +24,13 @@ export function FeaturedTile({
   imageColor,
   tooLate = false,
   adding = false,
+  fill = false,
   onAdd,
 }: FeaturedTileProps) {
   const disabled = tooLate || adding;
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, fill && styles.fill]}>
       <View style={[styles.photo, { backgroundColor: imageColor }, tooLate && styles.photoLate]}>
         <View style={[styles.badge, tooLate && styles.badgeLate]}>
           <Text style={[styles.badgeText, tooLate && styles.badgeTextLate]}>{minutes}</Text>
@@ -63,6 +65,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radii.card,
     overflow: 'hidden',
+  },
+  fill: {
+    width: '100%',
   },
   photo: {
     height: 112,

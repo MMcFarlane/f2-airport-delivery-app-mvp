@@ -13,7 +13,7 @@ const links: { href: Href; label: string }[] = [
 export default function BrowseScreen() {
   return (
     <Screen title="Browse">
-      <Muted>Search and filters land in a later phase. These lists are the ones Home opens.</Muted>
+      <Muted>Restaurants, featured dishes, and specials that can reach your gate.</Muted>
       {links.map((link) => (
         <Pressable key={link.label} accessibilityRole="button" onPress={() => router.push(link.href)}>
           <Text style={styles.link}>{link.label}</Text>

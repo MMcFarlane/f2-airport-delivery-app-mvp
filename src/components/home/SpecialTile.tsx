@@ -15,6 +15,7 @@ type SpecialTileProps = {
   imageColor: string;
   tooLate?: boolean;
   adding?: boolean;
+  fill?: boolean;
   onAdd?: () => void;
 };
 
@@ -29,12 +30,13 @@ export function SpecialTile({
   imageColor,
   tooLate = false,
   adding = false,
+  fill = false,
   onAdd,
 }: SpecialTileProps) {
   const disabled = tooLate || adding;
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, fill && styles.fill]}>
       <View style={[styles.art, { backgroundColor: imageColor }, tooLate && styles.artLate]}>
         {badge ? (
           <View style={styles.badge}>
@@ -79,6 +81,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radii.card,
     padding: 12,
+  },
+  fill: {
+    width: '100%',
   },
   art: {
     width: 84,

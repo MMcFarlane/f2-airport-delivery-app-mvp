@@ -1,6 +1,6 @@
 # Phase 5 — Browse lists
 
-Status: Not started.
+Status: Done. Search, chips, and sort work on the restaurant, featured, and specials lists. Too-late rows stay visible with add disabled. A restaurant opens its menu route.
 
 Depends on [04-home.md](04-home.md).
 

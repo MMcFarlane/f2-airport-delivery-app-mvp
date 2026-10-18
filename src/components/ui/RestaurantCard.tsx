@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { colors, radii, space, type } from '@/src/theme';
+import { markInk, markNeedsBorder } from '@/src/theme/contrast';
 
 type RestaurantCardProps = {
   initials: string;
@@ -8,8 +9,9 @@ type RestaurantCardProps = {
   name: string;
   detail: string;
   status: string;
-  statusTone?: 'ok' | 'late';
+  statusTone?: 'ok' | 'partial' | 'late';
   minutes: string;
+  onPress?: () => void;
 };
 
 export function RestaurantCard({
@@ -20,21 +22,32 @@ export function RestaurantCard({
   status,
   statusTone = 'ok',
   minutes,
+  onPress,
 }: RestaurantCardProps) {
+  const quietBadge = statusTone !== 'ok';
+  const lateCopy = statusTone !== 'ok';
+
   return (
-    <View style={styles.card}>
-      <View style={[styles.mark, { backgroundColor: markColor }]}>
-        <Text style={styles.initials}>{initials}</Text>
+    <Pressable
+      accessibilityRole={onPress ? 'button' : undefined}
+      accessibilityLabel={onPress ? `Open ${name}` : undefined}
+      disabled={!onPress}
+      onPress={onPress}
+      style={({ pressed }) => [styles.card, pressed && onPress && styles.pressed]}>
+      <View style={[styles.mark, { backgroundColor: markColor }, markNeedsBorder(markColor) && styles.lightMark]}>
+        <Text style={[styles.initials, { color: markInk(markColor) }]}>{initials}</Text>
       </View>
       <View style={styles.copy}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.detail}>{detail}</Text>
-        <Text style={[styles.status, statusTone === 'late' && styles.late]}>{status}</Text>
+        <Text style={styles.detail} numberOfLines={1}>
+          {detail}
+        </Text>
+        <Text style={[styles.status, lateCopy && styles.late]}>{status}</Text>
       </View>
-      <View style={styles.badge}>
-        <Text style={styles.badgeText}>{minutes}</Text>
+      <View style={[styles.badge, quietBadge && styles.badgeQuiet]}>
+        <Text style={[styles.badgeText, quietBadge && styles.badgeTextQuiet]}>{minutes}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -47,6 +60,9 @@ const styles = StyleSheet.create({
     borderRadius: radii.card,
     padding: 14,
   },
+  pressed: {
+    opacity: 0.85,
+  },
   mark: {
     width: 52,
     height: 52,
@@ -54,10 +70,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  lightMark: {
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
   initials: {
     fontSize: 16,
     fontWeight: '800',
-    color: colors.ink,
   },
   copy: {
     flex: 1,
@@ -85,8 +104,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
   },
+  badgeQuiet: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
   badgeText: {
     ...type.badge,
     color: colors.accent,
+  },
+  badgeTextQuiet: {
+    color: colors.muted,
   },
 });

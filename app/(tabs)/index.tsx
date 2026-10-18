@@ -1,5 +1,5 @@
 import { router, type Href } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,18 +8,11 @@ import { HomeCarousel } from '@/src/components/home/HomeCarousel';
 import { RestaurantTile } from '@/src/components/home/RestaurantTile';
 import { SpecialTile } from '@/src/components/home/SpecialTile';
 import { Muted } from '@/src/components/ui/Screen';
-import {
-  demoOrderingNow,
-  formatCents,
-  formatClock,
-  itemFits,
-  timeWindow,
-  type MenuItem,
-  type Trip,
-} from '@/src/domain';
+import { formatCents, type MenuItem } from '@/src/domain';
 import { errorMessage } from '@/src/hooks/error-message';
 import { useCart } from '@/src/hooks/useCart';
 import { useCatalog } from '@/src/hooks/useCatalog';
+import { useOrderingWindow } from '@/src/hooks/useOrderingWindow';
 import { useTripSession } from '@/src/hooks/TripProvider';
 import { colors, radii, space, type } from '@/src/theme';
 
@@ -138,19 +131,6 @@ export default function HomeScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-}
-
-function useOrderingWindow(trip: Trip | null) {
-  return useMemo(() => {
-    if (!trip) return null;
-    const departureAt = new Date(trip.departureAt);
-    const now = demoOrderingNow(departureAt);
-    const deliverBy = timeWindow(departureAt).deliverBy;
-    return {
-      deliverByClock: formatClock(deliverBy),
-      fits: (prepMinutes: number) => itemFits(now, prepMinutes, deliverBy),
-    };
-  }, [trip]);
 }
 
 const styles = StyleSheet.create({
