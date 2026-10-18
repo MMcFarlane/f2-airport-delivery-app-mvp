@@ -1,6 +1,6 @@
 # Phase 4 — Home
 
-Status: Not started.
+Status: Done. After the trip sheet, Home shows Restaurants, Featured items, and Specials and bundles. The gate pill reopens the sheet. See all opens `/browse/restaurants`, `/browse/featured`, and `/browse/specials`. A restaurant opens `/restaurant/[id]`. Items that miss the window stay visible with add disabled.
 
 Depends on [03-trip-and-time-window.md](03-trip-and-time-window.md). Phase 3b can land before or after this phase.
 

@@ -121,7 +121,7 @@ Browse stays the active tab on the three list screens. Orders stays active on Or
 | 2b. Places seed | [phases/02b-places-seed.md](phases/02b-places-seed.md) | Not started |
 | 3. Trip and time window | [phases/03-trip-and-time-window.md](phases/03-trip-and-time-window.md) | Done |
 | 3b. SkyLink | [phases/03b-skylink.md](phases/03b-skylink.md) | Not started |
-| 4. Home | [phases/04-home.md](phases/04-home.md) | Not started |
+| 4. Home | [phases/04-home.md](phases/04-home.md) | Done |
 | 5. Browse lists | [phases/05-browse.md](phases/05-browse.md) | Not started |
 | 6. Menu and item | [phases/06-menu-and-item.md](phases/06-menu-and-item.md) | Not started |
 | 7. Cart, pay, code | [phases/07-cart-pay-code.md](phases/07-cart-pay-code.md) | Not started |
