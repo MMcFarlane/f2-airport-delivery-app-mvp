@@ -1,5 +1,5 @@
-import { router, type Href } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect, type Href } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { FeaturedTile } from '@/src/components/home/FeaturedTile';
@@ -18,7 +18,12 @@ const sorts = ['fastest', 'price'] as const;
 export function FeaturedList() {
   const { trip, loading: tripLoading, error: tripError } = useTripSession();
   const catalog = useCatalog();
-  const { cart, addLine } = useCart();
+  const { cart, addLine, reload: reloadCart } = useCart();
+  useFocusEffect(
+    useCallback(() => {
+      void reloadCart();
+    }, [reloadCart]),
+  );
   const window = useOrderingWindow(trip);
   const { addItem, addingId, error: addError } = useAddItem(addLine);
   const [query, setQuery] = useState('');

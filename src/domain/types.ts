@@ -95,6 +95,7 @@ export type CartLine = {
   quantity: number;
   note: string | null;
   discountCode: string | null;
+  imageColor: string;
 };
 
 export type Cart = {

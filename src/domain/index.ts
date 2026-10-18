@@ -59,6 +59,28 @@ export type {
   SpecialSort,
 } from './browse';
 export {
+  TIP_PRESETS_CENTS,
+  appliedCodeCopy,
+  arrivalBoardLine,
+  cartPriceLines,
+  codeCharacters,
+  confirmationTimeline,
+  cookingLine,
+  courierCodeCopy,
+  deliverToLabel,
+  discountRowLabel,
+  givenName,
+  groupCartByRestaurant,
+  isTipPreset,
+  itemCountLabel,
+  orderItemSummary,
+  parseTipCents,
+  placedTitle,
+  spareCopy,
+  tipChipLabel,
+} from './checkout';
+export type { CartGroup, TimelineStep } from './checkout';
+export {
   arrivalLine,
   cartFoodCents,
   cartItemCount,

@@ -1,6 +1,6 @@
 # Phase 7 — Cart, pay, and confirmation
 
-Status: Not started.
+Status: Done. Paying the reference cart writes a local order in "being prepared", shows a 4-character code, and clears the cart. FLY10 on the $14.50 burger is $1.45 off, tax is $1.56, and the Pay button reads $26.60.
 
 Depends on [06-menu-and-item.md](06-menu-and-item.md).
 

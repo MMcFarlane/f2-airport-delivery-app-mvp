@@ -1,5 +1,5 @@
-import { router, type Href } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect, type Href } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -27,7 +27,12 @@ export default function HomeScreen() {
   const { trip, loading, error, openSheet } = useTripSession();
   const { profile } = useProfile();
   const catalog = useCatalog();
-  const { cart, addLine } = useCart();
+  const { cart, addLine, reload: reloadCart } = useCart();
+  useFocusEffect(
+    useCallback(() => {
+      void reloadCart();
+    }, [reloadCart]),
+  );
   const [addingId, setAddingId] = useState<string | null>(null);
   const [addError, setAddError] = useState<string | null>(null);
   const window = useOrderingWindow(trip);

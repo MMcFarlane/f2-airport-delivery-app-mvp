@@ -1,9 +1,5 @@
-import { Muted, Screen } from '@/src/components/ui/Screen';
+import { CartCheckout } from '@/src/components/cart/CartCheckout';
 
 export default function CartScreen() {
-  return (
-    <Screen title="Your cart">
-      <Muted>Checkout lands in a later phase.</Muted>
-    </Screen>
-  );
+  return <CartCheckout />;
 }
