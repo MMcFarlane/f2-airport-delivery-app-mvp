@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
 import { PhoneFrame } from '@/src/components/ui/PhoneFrame';
+import { TripProvider } from '@/src/hooks/TripProvider';
 import { colors } from '@/src/theme';
 
 export { ErrorBoundary } from 'expo-router';
@@ -21,14 +22,16 @@ export default function RootLayout() {
 
   return (
     <PhoneFrame>
-      <StatusBar style="dark" />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: colors.background },
-        }}>
-        <Stack.Screen name="(tabs)" />
-      </Stack>
+      <TripProvider>
+        <StatusBar style="dark" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: colors.background },
+          }}>
+          <Stack.Screen name="(tabs)" />
+        </Stack>
+      </TripProvider>
     </PhoneFrame>
   );
 }

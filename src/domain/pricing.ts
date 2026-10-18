@@ -28,6 +28,12 @@ const EMPTY_QUOTE: PriceQuote = {
   totalCents: 0,
 };
 
+export function formatCents(cents: number): string {
+  const sign = cents < 0 ? '-' : '';
+  const absolute = Math.abs(cents);
+  return `${sign}$${Math.floor(absolute / 100)}.${String(absolute % 100).padStart(2, '0')}`;
+}
+
 export function lineDiscountCents(priceCents: number, quantity: number, discountPercent: number): number {
   return Math.round((priceCents * quantity * discountPercent) / 100);
 }

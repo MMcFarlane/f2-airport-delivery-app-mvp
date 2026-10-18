@@ -1,75 +1,87 @@
-import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { PrimaryButton, Row, SecondaryButton } from '@/src/components/ui/Buttons';
-import { FilterChip } from '@/src/components/ui/FilterChip';
 import { MenuCard } from '@/src/components/ui/MenuCard';
-import { RestaurantCard } from '@/src/components/ui/RestaurantCard';
 import { Muted, Screen, SectionLabel } from '@/src/components/ui/Screen';
-
-const chips = ['Fits my window', 'Under 10 min', 'Coffee', 'Burgers'] as const;
+import { createDataSource } from '@/src/data';
+import { demoOrderingNow, formatCents, formatClock, itemFits, timeWindow, type MenuItem, type Trip } from '@/src/domain';
+import { useAsyncValue } from '@/src/hooks/useAsyncValue';
+import { useTripSession } from '@/src/hooks/TripProvider';
+import { colors, type } from '@/src/theme';
 
 export default function HomeScreen() {
-  const [selected, setSelected] = useState<(typeof chips)[number]>('Fits my window');
-  const [added, setAdded] = useState(false);
+  const { trip, loading, error, openSheet } = useTripSession();
 
   return (
-    <Screen title="Theme">
-      <Muted>
-        Shared pieces for the later screens. Filters, cards, and buttons use the artboard colors.
-      </Muted>
-
-      <SectionLabel>Buttons</SectionLabel>
-      <PrimaryButton label={added ? 'Added · $13.85' : 'Show me what I can get'} onPress={() => setAdded(true)} />
-      <SecondaryButton label="Back to home" onPress={() => setAdded(false)} />
-
-      <SectionLabel>Chips</SectionLabel>
-      <Row>
-        {chips.map((chip) => (
-          <FilterChip
-            key={chip}
-            label={chip}
-            selected={selected === chip}
-            onPress={() => setSelected(chip)}
-          />
-        ))}
-      </Row>
-
-      <SectionLabel>Restaurant</SectionLabel>
-      <RestaurantCard
-        initials="RB"
-        markColor="#FFC940"
-        name="Runway Burger"
-        detail="Burgers, fries, shakes · Near B9"
-        status="Full menu available"
-        minutes="8 MIN"
-      />
-      <RestaurantCard
-        initials="CP"
-        markColor="#F2B36B"
-        name="Concourse Pizza"
-        detail="Pizza, salads · Concourse A"
-        status="Some items too slow for your flight"
-        statusTone="late"
-        minutes="24 MIN"
-      />
-
-      <SectionLabel>Menu</SectionLabel>
-      <MenuCard
-        name="Double smash burger"
-        description="Two beef patties, American cheese, pickles, house sauce"
-        price="$14.50"
-        minutes="12 MIN"
-        imageColor="#F2B36B"
-        onAdd={() => setAdded(true)}
-      />
-      <MenuCard
-        name="Smoked brisket platter"
-        description="12-hour brisket, two sides, cornbread"
-        price="$21.00"
-        minutes="TOO LATE FOR 15:00"
-        imageColor="#D4B08A"
-        tooLate
-      />
+    <Screen title="What you can get">
+      {loading ? <Muted>Loading your trip.</Muted> : null}
+      {error ? <Muted>{error}</Muted> : null}
+      {!loading && trip ? <WindowProof trip={trip} onChange={openSheet} /> : null}
+      {!loading && !trip ? <Muted>Set your gate to see what can reach you before you board.</Muted> : null}
     </Screen>
   );
 }
+
+function WindowProof({ trip, onChange }: { trip: Trip; onChange: () => void }) {
+  const departureAt = new Date(trip.departureAt);
+  const now = demoOrderingNow(departureAt);
+  const { deliverBy } = timeWindow(departureAt);
+  const deliverByClock = formatClock(deliverBy);
+  const { value: menu, loading, error } = useAsyncValue(async () => {
+    const data = await createDataSource();
+    return data.catalog.listMenu('runway-burger');
+  }, [] as MenuItem[]);
+
+  const fitting = menu.filter((item) => itemFits(now, item.prepMinutes, deliverBy)).length;
+
+  return (
+    <View style={styles.block}>
+      <View style={styles.header}>
+        <Text style={styles.trip}>
+          {trip.passengerName} · Gate {trip.gate} · by {deliverByClock}
+        </Text>
+        <Pressable accessibilityRole="button" onPress={onChange}>
+          <Text style={styles.change}>Change</Text>
+        </Pressable>
+      </View>
+      <SectionLabel>
+        {loading ? 'Checking the window' : `${fitting} of ${menu.length} items arrive before ${deliverByClock}`}
+      </SectionLabel>
+      {error ? <Muted>{error}</Muted> : null}
+      {menu.map((item) => {
+        const tooLate = !itemFits(now, item.prepMinutes, deliverBy);
+        return (
+          <MenuCard
+            key={item.id}
+            name={item.name}
+            description={item.description}
+            price={formatCents(item.priceCents)}
+            minutes={tooLate ? `TOO LATE FOR ${deliverByClock}` : `${item.prepMinutes} MIN`}
+            imageColor={item.imageColor}
+            tooLate={tooLate}
+          />
+        );
+      })}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  block: {
+    gap: 12,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  trip: {
+    ...type.label,
+    flex: 1,
+  },
+  change: {
+    ...type.label,
+    color: colors.ink,
+    textDecorationLine: 'underline',
+  },
+});

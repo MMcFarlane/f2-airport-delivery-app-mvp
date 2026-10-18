@@ -6,14 +6,17 @@ import { colors, radii, type } from '@/src/theme';
 type ButtonProps = {
   label: string;
   onPress?: () => void;
+  disabled?: boolean;
 };
 
-export function PrimaryButton({ label, onPress }: ButtonProps) {
+export function PrimaryButton({ label, onPress, disabled = false }: ButtonProps) {
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onPress={onPress}
-      style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
+      style={({ pressed }) => [styles.primary, disabled && styles.disabled, pressed && !disabled && styles.pressed]}>
       <Text style={styles.primaryLabel}>{label}</Text>
     </Pressable>
   );
@@ -63,6 +66,9 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.85,
+  },
+  disabled: {
+    opacity: 0.45,
   },
   row: {
     flexDirection: 'row',

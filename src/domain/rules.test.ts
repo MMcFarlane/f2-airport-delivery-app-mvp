@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
+import { demoOrderingNow, departureInstant, formatClock } from './clock';
 import { cartArrival, itemFits, spareMinutes, timeWindow } from './time-window';
 import { priceCart } from './pricing';
 
@@ -30,6 +31,28 @@ describe('time window', () => {
 
     assert.equal(arrival.toISOString(), '2026-10-17T18:29:00.000Z');
     assert.equal(spareMinutes(boardingAt, arrival), 41);
+  });
+});
+
+describe('airport clock', () => {
+  const day = { year: 2026, month: 10, day: 17 };
+
+  it('stores 15:40 in America/New_York and aims to deliver by 15:00', () => {
+    const stored = departureInstant('15:40', day);
+    assert.ok(stored);
+    assert.equal(stored.toISOString(), '2026-10-17T19:40:00.000Z');
+    assert.equal(formatClock(timeWindow(stored).deliverBy), '15:00');
+  });
+
+  it('uses the artboard afternoon so a 12-minute item fits and a 48-minute item does not', () => {
+    const stored = departureInstant('15:40', day);
+    assert.ok(stored);
+    const now = demoOrderingNow(stored);
+    const { deliverBy } = timeWindow(stored);
+
+    assert.equal(now.toISOString(), '2026-10-17T18:17:00.000Z');
+    assert.equal(itemFits(now, 12, deliverBy), true);
+    assert.equal(itemFits(now, 48, deliverBy), false);
   });
 });
 

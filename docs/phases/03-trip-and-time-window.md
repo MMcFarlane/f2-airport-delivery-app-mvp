@@ -1,6 +1,6 @@
 # Phase 3 — Trip and time window
 
-Status: Not started.
+Status: Done. The first launch opens the trip sheet. Saving writes the trip through `TripRepository`. Home lists the Runway Burger menu against that window, and Account can change the same trip.
 
 Depends on [02-data-boundary.md](02-data-boundary.md).
 
