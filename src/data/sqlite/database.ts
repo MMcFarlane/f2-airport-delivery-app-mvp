@@ -1,7 +1,10 @@
 import { openDatabaseAsync, type SQLiteDatabase } from 'expo-sqlite';
 
+import { catalogSource } from '@/src/config/catalog';
+
 import { SCHEMA_SQL } from './schema';
 import { seedFixtures } from './seed';
+import { importPlacesCatalog } from './import-places';
 
 const DATABASE_VERSION = 1;
 
@@ -10,6 +13,9 @@ export async function openDatabase(): Promise<SQLiteDatabase> {
   await db.execAsync('PRAGMA journal_mode = WAL');
   await db.execAsync('PRAGMA foreign_keys = ON');
   await migrate(db);
+  if (catalogSource() === 'places') {
+    await importPlacesCatalog(db);
+  }
   return db;
 }
 

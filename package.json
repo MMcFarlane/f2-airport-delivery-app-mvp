@@ -36,7 +36,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "tsx --test src/domain/rules.test.ts",
+    "test": "tsx --test src/domain/rules.test.ts src/data/places/upsert.test.ts",
+    "seed:places": "tsx scripts/seed-places.ts",
     "lint": "expo lint"
   },
   "private": true

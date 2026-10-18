@@ -118,7 +118,7 @@ Browse stays the active tab on the three list screens. Orders stays active on Or
 | 0. Repo and shell | [phases/00-repo-and-shell.md](phases/00-repo-and-shell.md) | Done |
 | 1. Theme | [phases/01-theme.md](phases/01-theme.md) | Done |
 | 2. Data boundary | [phases/02-data-boundary.md](phases/02-data-boundary.md) | Done |
-| 2b. Places seed | [phases/02b-places-seed.md](phases/02b-places-seed.md) | Not started |
+| 2b. Places seed | [phases/02b-places-seed.md](phases/02b-places-seed.md) | Done |
 | 3. Trip and time window | [phases/03-trip-and-time-window.md](phases/03-trip-and-time-window.md) | Done |
 | 3b. SkyLink | [phases/03b-skylink.md](phases/03b-skylink.md) | Not started |
 | 4. Home | [phases/04-home.md](phases/04-home.md) | Done |

@@ -1,6 +1,6 @@
 # Phase 2b — Places seed
 
-Status: Not started.
+Status: Done. `npm run seed:places` upserts ATL restaurants into `data/places.db` and writes `src/data/places/catalog.json`. A second run updates identity fields and leaves menu rows in place. The app imports that snapshot when `CATALOG_SOURCE=places`. Fixtures stay the default, and a missing key exits before any request.
 
 Depends on [02-data-boundary.md](02-data-boundary.md).
 

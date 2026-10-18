@@ -43,3 +43,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Places seed working database. The app reads src/data/places/catalog.json.
+/data/
