@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import { demoOrderingNow, departureInstant, formatClock } from './clock';
+import { dayPartGreeting, demoOrderingNow, departureInstant, formatClock } from './clock';
 import { cartArrival, itemFits, spareMinutes, timeWindow } from './time-window';
 import { priceCart } from './pricing';
 
@@ -53,6 +53,8 @@ describe('airport clock', () => {
     assert.equal(now.toISOString(), '2026-10-17T18:17:00.000Z');
     assert.equal(itemFits(now, 12, deliverBy), true);
     assert.equal(itemFits(now, 48, deliverBy), false);
+    assert.equal(dayPartGreeting(14), 'Good afternoon,');
+    assert.equal(spareMinutes(deliverBy, now), 43);
   });
 });
 

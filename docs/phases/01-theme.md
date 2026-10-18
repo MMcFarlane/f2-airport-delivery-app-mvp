@@ -15,7 +15,7 @@ Shared visual primitives taken from the artboard PNGs, so later screens do not i
 - Yellow accent for selected chips, discounted prices, and the active tab indicator
 - Large bold headlines
 - Heavily rounded cards, fields, and buttons
-- Bottom tab bar: Home, Browse, Orders, Account
+- Bottom tab bar: Home, Browse, Orders, Cart, with a yellow indicator on the active tab
 
 Sample the PNGs in `artboards/` for the exact colors before hard-coding a palette. Put tokens in something like `src/theme/`.
 

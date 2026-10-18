@@ -22,7 +22,7 @@ The Orders tab stays active.
 
 ## Account
 
-The Account tab stays active.
+Account is not a tab. The home artboard's fourth tab is Cart. This screen stays at `/account` until it has an entry point.
 
 - Jordan, email, phone, Edit
 - Current trip: Gate B14 · Dep 15:40, and Change opens the trip sheet

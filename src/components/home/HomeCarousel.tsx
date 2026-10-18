@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   seeAll: {
     ...type.label,
     color: colors.ink,
+    textDecorationLine: 'underline',
   },
   row: {
     gap: space.md,

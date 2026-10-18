@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { colors, radii, space, type } from '@/src/theme';
 
@@ -14,6 +14,7 @@ type FeaturedTileProps = {
   adding?: boolean;
   fill?: boolean;
   onAdd?: () => void;
+  onPress?: () => void;
 };
 
 export function FeaturedTile({
@@ -26,24 +27,33 @@ export function FeaturedTile({
   adding = false,
   fill = false,
   onAdd,
+  onPress,
 }: FeaturedTileProps) {
   const disabled = tooLate || adding;
 
   return (
     <View style={[styles.card, fill && styles.fill]}>
-      <View style={[styles.photo, { backgroundColor: imageColor }, tooLate && styles.photoLate]}>
-        <View style={[styles.badge, tooLate && styles.badgeLate]}>
-          <Text style={[styles.badgeText, tooLate && styles.badgeTextLate]}>{minutes}</Text>
+      <Pressable
+        accessibilityRole={onPress ? 'button' : undefined}
+        accessibilityLabel={onPress ? `Open ${name}` : undefined}
+        disabled={!onPress}
+        onPress={onPress}
+        style={({ pressed }) => [pressed && onPress && styles.pressed]}>
+        <View style={[styles.photo, { backgroundColor: imageColor }, tooLate && styles.photoLate]}>
+          <View style={[styles.badge, tooLate && styles.badgeLate]}>
+            <Text style={[styles.badgeText, tooLate && styles.badgeTextLate]}>{minutes}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.body}>
-        <Text style={styles.name} numberOfLines={2}>
-          {name}
-        </Text>
-        <Text style={styles.restaurant} numberOfLines={1}>
-          {restaurantName}
-        </Text>
-        <View style={styles.footer}>
+        <View style={styles.copy}>
+          <Text style={styles.name} numberOfLines={2}>
+            {name}
+          </Text>
+          <Text style={styles.restaurant} numberOfLines={1}>
+            {restaurantName}
+          </Text>
+        </View>
+      </Pressable>
+      <View style={styles.footer}>
           <View style={styles.priceBlock}>
             <Text style={styles.price}>{price}</Text>
             {tooLate ? <Text style={styles.late}>Too late</Text> : null}
@@ -53,7 +63,6 @@ export function FeaturedTile({
             disabled={disabled}
             onPress={onAdd}
           />
-        </View>
       </View>
     </View>
   );
@@ -76,6 +85,14 @@ const styles = StyleSheet.create({
   photoLate: {
     opacity: 0.55,
   },
+  pressed: {
+    opacity: 0.85,
+  },
+  copy: {
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    gap: 4,
+  },
   badge: {
     alignSelf: 'flex-start',
     backgroundColor: colors.ink,
@@ -93,10 +110,6 @@ const styles = StyleSheet.create({
   badgeTextLate: {
     color: colors.muted,
   },
-  body: {
-    padding: 12,
-    gap: 4,
-  },
   name: {
     ...type.headline,
     fontSize: 16,
@@ -113,6 +126,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-between',
     gap: space.sm,
+    paddingHorizontal: 12,
+    paddingBottom: 12,
     marginTop: space.sm,
   },
   priceBlock: {

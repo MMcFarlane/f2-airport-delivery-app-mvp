@@ -36,7 +36,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "tsx --test src/domain/rules.test.ts src/domain/browse.test.ts src/data/places/upsert.test.ts",
+    "test": "tsx --test src/domain/rules.test.ts src/domain/browse.test.ts src/domain/menu.test.ts src/data/places/upsert.test.ts",
     "seed:places": "tsx scripts/seed-places.ts",
     "lint": "expo lint"
   },

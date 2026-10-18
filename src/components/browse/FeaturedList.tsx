@@ -1,3 +1,4 @@
+import { router, type Href } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -76,6 +77,7 @@ export function FeaturedList() {
                   imageColor={item.imageColor}
                   tooLate={tooLate}
                   adding={addingId === item.id}
+                  onPress={() => router.push(`/item/${item.id}` as Href)}
                   onAdd={tooLate ? undefined : () => void addItem(item, true)}
                 />
               </View>

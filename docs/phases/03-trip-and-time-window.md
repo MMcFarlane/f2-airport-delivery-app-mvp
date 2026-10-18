@@ -1,6 +1,6 @@
 # Phase 3 — Trip and time window
 
-Status: Done. The first launch opens the trip sheet. Saving writes the trip through `TripRepository`. Home lists the Runway Burger menu against that window, and Account can change the same trip.
+Status: Done. The first launch opens the trip sheet. Saving writes the trip through `TripRepository`. The home trip board's Edit control reopens the same sheet, and Account can change the same trip.
 
 Depends on [02-data-boundary.md](02-data-boundary.md).
 
@@ -20,7 +20,7 @@ The first launch opens the "Before you order" sheet. Manual entry is enough for 
 - Helper: Boarding usually starts 30 min before departure, so we'll aim to deliver by 15:00.
 - Button: Show me what I can get.
 
-Save the trip through `TripRepository`. Changing gate or departure time from Account or the cart updates the same trip.
+Save the trip through `TripRepository`. The home trip board Edit control opens this sheet. Changing gate or departure time from Account or the cart updates the same trip.
 
 ## Filtering
 

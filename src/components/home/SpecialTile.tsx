@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { colors, radii, space, type } from '@/src/theme';
 
@@ -17,6 +17,7 @@ type SpecialTileProps = {
   adding?: boolean;
   fill?: boolean;
   onAdd?: () => void;
+  onPress?: () => void;
 };
 
 export function SpecialTile({
@@ -32,42 +33,52 @@ export function SpecialTile({
   adding = false,
   fill = false,
   onAdd,
+  onPress,
 }: SpecialTileProps) {
   const disabled = tooLate || adding;
 
   return (
     <View style={[styles.card, fill && styles.fill]}>
-      <View style={[styles.art, { backgroundColor: imageColor }, tooLate && styles.artLate]}>
-        {badge ? (
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{badge}</Text>
-          </View>
-        ) : null}
-      </View>
-      <View style={styles.copy}>
-        <Text style={styles.name} numberOfLines={2}>
-          {name}
-        </Text>
-        <Text style={styles.description} numberOfLines={2}>
-          {description}
-        </Text>
-        <Text style={styles.restaurant} numberOfLines={1}>
-          {restaurantName}
-        </Text>
-        <View style={styles.footer}>
-          <View style={styles.meta}>
-            <View style={styles.prices}>
-              <Text style={styles.price}>{price}</Text>
-              {compareAt ? <Text style={styles.compare}>{compareAt}</Text> : null}
+      <Pressable
+        accessibilityRole={onPress ? 'button' : undefined}
+        accessibilityLabel={onPress ? `Open ${name}` : undefined}
+        disabled={!onPress}
+        onPress={onPress}
+        style={({ pressed }) => [styles.open, pressed && onPress && styles.pressed]}>
+        <View style={[styles.art, { backgroundColor: imageColor }, tooLate && styles.artLate]}>
+          {badge ? (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{badge}</Text>
             </View>
-            <Text style={[styles.minutes, tooLate && styles.late]}>{tooLate ? 'Too late' : minutes}</Text>
-          </View>
-          <PlusButton
-            label={tooLate ? `${name} is too late to add` : `Add ${name}`}
-            disabled={disabled}
-            onPress={onAdd}
-          />
+          ) : null}
         </View>
+        <View style={styles.copy}>
+          <Text style={styles.name} numberOfLines={2}>
+            {name}
+          </Text>
+          <Text style={styles.description} numberOfLines={2}>
+            {description}
+          </Text>
+          <Text style={styles.restaurant} numberOfLines={1}>
+            {restaurantName}
+          </Text>
+          <View style={styles.footer}>
+            <View style={styles.meta}>
+              <View style={styles.prices}>
+                <Text style={styles.price}>{price}</Text>
+                {compareAt ? <Text style={styles.compare}>{compareAt}</Text> : null}
+              </View>
+              <Text style={[styles.minutes, tooLate && styles.late]}>{tooLate ? 'Too late' : minutes}</Text>
+            </View>
+          </View>
+        </View>
+      </Pressable>
+      <View style={styles.add}>
+        <PlusButton
+          label={tooLate ? `${name} is too late to add` : `Add ${name}`}
+          disabled={disabled}
+          onPress={onAdd}
+        />
       </View>
     </View>
   );
@@ -84,6 +95,19 @@ const styles = StyleSheet.create({
   },
   fill: {
     width: '100%',
+  },
+  open: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: space.md,
+  },
+  pressed: {
+    opacity: 0.85,
+  },
+  add: {
+    position: 'absolute',
+    right: 12,
+    bottom: 12,
   },
   art: {
     width: 84,
@@ -131,6 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: space.sm,
     marginTop: space.xs,
+    paddingRight: 40,
   },
   meta: {
     flex: 1,

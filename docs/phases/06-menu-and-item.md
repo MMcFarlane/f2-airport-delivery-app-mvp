@@ -1,6 +1,6 @@
 # Phase 6 — Menu and item
 
-Status: Not started.
+Status: Done. A restaurant menu has category tabs, a too-late row, and a sticky cart bar. Item detail applies FLY10 at 10%, so the add button moves from $14.50 to $13.05. The artboard's $13.85 conflicts with the $1.45 discount in the cart rules.
 
 Depends on [05-browse.md](05-browse.md).
 

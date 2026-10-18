@@ -27,6 +27,7 @@ export {
   departureInstant,
   demoOrderingNow,
   demoOrderingClock,
+  dayPartGreeting,
 } from './clock';
 export type { CalendarDay } from './clock';
 export {
@@ -57,6 +58,23 @@ export type {
   RestaurantSort,
   SpecialSort,
 } from './browse';
+export {
+  arrivalLine,
+  cartFoodCents,
+  cartItemCount,
+  cuisineLocationLine,
+  discountAppliedCopy,
+  fittingPrepRange,
+  itemPrepChip,
+  itemsForMenuTab,
+  lineTotalCents,
+  menuTabs,
+  openUntilLabel,
+  prepRangeLabel,
+  toGateChip,
+  tooLateLabel,
+} from './menu';
+export type { MenuTab } from './menu';
 export type {
   Cart,
   CartLine,

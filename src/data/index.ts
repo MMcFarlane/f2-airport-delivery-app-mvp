@@ -9,16 +9,27 @@ import { SqliteOrderRepository } from './sqlite/order-repository';
 import { SqliteProfileRepository } from './sqlite/profile-repository';
 import { SqliteTripRepository } from './sqlite/trip-repository';
 
-let dataSource: Promise<DataSource> | null = null;
+const dataSourceSlot = '__f2AirportDataSource';
+
+type DataSourceSlot = {
+  promise: Promise<DataSource> | null;
+};
+
+function slot(): DataSourceSlot {
+  const root = globalThis as typeof globalThis & { [dataSourceSlot]?: DataSourceSlot };
+  root[dataSourceSlot] ??= { promise: null };
+  return root[dataSourceSlot];
+}
 
 export function createDataSource(): Promise<DataSource> {
-  if (!dataSource) {
-    dataSource = compose().catch((error: unknown) => {
-      dataSource = null;
+  const current = slot();
+  if (!current.promise) {
+    current.promise = compose().catch((error: unknown) => {
+      if (slot().promise === current.promise) current.promise = null;
       throw error;
     });
   }
-  return dataSource;
+  return current.promise;
 }
 
 async function compose(): Promise<DataSource> {

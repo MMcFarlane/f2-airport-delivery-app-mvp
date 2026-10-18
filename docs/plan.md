@@ -24,7 +24,7 @@ Spec behavior:
 8. Featured items and specials are filtered by the same window.
 9. Item detail shows photo, description, discount code, price, and add to cart.
 
-`artboards/home` is empty. Build Home from this spec and from the visual language of the other mocks.
+Home matches `artboards/home/Departure board@1x.png`.
 
 ## What this build includes
 
@@ -94,10 +94,11 @@ Reference cart math from the mock: subtotal $21.00, FLY10 on the $14.50 burger i
 
 ## Screens
 
-Tabs: Home, Browse, Orders, Account.
+Tabs: Home, Browse, Orders, Cart.
 
 | Screen | Artboard |
 | --- | --- |
+| Home | `artboards/home/Departure board@1x.png` |
 | Trip sheet | `artboards/departure_and_food_order/Trip setup pop-up@1x.png` |
 | Restaurant menu | `artboards/departure_and_food_order/Restaurant menu@1x.png` |
 | Item detail | `artboards/departure_and_food_order/Item detail@1x.png` |
@@ -109,7 +110,7 @@ Tabs: Home, Browse, Orders, Account.
 | Orders | `artboards/restaurant_details/Orders · active & past@1x.png` |
 | Account | `artboards/restaurant_details/Profile@1x.png` |
 
-Browse stays the active tab on the three list screens. Orders stays active on Orders. Account stays active on Account.
+Browse stays the active tab on the three list screens. Orders stays active on Orders. Cart stays active on Cart. Account is the profile screen and is not a tab on the home artboard.
 
 ## Phases
 
@@ -123,7 +124,7 @@ Browse stays the active tab on the three list screens. Orders stays active on Or
 | 3b. SkyLink | [phases/03b-skylink.md](phases/03b-skylink.md) | Not started |
 | 4. Home | [phases/04-home.md](phases/04-home.md) | Done |
 | 5. Browse lists | [phases/05-browse.md](phases/05-browse.md) | Done |
-| 6. Menu and item | [phases/06-menu-and-item.md](phases/06-menu-and-item.md) | Not started |
+| 6. Menu and item | [phases/06-menu-and-item.md](phases/06-menu-and-item.md) | Done |
 | 7. Cart, pay, code | [phases/07-cart-pay-code.md](phases/07-cart-pay-code.md) | Not started |
 | 8. Orders and account | [phases/08-orders-and-account.md](phases/08-orders-and-account.md) | Not started |
 | 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Not started |

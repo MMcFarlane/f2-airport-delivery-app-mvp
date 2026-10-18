@@ -10,6 +10,12 @@ export type CalendarDay = {
 
 export const demoOrderingClock = { hour: 14, minute: 17 } as const;
 
+export function dayPartGreeting(hour: number): string {
+  if (hour < 12) return 'Good morning,';
+  if (hour < 17) return 'Good afternoon,';
+  return 'Good evening,';
+}
+
 export function calendarDay(instant: Date, zone = timeZone): CalendarDay {
   const parts = partsInZone(instant, zone);
   return {
