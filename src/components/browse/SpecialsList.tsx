@@ -6,10 +6,14 @@ import { SpecialTile } from '@/src/components/home/SpecialTile';
 import { Muted } from '@/src/components/ui/Screen';
 import {
   formatCents,
+  itemPassesHub,
+  parseHubCategory,
+  parseHubChip,
   sortSpecials,
   specialsLine,
   specialTagLabels,
   specialVisible,
+  type HubChip,
   type SpecialSort,
 } from '@/src/domain';
 import { useOrderingWindow } from '@/src/hooks/useOrderingWindow';
@@ -18,7 +22,7 @@ import { useCatalog } from '@/src/hooks/useCatalog';
 import { useTripSession } from '@/src/hooks/TripProvider';
 import { space } from '@/src/theme';
 
-import { BrowseChrome, cycleChoice, SearchToggle, type BrowseChip } from './BrowseChrome';
+import { BrowseChrome, cycleChoice, SearchToggle, type BrowseChip, type IncomingBrowse } from './BrowseChrome';
 import { useAddItem } from './useAddItem';
 
 const sorts = ['listed', 'fastest'] as const;
@@ -28,15 +32,16 @@ const sortLabels: Record<SpecialSort, string> = {
   fastest: 'Fastest first',
 };
 
-export function SpecialsList() {
+export function SpecialsList({ initialQuery = '', initialHub = '', initialCategory = '' }: IncomingBrowse = {}) {
   const { trip, loading: tripLoading, error: tripError } = useTripSession();
   const catalog = useCatalog();
   const { addLine } = useCart();
   const window = useOrderingWindow(trip);
   const { addItem, addingId, error: addError } = useAddItem(addLine);
-  const [query, setQuery] = useState('');
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [chip, setChip] = useState<string | null>('all');
+  const [query, setQuery] = useState(initialQuery);
+  const [searchOpen, setSearchOpen] = useState(initialQuery.trim().length > 0);
+  const [chip, setChip] = useState<string | null>(parseHubCategory(initialCategory) === 'flight' ? 'tag:For the flight' : 'all');
+  const [hubFilter, setHubFilter] = useState<HubChip | null>(parseHubChip(initialHub));
   const [sort, setSort] = useState<SpecialSort>('listed');
 
   const chips: BrowseChip[] = [
@@ -44,7 +49,7 @@ export function SpecialsList() {
     ...specialTagLabels(catalog.specials).map((label) => ({ id: `tag:${label}`, label })),
   ];
   const tag = chip?.startsWith('tag:') ? chip.slice('tag:'.length) : null;
-  const visible = catalog.specials.filter((item) => specialVisible(item, tag, query));
+  const visible = catalog.specials.filter((item) => specialVisible(item, tag, query) && itemPassesHub(item, hubFilter, ''));
   const rows = window ? sortSpecials(visible, sort, window.fits) : [];
   const waiting = tripLoading || catalog.loading;
 
@@ -74,7 +79,10 @@ export function SpecialsList() {
       }
       chips={chips}
       selectedChip={chip}
-      onChip={(id) => setChip((current) => (current === id ? null : id))}
+      onChip={(id) => {
+        setHubFilter(null);
+        setChip((current) => (current === id ? null : id));
+      }}
       meta={window && trip ? specialsLine(trip.gate, window.deliverByClock) : 'Set your gate to see what can reach you'}
       sort={{
         label: sortLabels[sort],

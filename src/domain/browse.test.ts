@@ -7,8 +7,15 @@ import {
   cuisineChipLabels,
   featuredCountLabel,
   featuredVisible,
+  hubCategorySummaries,
+  hubCounts,
+  itemPassesHub,
   menuAvailability,
+  parseHubCategory,
+  parseHubChip,
   reachCountLabel,
+  restaurantInCategory,
+  restaurantPassesHub,
   restaurantVisible,
   sortFeatured,
   sortRestaurants,
@@ -193,6 +200,110 @@ describe('featured and specials lists', () => {
     assert.equal(specialsLine('B14', '15:00'), 'Deals that still reach Gate B14 by 15:00');
     assert.equal(reachCountLabel(7, 'B14'), '7 restaurants can reach B14');
     assert.equal(reachCountLabel(1, 'B14'), '1 restaurant can reach B14');
+  });
+});
+
+describe('browse hub', () => {
+  const restaurants = [
+    restaurant({ id: 'gate-cafe', name: 'Gate Café', cuisine: 'Coffee, pastries', location: 'Near B12', fastestPrepMinutes: 5 }),
+    restaurant({ id: 'jetstream-juice', name: 'Jetstream Juice', cuisine: 'Smoothies, bowls', fastestPrepMinutes: 6 }),
+    restaurant({ id: 'runway-burger', name: 'Runway Burger', cuisine: 'Burgers, fries, shakes', fastestPrepMinutes: 8 }),
+    restaurant({ id: 'terminal-taco', name: 'Terminal Taco', cuisine: 'Tacos, bowls', fastestPrepMinutes: 11 }),
+    restaurant({ id: 'wing-bar', name: 'Wing Bar', cuisine: 'Wings, beer, wine', fastestPrepMinutes: 13 }),
+    restaurant({ id: 'sky-noodle', name: 'Sky Noodle', cuisine: 'Ramen, poke, dumplings', fastestPrepMinutes: 14 }),
+    restaurant({ id: 'concourse-pizza', name: 'Concourse Pizza', cuisine: 'Pizza, salads', fastestPrepMinutes: 24 }),
+  ];
+  const featured = [
+    item({ id: 'smash', restaurantId: 'runway-burger', name: 'Double smash burger', priceCents: 1450, prepMinutes: 12, category: 'Burgers' }),
+    item({ id: 'cold-brew', restaurantId: 'gate-cafe', name: 'Cold brew + croissant', description: 'Cold brew and an almond croissant', priceCents: 850, prepMinutes: 6, category: 'Coffee' }),
+    item({ id: 'acai', restaurantId: 'jetstream-juice', name: 'Açaí bowl', priceCents: 1100, prepMinutes: 8, category: 'Bowls' }),
+    item({ id: 'tacos', restaurantId: 'terminal-taco', name: 'Chicken tinga tacos', priceCents: 975, prepMinutes: 11, category: 'Tacos' }),
+    item({ id: 'poke', restaurantId: 'sky-noodle', name: 'Spicy tuna poke bowl', priceCents: 1600, prepMinutes: 18, category: 'Bowls' }),
+    item({ id: 'pizza', restaurantId: 'concourse-pizza', name: 'Wood-fired pizza', priceCents: 1700, prepMinutes: 52, category: 'Pizza' }),
+  ];
+  const specials = [
+    item({ id: 'combo', restaurantId: 'runway-burger', name: 'Pre-flight combo', description: 'Smash burger, fries and a drink', priceCents: 1899, prepMinutes: 14, badge: 'SAVE $4', tags: ['Combos'] }),
+    item({ id: 'breakfast', restaurantId: 'gate-cafe', name: 'Breakfast for two', priceCents: 1400, prepMinutes: 7, tags: ['Breakfast'] }),
+    item({ id: 'flight', restaurantId: 'jetstream-juice', name: 'Carry-on snack pack', priceCents: 1150, prepMinutes: 9, tags: ['For the flight'] }),
+    item({ id: 'duo', restaurantId: 'terminal-taco', name: 'Taco duo + agua fresca', priceCents: 1600, prepMinutes: 11, tags: ['Combos'] }),
+    item({ id: 'wings', restaurantId: 'wing-bar', name: 'Wings + draft beer', priceCents: 1500, prepMinutes: 13, tags: ['Drinks'] }),
+  ];
+  const fries = item({
+    id: 'fries',
+    restaurantId: 'runway-burger',
+    name: 'Loaded fries',
+    priceCents: 650,
+    prepMinutes: 8,
+    category: 'Sides',
+  });
+  const items = [...featured, ...specials, fries];
+
+  it('keeps the 52-minute pizza in the unfiltered totals', () => {
+    assert.deepEqual(hubCounts(restaurants, featured, specials, items, null, ''), {
+      restaurants: 7,
+      featured: 6,
+      specials: 5,
+    });
+    assert.deepEqual(
+      hubCategorySummaries(restaurants, items, null, '').map((entry) => [entry.title, entry.detail]),
+      [
+        ['Coffee & pastries', '1 PLACE · 5 MIN+'],
+        ['Breakfast', '1 PLACE · 5 MIN+'],
+        ['Burgers & sandwiches', '1 PLACE · 8 MIN+'],
+        ['Healthy & bowls', '3 PLACES · 6 MIN+'],
+        ['Bar & drinks 21+', '1 PLACE · 13 MIN+'],
+        ['For the flight', 'PACKED TO TRAVEL'],
+      ],
+    );
+  });
+
+  it('filters restaurants, featured items, and specials by the hub chips', () => {
+    assert.deepEqual(hubCounts(restaurants, featured, specials, items, 'ready10', ''), {
+      restaurants: 3,
+      featured: 2,
+      specials: 2,
+    });
+    assert.deepEqual(hubCounts(restaurants, featured, specials, items, 'under20', ''), {
+      restaurants: 6,
+      featured: 5,
+      specials: 5,
+    });
+    assert.deepEqual(hubCounts(restaurants, featured, specials, items, 'under10dollars', ''), {
+      restaurants: 3,
+      featured: 2,
+      specials: 0,
+    });
+    assert.equal(itemPassesHub(item({ id: 'ten', name: 'Ten', priceCents: 1000, prepMinutes: 10 }), 'ready10', ''), true);
+    assert.equal(itemPassesHub(item({ id: 'eleven', name: 'Eleven', priceCents: 900, prepMinutes: 11 }), 'ready10', ''), false);
+    assert.equal(itemPassesHub(item({ id: 'nineteen', name: 'Nineteen', priceCents: 900, prepMinutes: 19 }), 'under20', ''), true);
+    assert.equal(itemPassesHub(item({ id: 'twenty', name: 'Twenty', priceCents: 900, prepMinutes: 20 }), 'under20', ''), false);
+    assert.equal(itemPassesHub(item({ id: 'cheap', name: 'Cheap', priceCents: 999, prepMinutes: 30 }), 'under10dollars', ''), true);
+    assert.equal(itemPassesHub(item({ id: 'ten-dollars', name: 'Ten dollars', priceCents: 1000, prepMinutes: 5 }), 'under10dollars', ''), false);
+  });
+
+  it('matches restaurant fields and item name, description, category, and badge', () => {
+    assert.equal(hubCounts(restaurants, featured, specials, items, null, 'croissant').featured, 1);
+    assert.equal(hubCounts(restaurants, featured, specials, items, null, 'croissant').restaurants, 0);
+    assert.equal(hubCounts(restaurants, featured, specials, items, null, 'b12').restaurants, 1);
+    assert.equal(hubCounts(restaurants, featured, specials, items, null, 'save $4').specials, 1);
+    assert.equal(restaurantPassesHub(restaurants[2]!, items, 'under10dollars', ''), true);
+    assert.equal(restaurantPassesHub(restaurants[6]!, items, 'under10dollars', ''), false);
+  });
+
+  it('counts places from restaurants that belong, and drops a category to zero places', () => {
+    const ready = hubCategorySummaries(restaurants, items, 'ready10', '');
+    assert.equal(ready.find((entry) => entry.id === 'healthy')?.detail, '1 PLACE · 6 MIN+');
+    assert.equal(ready.find((entry) => entry.id === 'bar')?.detail, '0 PLACES');
+    assert.equal(ready.find((entry) => entry.id === 'flight')?.detail, 'PACKED TO TRAVEL');
+
+    const deli = restaurant({ id: 'deli', name: 'Deli', cuisine: 'Salads', fastestPrepMinutes: 9 });
+    const sandwich = item({ id: 'sandwich', restaurantId: 'deli', name: 'Turkey sandwich', priceCents: 900, prepMinutes: 9, category: 'Sandwiches' });
+    assert.equal(restaurantInCategory(deli, [sandwich], 'burgers'), true);
+    assert.equal(restaurantInCategory(restaurants[0]!, items, 'flight'), false);
+    assert.equal(parseHubChip('ready10'), 'ready10');
+    assert.equal(parseHubChip('fits'), null);
+    assert.equal(parseHubCategory('flight'), 'flight');
+    assert.equal(parseHubCategory('pastry'), null);
   });
 });
 

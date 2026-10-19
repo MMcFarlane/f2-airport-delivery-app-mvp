@@ -9,14 +9,14 @@ const hrefs: Record<string, Href> = {
   index: '/',
   browse: '/browse',
   orders: '/orders',
-  cart: '/cart',
+  account: '/account',
 };
 
 const icons: Record<string, keyof typeof Ionicons.glyphMap> = {
   index: 'home',
   browse: 'search',
   orders: 'receipt',
-  cart: 'bag-handle-outline',
+  account: 'person-outline',
 };
 
 type AppTabBarProps = {

@@ -131,7 +131,7 @@ Home stays active on Home. Browse stays active on the hub and the three list scr
 | 6. Menu and item | [phases/06-menu-and-item.md](phases/06-menu-and-item.md) | Done |
 | 7. Cart, pay, code | [phases/07-cart-pay-code.md](phases/07-cart-pay-code.md) | Done |
 | 8. Orders and account | [phases/08-orders-and-account.md](phases/08-orders-and-account.md) | Done |
-| 8a. Browse hub | [phases/08a-browse-hub.md](phases/08a-browse-hub.md) | Not started |
+| 8a. Browse hub | [phases/08a-browse-hub.md](phases/08a-browse-hub.md) | Done |
 | 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Not started |
 
 ## External APIs

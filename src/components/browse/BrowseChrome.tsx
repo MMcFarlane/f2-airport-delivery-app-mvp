@@ -140,17 +140,23 @@ export function GatePill({ label, onPress }: { label: string; onPress: () => voi
   );
 }
 
-export function CartBadge({ count }: { count: number }) {
-  const label = count === 1 ? '1 item in the cart' : `${count} items in the cart`;
+export type IncomingBrowse = {
+  initialQuery?: string;
+  initialHub?: string;
+  initialCategory?: string;
+};
+
+export function CartBadge({ count, onPress }: { count: number; onPress: () => void }) {
+  const label = count === 1 ? 'Cart, 1 item' : `Cart, ${count} items`;
   return (
-    <View accessibilityLabel={label} style={styles.cart}>
+    <Pressable accessibilityRole="button" accessibilityLabel={label} onPress={onPress} style={styles.cart}>
       <Ionicons name="bag-handle-outline" size={20} color={colors.surface} />
       {count > 0 ? (
         <View style={styles.cartCount}>
           <Text style={styles.cartCountText}>{count}</Text>
         </View>
       ) : null}
-    </View>
+    </Pressable>
   );
 }
 

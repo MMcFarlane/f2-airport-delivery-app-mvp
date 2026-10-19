@@ -150,15 +150,16 @@ export function CartCheckout() {
         contentContainerStyle={styles.content}>
         <View style={styles.header}>
           <View style={styles.headerTitle}>
-            {router.canGoBack() ? (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Back"
-                onPress={() => router.back()}
-                style={styles.back}>
-                <Ionicons name="chevron-back" size={22} color={colors.ink} />
-              </Pressable>
-            ) : null}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Back"
+              onPress={() => {
+                if (router.canGoBack()) router.back();
+                else router.navigate('/');
+              }}
+              style={styles.back}>
+              <Ionicons name="chevron-back" size={22} color={colors.ink} />
+            </Pressable>
             <Text style={styles.title}>Your cart</Text>
           </View>
           <Text style={styles.count}>{itemCountLabel(count)}</Text>

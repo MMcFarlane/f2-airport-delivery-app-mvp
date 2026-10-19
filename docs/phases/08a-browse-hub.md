@@ -1,6 +1,6 @@
 # Phase 8a — Browse hub
 
-Status: Not started.
+Status: Done. The Browse tab is the search hub: gate pill, search, time and price chips, the unfiltered 7 / 6 / 5 counts, and the six category cards. Account is the fourth tab. Cart opens from the home bag, the featured bag, the menu View cart bar, and a successful reorder, and that screen has no tab bar.
 
 Depends on [08-orders-and-account.md](08-orders-and-account.md).
 

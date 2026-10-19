@@ -8,9 +8,15 @@ import {
   availabilityLabel,
   cuisineChipLabels,
   menuAvailability,
+  parseHubCategory,
+  parseHubChip,
   reachCountLabel,
+  restaurantInCategory,
+  restaurantPassesHub,
   restaurantVisible,
   sortRestaurants,
+  type HubCategoryId,
+  type HubChip,
   type RestaurantFilter,
   type RestaurantSort,
 } from '@/src/domain';
@@ -20,7 +26,7 @@ import { useCatalog } from '@/src/hooks/useCatalog';
 import { useTripSession } from '@/src/hooks/TripProvider';
 import { space } from '@/src/theme';
 
-import { BrowseChrome, cycleChoice, GatePill, type BrowseChip } from './BrowseChrome';
+import { BrowseChrome, cycleChoice, GatePill, type BrowseChip, type IncomingBrowse } from './BrowseChrome';
 
 const sorts = ['fastest', 'name'] as const;
 
@@ -29,13 +35,18 @@ const sortLabels: Record<RestaurantSort, string> = {
   name: 'A–Z',
 };
 
-export function RestaurantList() {
+export function RestaurantList({ initialQuery = '', initialHub = '', initialCategory = '' }: IncomingBrowse = {}) {
+  const openingHub = parseHubChip(initialHub);
+  const parsedCategory = parseHubCategory(initialCategory);
+  const openingCategory = parsedCategory && parsedCategory !== 'flight' ? parsedCategory : null;
   const { trip, loading: tripLoading, error: tripError, openSheet } = useTripSession();
   const catalog = useCatalog();
   const window = useOrderingWindow(trip);
   const menus = useMenuPrep(catalog.restaurants.map((restaurant) => restaurant.id));
-  const [query, setQuery] = useState('');
-  const [chip, setChip] = useState<string | null>('fits');
+  const [query, setQuery] = useState(initialQuery);
+  const [chip, setChip] = useState<string | null>(openingHub || openingCategory ? null : 'fits');
+  const [hubFilter, setHubFilter] = useState<HubChip | null>(openingHub);
+  const [categoryFilter, setCategoryFilter] = useState<HubCategoryId | null>(openingCategory);
   const [sort, setSort] = useState<RestaurantSort>('fastest');
 
   const chips: BrowseChip[] = [
@@ -52,10 +63,13 @@ export function RestaurantList() {
         : ('late' as const),
     ]),
   );
+  const catalogItems = [...menus.items, ...catalog.specials];
   const rows = sortRestaurants(catalog.restaurants, sort, (restaurant) => availabilityById.get(restaurant.id) ?? 'late').flatMap(
     (restaurant) => {
       const availability = availabilityById.get(restaurant.id) ?? 'late';
       if (!window || !restaurantVisible(restaurant, availability, filter, query)) return [];
+      if (hubFilter && !restaurantPassesHub(restaurant, catalogItems, hubFilter, '')) return [];
+      if (categoryFilter && !restaurantInCategory(restaurant, catalogItems, categoryFilter)) return [];
       return [{ restaurant, availability }];
     },
   );
@@ -78,7 +92,11 @@ export function RestaurantList() {
       }}
       chips={chips}
       selectedChip={chip}
-      onChip={(id) => setChip((current) => (current === id ? null : id))}
+      onChip={(id) => {
+        setHubFilter(null);
+        setCategoryFilter(null);
+        setChip((current) => (current === id ? null : id));
+      }}
       meta={window && trip ? reachCountLabel(reaching, trip.gate) : 'Set your gate to see what can reach you'}
       sort={{
         label: sortLabels[sort],

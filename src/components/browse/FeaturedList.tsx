@@ -4,18 +4,29 @@ import { StyleSheet, View } from 'react-native';
 
 import { FeaturedTile } from '@/src/components/home/FeaturedTile';
 import { Muted } from '@/src/components/ui/Screen';
-import { categoryChipLabels, featuredCountLabel, featuredVisible, formatCents, sortFeatured, type FeaturedFilter, type FeaturedSort } from '@/src/domain';
+import {
+  categoryChipLabels,
+  featuredCountLabel,
+  featuredVisible,
+  formatCents,
+  itemPassesHub,
+  parseHubChip,
+  sortFeatured,
+  type FeaturedFilter,
+  type FeaturedSort,
+  type HubChip,
+} from '@/src/domain';
 import { useOrderingWindow } from '@/src/hooks/useOrderingWindow';
 import { useCart } from '@/src/hooks/useCart';
 import { useCatalog } from '@/src/hooks/useCatalog';
 import { useTripSession } from '@/src/hooks/TripProvider';
 
-import { BrowseChrome, CartBadge, cycleChoice, type BrowseChip } from './BrowseChrome';
+import { BrowseChrome, CartBadge, cycleChoice, type BrowseChip, type IncomingBrowse } from './BrowseChrome';
 import { useAddItem } from './useAddItem';
 
 const sorts = ['fastest', 'price'] as const;
 
-export function FeaturedList() {
+export function FeaturedList({ initialQuery = '', initialHub = '' }: IncomingBrowse = {}) {
   const { trip, loading: tripLoading, error: tripError } = useTripSession();
   const catalog = useCatalog();
   const { cart, addLine, reload: reloadCart } = useCart();
@@ -26,8 +37,9 @@ export function FeaturedList() {
   );
   const window = useOrderingWindow(trip);
   const { addItem, addingId, error: addError } = useAddItem(addLine);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery);
   const [chip, setChip] = useState<string | null>('all');
+  const [hubFilter, setHubFilter] = useState<HubChip | null>(parseHubChip(initialHub));
   const [sort, setSort] = useState<FeaturedSort>('fastest');
 
   const chips: BrowseChip[] = [
@@ -37,7 +49,7 @@ export function FeaturedList() {
     ...categoryChipLabels(catalog.featured).map((label) => ({ id: `category:${label}`, label })),
   ];
   const filter = featuredFilter(chip);
-  const visible = catalog.featured.filter((item) => featuredVisible(item, filter, query));
+  const visible = catalog.featured.filter((item) => featuredVisible(item, filter, query) && itemPassesHub(item, hubFilter, ''));
   const rows = window ? sortFeatured(visible, sort, window.fits) : [];
   const arriving = window ? rows.filter((item) => window.fits(item.prepMinutes)).length : 0;
   const count = cart?.lines.reduce((sum, line) => sum + line.quantity, 0) ?? 0;
@@ -46,7 +58,7 @@ export function FeaturedList() {
   return (
     <BrowseChrome
       title="Featured items"
-      trailing={<CartBadge count={count} />}
+      trailing={<CartBadge count={count} onPress={() => router.push('/cart' as Href)} />}
       search={{
         value: query,
         placeholder: 'Search dishes and drinks',
@@ -54,7 +66,10 @@ export function FeaturedList() {
       }}
       chips={chips}
       selectedChip={chip}
-      onChip={(id) => setChip((current) => (current === id ? null : id))}
+      onChip={(id) => {
+        setHubFilter(null);
+        setChip((current) => (current === id ? null : id));
+      }}
       meta={
         window
           ? featuredCountLabel(arriving, window.deliverByClock, sort)

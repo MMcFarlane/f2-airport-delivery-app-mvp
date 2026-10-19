@@ -147,3 +147,122 @@ function matchesQuery(query: string, fields: readonly string[]): boolean {
   if (!needle) return true;
   return fields.some((field) => field.toLowerCase().includes(needle));
 }
+
+export const hubChipIds = ['ready10', 'under20', 'under10dollars'] as const;
+
+export type HubChip = (typeof hubChipIds)[number];
+
+export const hubCategoryIds = ['coffee', 'breakfast', 'burgers', 'healthy', 'bar', 'flight'] as const;
+
+export type HubCategoryId = (typeof hubCategoryIds)[number];
+
+export type HubCategorySummary = {
+  id: HubCategoryId;
+  title: string;
+  detail: string;
+};
+
+export type HubCounts = {
+  restaurants: number;
+  featured: number;
+  specials: number;
+};
+
+const hubCategories: { id: HubCategoryId; title: string }[] = [
+  { id: 'coffee', title: 'Coffee & pastries' },
+  { id: 'breakfast', title: 'Breakfast' },
+  { id: 'burgers', title: 'Burgers & sandwiches' },
+  { id: 'healthy', title: 'Healthy & bowls' },
+  { id: 'bar', title: 'Bar & drinks 21+' },
+  { id: 'flight', title: 'For the flight' },
+];
+
+const categoryNeedles: Record<Exclude<HubCategoryId, 'breakfast' | 'flight'>, readonly string[]> = {
+  coffee: ['coffee', 'pastry'],
+  burgers: ['burger', 'sandwich'],
+  healthy: ['bowl', 'smoothie', 'poke'],
+  bar: ['beer', 'wine', 'wings'],
+};
+
+export function parseHubChip(value: string | null | undefined): HubChip | null {
+  return hubChipIds.find((chip) => chip === value) ?? null;
+}
+
+export function parseHubCategory(value: string | null | undefined): HubCategoryId | null {
+  return hubCategoryIds.find((category) => category === value) ?? null;
+}
+
+export function restaurantPassesHub(
+  restaurant: Restaurant,
+  items: readonly MenuItem[],
+  chip: HubChip | null,
+  query: string,
+): boolean {
+  if (!matchesQuery(query, [restaurant.name, restaurant.cuisine, restaurant.location])) return false;
+  if (chip === 'ready10') return restaurant.fastestPrepMinutes <= 10;
+  if (chip === 'under20') return restaurant.fastestPrepMinutes < 20;
+  if (chip === 'under10dollars') {
+    return items.some((item) => item.restaurantId === restaurant.id && item.priceCents < 1000);
+  }
+  return true;
+}
+
+export function itemPassesHub(item: MenuItem, chip: HubChip | null, query: string): boolean {
+  if (!matchesQuery(query, [item.name, item.description, item.category ?? '', item.badge ?? ''])) return false;
+  if (chip === 'ready10') return item.prepMinutes <= 10;
+  if (chip === 'under20') return item.prepMinutes < 20;
+  if (chip === 'under10dollars') return item.priceCents < 1000;
+  return true;
+}
+
+export function restaurantInCategory(
+  restaurant: Restaurant,
+  items: readonly MenuItem[],
+  category: HubCategoryId,
+): boolean {
+  if (category === 'flight') return false;
+  const own = items.filter((item) => item.restaurantId === restaurant.id);
+  if (category === 'breakfast') {
+    return own.some((item) => item.tags.some((tag) => tag.toLowerCase() === 'breakfast'));
+  }
+  const haystack = [restaurant.cuisine, ...own.map((item) => item.category ?? '')].join('\n').toLowerCase();
+  return categoryNeedles[category].some((needle) => haystack.includes(needle));
+}
+
+export function hubCounts(
+  restaurants: readonly Restaurant[],
+  featured: readonly MenuItem[],
+  specials: readonly MenuItem[],
+  items: readonly MenuItem[],
+  chip: HubChip | null,
+  query: string,
+): HubCounts {
+  return {
+    restaurants: restaurants.filter((restaurant) => restaurantPassesHub(restaurant, items, chip, query)).length,
+    featured: featured.filter((item) => itemPassesHub(item, chip, query)).length,
+    specials: specials.filter((item) => itemPassesHub(item, chip, query)).length,
+  };
+}
+
+export function hubCategorySummaries(
+  restaurants: readonly Restaurant[],
+  items: readonly MenuItem[],
+  chip: HubChip | null,
+  query: string,
+): HubCategorySummary[] {
+  return hubCategories.map((category) => {
+    if (category.id === 'flight') return { ...category, detail: 'PACKED TO TRAVEL' };
+    const places = restaurants.filter(
+      (restaurant) =>
+        restaurantInCategory(restaurant, items, category.id) && restaurantPassesHub(restaurant, items, chip, query),
+    );
+    return { ...category, detail: placeDetail(places) };
+  });
+}
+
+function placeDetail(places: readonly Restaurant[]): string {
+  if (places.length === 0) return '0 PLACES';
+  const fastest = Math.min(...places.map((place) => place.fastestPrepMinutes));
+  const label = places.length === 1 ? 'PLACE' : 'PLACES';
+  return `${places.length} ${label} · ${fastest} MIN+`;
+}

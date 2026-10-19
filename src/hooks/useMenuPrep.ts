@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { createDataSource } from '@/src/data';
+import type { MenuItem } from '@/src/domain';
 
 import { errorMessage } from './error-message';
 
 type PrepState = {
   key: string;
   prep: Record<string, number[]>;
+  items: MenuItem[];
   error: string | null;
 };
 
@@ -25,14 +27,17 @@ export function useMenuPrep(restaurantIds: readonly string[]) {
       .then((menus) => {
         if (!active) return;
         const prep: Record<string, number[]> = {};
+        const items: MenuItem[] = [];
         ids.forEach((id, index) => {
-          prep[id] = menus[index]?.map((item) => item.prepMinutes) ?? [];
+          const menu = menus[index] ?? [];
+          prep[id] = menu.map((item) => item.prepMinutes);
+          items.push(...menu);
         });
-        setState({ key, prep, error: null });
+        setState({ key, prep, items, error: null });
       })
       .catch((caught: unknown) => {
         if (!active) return;
-        setState({ key, prep: {}, error: errorMessage(caught) });
+        setState({ key, prep: {}, items: [], error: errorMessage(caught) });
       });
 
     return () => {
@@ -40,11 +45,12 @@ export function useMenuPrep(restaurantIds: readonly string[]) {
     };
   }, [key]);
 
-  if (!key) return { prep: {}, loading: false, error: null, ready: true };
+  if (!key) return { prep: {}, items: [], loading: false, error: null, ready: true };
 
   const current = state?.key === key ? state : null;
   return {
     prep: current?.prep ?? {},
+    items: current?.items ?? [],
     loading: current === null,
     error: current?.error ?? null,
     ready: current !== null && current.error === null,
