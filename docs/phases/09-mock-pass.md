@@ -2,7 +2,7 @@
 
 Status: Not started.
 
-Depends on [08-orders-and-account.md](08-orders-and-account.md).
+Depends on [08a-browse-hub.md](08a-browse-hub.md).
 
 ## Goal
 
@@ -16,6 +16,8 @@ Walk every screen against its PNG and against the rules in [../plan.md](../plan.
 - Cart breakdown totals $26.60 for the reference cart
 - Confirmation code and timeline
 - Restaurant, featured, and specials search and chips
+- Browse hub gate pill, unfiltered counts of 7, 6, and 5, the category lines, and a chip that changes those counts
+- Tabbed screens show Home, Browse, Orders, and Account. Menu, item, cart, and confirmation show no tab bar
 - Orders in-progress card and past orders
 - Account trip, dietary chips, and toggles
 - Empty cart

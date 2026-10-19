@@ -1,6 +1,6 @@
 # Phase 8 — Orders and account
 
-Status: Done. The Orders tab shows the newest in-progress order (the Phase 7 checkout, or the seeded Runway Burger card when none exists) and Advance moves it from received through at the gate. Past orders match the artboard. Reorder adds only lines that still fit the current window. Account stays at `/account`, opened from the home name, and dietary chips, notification toggles, and profile edits persist in SQLite. The fourth tab stays Cart.
+Status: Done. The Orders tab shows the newest in-progress order (the Phase 7 checkout, or the seeded Runway Burger card when none exists) and Advance moves it from received through at the gate. Past orders match the artboard. Reorder adds only lines that still fit the current window. Account stays at `/account`, opened from the home name, and dietary chips, notification toggles, and profile edits persist in SQLite. Phase 8a makes Account the fourth tab.
 
 Depends on [07-cart-pay-code.md](07-cart-pay-code.md).
 
@@ -22,7 +22,7 @@ The Orders tab stays active.
 
 ## Account
 
-Account is not a tab. The home artboard's fourth tab is Cart. This screen stays at `/account` until it has an entry point.
+This screen stays at `/account`. Phase 8a puts it on the tab bar. The home artboard's fourth tab is Cart. The profile artboard's fourth tab is Account, and that is the one the app follows. The home name still opens this screen.
 
 - Jordan, email, phone, Edit
 - Current trip: Gate B14 · Dep 15:40, and Change opens the trip sheet

@@ -10,7 +10,7 @@ Artboards:
 - `artboards/restaurant_details/All featured items · search & filter@1x.png`
 - `artboards/restaurant_details/All specials & bundles@1x.png`
 
-The Browse tab stays active on all three.
+The Browse tab root is the hub in [08a-browse-hub.md](08a-browse-hub.md). This phase is the three lists that hub opens. The Browse tab stays active on the hub and all three.
 
 ## Restaurants
 

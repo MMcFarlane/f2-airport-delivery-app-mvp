@@ -23,8 +23,9 @@ Spec behavior:
 7. Pay produces a confirmation code and records the order for the restaurant.
 8. Featured items and specials are filtered by the same window.
 9. Item detail shows photo, description, discount code, price, and add to cart.
+10. Browse is a search hub: a flight chip, search, time and price chips, counts for restaurants, featured items, and specials, and six category cards.
 
-Home matches `artboards/home/Departure board@1x.png`.
+Home matches `artboards/home/Departure board@1x.png`, except its fourth tab. That PNG draws Cart. The app uses Account, matching the other tabbed artboards.
 
 ## What this build includes
 
@@ -94,7 +95,9 @@ Reference cart math from the mock: subtotal $21.00, FLY10 on the $14.50 burger i
 
 ## Screens
 
-Tabs: Home, Browse, Orders, Cart.
+Tabs: Home, Browse, Orders, Account.
+
+Cart is not a tab. The header bag on Home and Featured items opens it, as does the menu View cart bar. Cart, the menu, item detail, and confirmation have no tab bar. The trip sheet covers the tab bar.
 
 | Screen | Artboard |
 | --- | --- |
@@ -104,13 +107,14 @@ Tabs: Home, Browse, Orders, Cart.
 | Item detail | `artboards/departure_and_food_order/Item detail@1x.png` |
 | Cart and pay | `artboards/departure_and_food_order/Cart & checkout@1x.png` |
 | Confirmation | `artboards/departure_and_food_order/Order confirmed · code@1x.png` |
+| Browse hub | `artboards/browse/Browse · search everything@1x.png` |
 | All restaurants | `artboards/restaurant_details/All restaurants · search & filter@1x.png` |
 | Featured items | `artboards/restaurant_details/All featured items · search & filter@1x.png` |
 | Specials and bundles | `artboards/restaurant_details/All specials & bundles@1x.png` |
 | Orders | `artboards/restaurant_details/Orders · active & past@1x.png` |
 | Account | `artboards/restaurant_details/Profile@1x.png` |
 
-Browse stays the active tab on the three list screens. Orders stays active on Orders. Cart stays active on Cart. Account is the profile screen and is not a tab on the home artboard.
+Home stays active on Home. Browse stays active on the hub and the three list screens. Orders stays active on Orders. Account stays active on Account.
 
 ## Phases
 
@@ -127,6 +131,7 @@ Browse stays the active tab on the three list screens. Orders stays active on Or
 | 6. Menu and item | [phases/06-menu-and-item.md](phases/06-menu-and-item.md) | Done |
 | 7. Cart, pay, code | [phases/07-cart-pay-code.md](phases/07-cart-pay-code.md) | Done |
 | 8. Orders and account | [phases/08-orders-and-account.md](phases/08-orders-and-account.md) | Done |
+| 8a. Browse hub | [phases/08a-browse-hub.md](phases/08a-browse-hub.md) | Not started |
 | 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Not started |
 
 ## External APIs
