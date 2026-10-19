@@ -6,7 +6,7 @@ Depends on [08a-browse-hub.md](08a-browse-hub.md).
 
 ## Goal
 
-Walk every screen against its PNG and against the rules in [../plan.md](../plan.md). Use `CATALOG_SOURCE=fixtures` so the names match the artboards.
+Walk every screen against its PNG and against the rules in [../plan.md](../plan.md). Use `CATALOG_SOURCE=fixtures` so the names match the artboards. Write down where the app, the PNG, and the rules differ. Do not change the app to close those gaps.
 
 ## Checks
 
@@ -29,8 +29,8 @@ Then, if `SKYLINK_API_KEY` is present, look up one live ATL flight and confirm t
 
 ## Done when
 
-Each mismatch you find is fixed, and the phase status at the top of the earlier files is updated to done.
+The differences are recorded in this file. Product code, the fixture catalog, and earlier phase files stay as they are.
 
 ## Out of scope
 
-New features. This phase only closes gaps against the spec, the domain rules, and the PNGs.
+Fixes, catalog edits, and new features. This phase reports differences. It does not close them.
