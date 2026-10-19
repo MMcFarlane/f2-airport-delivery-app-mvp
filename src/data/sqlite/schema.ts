@@ -105,3 +105,18 @@ CREATE TABLE order_lines (
 CREATE INDEX idx_restaurants_source ON restaurants(source, fastest_prep_minutes);
 CREATE INDEX idx_menu_items_restaurant ON menu_items(restaurant_id, position);
 `;
+
+export const DEPARTURES_TABLE_SQL = `
+CREATE TABLE IF NOT EXISTS departures (
+  flight_number TEXT NOT NULL,
+  airline TEXT NOT NULL,
+  status TEXT NOT NULL,
+  destination TEXT NOT NULL,
+  destination_iata TEXT NOT NULL,
+  scheduled_time TEXT NOT NULL,
+  departure_date TEXT NOT NULL,
+  PRIMARY KEY (flight_number, departure_date, scheduled_time)
+);
+
+CREATE INDEX IF NOT EXISTS idx_departures_date ON departures(departure_date, scheduled_time);
+`;

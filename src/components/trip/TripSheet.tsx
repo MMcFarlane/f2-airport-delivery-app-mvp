@@ -10,40 +10,72 @@ import {
   parseClock,
   timeWindow,
   todayInAirport,
+  type DepartureFlight,
   type Trip,
 } from '@/src/domain';
+import { calendarDayFromIso, findDeparture, shortDepartureList } from '@/src/data/skylink/board';
 import type { SaveTripInput } from '@/src/data/repositories';
 import { colors, radii, space, type } from '@/src/theme';
 
+type TripField = 'flight' | 'name' | 'gate' | 'departure';
+
 type TripSheetProps = {
   trip: Trip | null;
+  departures: readonly DepartureFlight[];
   defaultName: string;
   onSave: (input: SaveTripInput) => Promise<void>;
 };
 
-export function TripSheet({ trip, defaultName, onSave }: TripSheetProps) {
-  const day = trip ? calendarDay(new Date(trip.departureAt)) : todayInAirport();
+export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetProps) {
+  const [day, setDay] = useState(trip ? calendarDay(new Date(trip.departureAt)) : todayInAirport());
   const [name, setName] = useState(trip?.passengerName ?? defaultName);
   const [gate, setGate] = useState(trip?.gate ?? 'B14');
   const [departure, setDeparture] = useState(trip ? formatClock(new Date(trip.departureAt)) : '15:40');
-  const [focused, setFocused] = useState<'name' | 'gate' | 'departure'>('gate');
+  const [flightNumber, setFlightNumber] = useState(trip?.flightNumber ?? '');
+  const [focused, setFocused] = useState<TripField>('gate');
   const [later, setLater] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const selected = findDeparture(departures, flightNumber);
+  const listed = shortDepartureList(departures, flightNumber);
+  const unknownFlight = flightNumber.trim().length > 0 && selected === null;
 
   const instant = departureInstant(departure, day);
   const deliverBy = instant ? formatClock(timeWindow(instant).deliverBy) : null;
   const canSave = name.trim().length > 0 && gate.trim().length > 0 && instant !== null && !saving;
 
+  function chooseFlight(flight: DepartureFlight) {
+    const flightDay = calendarDayFromIso(flight.departureDate);
+    setFlightNumber(flight.flightNumber);
+    setDeparture(flight.scheduledTime);
+    if (flightDay) setDay(flightDay);
+    if (!trip && gate === 'B14') setGate('');
+  }
+
+  function editFlightNumber(value: string) {
+    const next = value.toUpperCase();
+    setFlightNumber(next);
+    const match = findDeparture(departures, next);
+    if (!match) return;
+    const flightDay = calendarDayFromIso(match.departureDate);
+    setDeparture(match.scheduledTime);
+    if (flightDay) setDay(flightDay);
+    if (!trip && gate === 'B14') setGate('');
+  }
+
   async function submit() {
     if (!instant || !canSave) return;
     setSaving(true);
     setError(null);
+    const match = findDeparture(departures, flightNumber);
     try {
       await onSave({
         passengerName: name.trim(),
         gate: gate.trim().toUpperCase(),
         departureAt: instant.toISOString(),
+        flightNumber: match?.flightNumber ?? null,
+        airline: match?.airline ?? null,
+        flightStatus: match?.status ?? null,
       });
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'Could not save this trip');
@@ -71,6 +103,46 @@ export function TripSheet({ trip, defaultName, onSave }: TripSheetProps) {
           <Text style={styles.scanLabel}>Scan boarding pass</Text>
         </Pressable>
         {later ? <Text style={styles.later}>Boarding pass scan comes later.</Text> : null}
+
+        <Text style={styles.fieldLabel}>Flight number</Text>
+        <TextInput
+          accessibilityLabel="Flight number"
+          value={flightNumber}
+          onChangeText={editFlightNumber}
+          onFocus={() => setFocused('flight')}
+          autoCapitalize="characters"
+          autoCorrect={false}
+          placeholder="DL711"
+          placeholderTextColor={colors.placeholder}
+          style={[styles.input, focused === 'flight' && styles.inputFocused]}
+        />
+        {listed.length > 0 ? (
+          <View style={styles.flightList}>
+            {listed.map((flight) => {
+              const active =
+                selected?.flightNumber === flight.flightNumber && selected.scheduledTime === flight.scheduledTime;
+              return (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={`${flight.flightNumber} to ${flight.destination} at ${flight.scheduledTime}`}
+                  key={`${flight.flightNumber}-${flight.departureDate}-${flight.scheduledTime}`}
+                  onPress={() => chooseFlight(flight)}
+                  style={[styles.flightRow, active && styles.flightRowActive]}>
+                  <Text style={styles.flightNumber}>{flight.flightNumber}</Text>
+                  <Text numberOfLines={1} style={styles.flightMeta}>
+                    {flight.destination} · {flight.scheduledTime}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        ) : null}
+        {selected ? (
+          <Text style={styles.later}>No gate on the saved board. Add it below.</Text>
+        ) : null}
+        {unknownFlight ? (
+          <Text style={styles.error}>That flight isn’t on the saved ATL board. You can still enter a gate and departure.</Text>
+        ) : null}
 
         <View style={styles.dividerRow}>
           <View style={styles.divider} />
@@ -216,6 +288,33 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.muted,
     marginTop: -4,
+  },
+  flightList: {
+    gap: space.sm,
+  },
+  flightRow: {
+    minHeight: 44,
+    borderRadius: 14,
+    backgroundColor: colors.background,
+    paddingHorizontal: space.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+    borderWidth: 1.5,
+    borderColor: 'transparent',
+  },
+  flightRowActive: {
+    backgroundColor: colors.surface,
+    borderColor: colors.ink,
+  },
+  flightNumber: {
+    ...type.label,
+    width: 72,
+  },
+  flightMeta: {
+    ...type.body,
+    flex: 1,
+    fontSize: 14,
   },
   dividerRow: {
     flexDirection: 'row',

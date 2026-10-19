@@ -125,7 +125,7 @@ Home stays active on Home. Browse stays active on the hub and the three list scr
 | 2. Data boundary | [phases/02-data-boundary.md](phases/02-data-boundary.md) | Done |
 | 2b. Places seed | [phases/02b-places-seed.md](phases/02b-places-seed.md) | Done |
 | 3. Trip and time window | [phases/03-trip-and-time-window.md](phases/03-trip-and-time-window.md) | Done |
-| 3b. SkyLink | [phases/03b-skylink.md](phases/03b-skylink.md) | Not started |
+| 3b. SkyLink | [phases/03b-skylink.md](phases/03b-skylink.md) | Done |
 | 4. Home | [phases/04-home.md](phases/04-home.md) | Done |
 | 5. Browse lists | [phases/05-browse.md](phases/05-browse.md) | Done |
 | 6. Menu and item | [phases/06-menu-and-item.md](phases/06-menu-and-item.md) | Done |

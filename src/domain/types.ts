@@ -85,6 +85,16 @@ export type Trip = {
   flightStatus: string | null;
 };
 
+export type DepartureFlight = {
+  flightNumber: string;
+  airline: string;
+  status: string;
+  destination: string;
+  destinationIata: string;
+  scheduledTime: string;
+  departureDate: string;
+};
+
 export type CartLine = {
   itemId: string;
   name: string;

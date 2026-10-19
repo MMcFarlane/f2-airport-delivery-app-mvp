@@ -1,0 +1,1447 @@
+{
+  "seededAt": "2026-10-19T17:27:16.006Z",
+  "lastRolledOn": "2026-10-19",
+  "callsDisabled": true,
+  "flights": [
+    {
+      "flightNumber": "9E5115",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Evansville",
+      "destinationIata": "EVV",
+      "scheduledTime": "17:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1984",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Tallahassee",
+      "destinationIata": "TLH",
+      "scheduledTime": "17:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL711",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Las Vegas",
+      "destinationIata": "LAS",
+      "scheduledTime": "17:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL997",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "New York",
+      "destinationIata": "LGA",
+      "scheduledTime": "17:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "YX4800",
+      "airline": "Republic Airline",
+      "status": "Scheduled",
+      "destination": "Washington",
+      "destinationIata": "DCA",
+      "scheduledTime": "17:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1093",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Myrtle Beach",
+      "destinationIata": "MYR",
+      "scheduledTime": "17:02",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2220",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Gainesville",
+      "destinationIata": "GNV",
+      "scheduledTime": "17:02",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2902",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Washington",
+      "destinationIata": "IAD",
+      "scheduledTime": "17:02",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "9E4993",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Valdosta",
+      "destinationIata": "VLD",
+      "scheduledTime": "17:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1497",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Orlando",
+      "destinationIata": "MCO",
+      "scheduledTime": "17:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL30",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "London",
+      "destinationIata": "LHR",
+      "scheduledTime": "17:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "B61396",
+      "airline": "Jetblue Airways",
+      "status": "Scheduled",
+      "destination": "Boston",
+      "destinationIata": "BOS",
+      "scheduledTime": "17:06",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2837",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Tulsa",
+      "destinationIata": "TUL",
+      "scheduledTime": "17:08",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3122",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Pittsburgh",
+      "destinationIata": "PIT",
+      "scheduledTime": "17:08",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL72",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Amsterdam",
+      "destinationIata": "AMS",
+      "scheduledTime": "17:10",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F91595",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "Chicago",
+      "destinationIata": "ORD",
+      "scheduledTime": "17:10",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "UA1850",
+      "airline": "United Airlines",
+      "status": "Scheduled",
+      "destination": "Chicago",
+      "destinationIata": "ORD",
+      "scheduledTime": "17:10",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1124",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Fort Myers",
+      "destinationIata": "RSW",
+      "scheduledTime": "17:11",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1021",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Greenville-Spartanburg",
+      "destinationIata": "GSP",
+      "scheduledTime": "17:12",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL140",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Brussels",
+      "destinationIata": "BRU",
+      "scheduledTime": "17:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL222",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Athens",
+      "destinationIata": "ATH",
+      "scheduledTime": "17:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "CM891",
+      "airline": "Copa Airlines",
+      "status": "Scheduled",
+      "destination": "Panama City",
+      "destinationIata": "PTY",
+      "scheduledTime": "17:16",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "9E5261",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Asheville/Hendersonv.",
+      "destinationIata": "AVL",
+      "scheduledTime": "17:17",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F91550",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "Jacksonville",
+      "destinationIata": "JAX",
+      "scheduledTime": "17:19",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL130",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Munich",
+      "destinationIata": "MUC",
+      "scheduledTime": "17:20",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "WN232",
+      "airline": "Southwest Airlines",
+      "status": "Scheduled",
+      "destination": "Indianapolis",
+      "destinationIata": "IND",
+      "scheduledTime": "17:20",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1959",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Mobile",
+      "destinationIata": "MOB",
+      "scheduledTime": "17:22",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1056",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Indianapolis",
+      "destinationIata": "IND",
+      "scheduledTime": "17:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1594",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Tampa",
+      "destinationIata": "TPA",
+      "scheduledTime": "17:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2771",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Fayetteville/Springdale",
+      "destinationIata": "XNA",
+      "scheduledTime": "17:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1097",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Raleigh/Durham",
+      "destinationIata": "RDU",
+      "scheduledTime": "17:26",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F92497",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "Indianapolis",
+      "destinationIata": "IND",
+      "scheduledTime": "17:26",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "AA2398",
+      "airline": "American Airlines",
+      "status": "Scheduled",
+      "destination": "Fort Worth",
+      "destinationIata": "DFW",
+      "scheduledTime": "17:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3053",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Panama City",
+      "destinationIata": "ECP",
+      "scheduledTime": "17:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL436",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Fort Worth",
+      "destinationIata": "DFW",
+      "scheduledTime": "17:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL54",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Lagos",
+      "destinationIata": "LOS",
+      "scheduledTime": "17:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "WN671",
+      "airline": "Southwest Airlines",
+      "status": "Scheduled",
+      "destination": "Dallas",
+      "destinationIata": "DAL",
+      "scheduledTime": "17:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "9E5508",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Bristol/Johnson/Kingsport",
+      "destinationIata": "TRI",
+      "scheduledTime": "17:31",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1132",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Birmingham",
+      "destinationIata": "BHM",
+      "scheduledTime": "17:31",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3119",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Cincinnati",
+      "destinationIata": "CVG",
+      "scheduledTime": "17:31",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "AA2880",
+      "airline": "American Airlines",
+      "status": "Scheduled",
+      "destination": "Miami",
+      "destinationIata": "MIA",
+      "scheduledTime": "17:33",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1393",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Saint Louis",
+      "destinationIata": "STL",
+      "scheduledTime": "17:33",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2193",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Columbia",
+      "destinationIata": "CAE",
+      "scheduledTime": "17:33",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2654",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Minneapolis/Saint Paul",
+      "destinationIata": "MSP",
+      "scheduledTime": "17:34",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL192",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Venice",
+      "destinationIata": "VCE",
+      "scheduledTime": "17:40",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "9E5161",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Montgomery",
+      "destinationIata": "MGM",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "9E5282",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Augusta",
+      "destinationIata": "AGS",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DCM6432",
+      "airline": "Fltplan",
+      "status": "Scheduled",
+      "destination": "Auburn",
+      "destinationIata": "AUO",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1670",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Fort Lauderdale",
+      "destinationIata": "FLL",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3171",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Huntsville",
+      "destinationIata": "HSV",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL678",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "New Orleans",
+      "destinationIata": "MSY",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL832",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Washington",
+      "destinationIata": "DCA",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL836",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Phoenix",
+      "destinationIata": "PHX",
+      "scheduledTime": "17:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "9E5376",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Chattanooga",
+      "destinationIata": "CHA",
+      "scheduledTime": "17:46",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "AA883",
+      "airline": "American Airlines",
+      "status": "Scheduled",
+      "destination": "Phoenix",
+      "destinationIata": "PHX",
+      "scheduledTime": "17:47",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3158",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Charlotte",
+      "destinationIata": "CLT",
+      "scheduledTime": "17:48",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL585",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Mexico City",
+      "destinationIata": "MEX",
+      "scheduledTime": "17:49",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F93976",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "Orlando",
+      "destinationIata": "MCO",
+      "scheduledTime": "17:49",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1490",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Nashville",
+      "destinationIata": "BNA",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2659",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Providence",
+      "destinationIata": "PVD",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2831",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Louisville",
+      "destinationIata": "SDF",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2879",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Chicago",
+      "destinationIata": "ORD",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3025",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Little Rock",
+      "destinationIata": "LIT",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3042",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Knoxville",
+      "destinationIata": "TYS",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL500",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Los Angeles",
+      "destinationIata": "LAX",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL821",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Boston",
+      "destinationIata": "BOS",
+      "scheduledTime": "17:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL653",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Salt Lake City",
+      "destinationIata": "SLC",
+      "scheduledTime": "17:52",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2378",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "New York",
+      "destinationIata": "JFK",
+      "scheduledTime": "17:54",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "AA1141",
+      "airline": "American Airlines",
+      "status": "Cancelled",
+      "destination": "Los Angeles",
+      "destinationIata": "LAX",
+      "scheduledTime": "17:55",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2189",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Jacksonville",
+      "destinationIata": "JAX",
+      "scheduledTime": "17:55",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "UA2866",
+      "airline": "United Airlines",
+      "status": "Scheduled",
+      "destination": "San Francisco",
+      "destinationIata": "SFO",
+      "scheduledTime": "17:58",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1235",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Lexington",
+      "destinationIata": "LEX",
+      "scheduledTime": "17:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2504",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Hartford",
+      "destinationIata": "BDL",
+      "scheduledTime": "17:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL517",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "San Francisco",
+      "destinationIata": "SFO",
+      "scheduledTime": "17:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL527",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Savannah",
+      "destinationIata": "SAV",
+      "scheduledTime": "17:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL680",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "San Diego",
+      "destinationIata": "SAN",
+      "scheduledTime": "17:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL100",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Paris",
+      "destinationIata": "CDG",
+      "scheduledTime": "18:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "JCM615",
+      "airline": "Secure Air Charter",
+      "status": "Scheduled",
+      "destination": "Nashville",
+      "destinationIata": "BNA",
+      "scheduledTime": "18:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "X7562",
+      "airline": "Challenge Airlines",
+      "status": "Scheduled",
+      "destination": "Liege",
+      "destinationIata": "LGG",
+      "scheduledTime": "18:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL14",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Frankfurt",
+      "destinationIata": "FRA",
+      "scheduledTime": "18:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1478",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Detroit",
+      "destinationIata": "DTW",
+      "scheduledTime": "18:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL174",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Milan",
+      "destinationIata": "MXP",
+      "scheduledTime": "18:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2803",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Destin/Fort Walton Beach",
+      "destinationIata": "VPS",
+      "scheduledTime": "18:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2939",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Memphis",
+      "destinationIata": "MEM",
+      "scheduledTime": "18:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "WN309",
+      "airline": "Southwest Airlines",
+      "status": "Scheduled",
+      "destination": "Chicago",
+      "destinationIata": "MDW",
+      "scheduledTime": "18:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2815",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Key West",
+      "destinationIata": "EYW",
+      "scheduledTime": "18:08",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "AS783",
+      "airline": "Alaska Airlines",
+      "status": "Scheduled",
+      "destination": "Portland",
+      "destinationIata": "PDX",
+      "scheduledTime": "18:10",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2035",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Orlando",
+      "destinationIata": "MCO",
+      "scheduledTime": "18:14",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL174",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Milan",
+      "destinationIata": "MXP",
+      "scheduledTime": "18:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2893",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "San Antonio",
+      "destinationIata": "SAT",
+      "scheduledTime": "18:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "SY356",
+      "airline": "Sun Country Airlines",
+      "status": "Scheduled",
+      "destination": "Minneapolis/Saint Paul",
+      "destinationIata": "MSP",
+      "scheduledTime": "18:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "UA2247",
+      "airline": "United Airlines",
+      "status": "Scheduled",
+      "destination": "New York",
+      "destinationIata": "EWR",
+      "scheduledTime": "18:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "VS104",
+      "airline": "Virgin Atlantic",
+      "status": "Scheduled",
+      "destination": "London",
+      "destinationIata": "LHR",
+      "scheduledTime": "18:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "VS104L",
+      "airline": "Virgin Atlantic",
+      "status": "Scheduled",
+      "destination": "London",
+      "destinationIata": "LHR",
+      "scheduledTime": "18:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2615",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Sioux Falls",
+      "destinationIata": "FSD",
+      "scheduledTime": "18:16",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "OH5067",
+      "airline": "PSA Airlines",
+      "status": "Scheduled",
+      "destination": "Charlotte",
+      "destinationIata": "CLT",
+      "scheduledTime": "18:17",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1906",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Kingston",
+      "destinationIata": "KIN",
+      "scheduledTime": "18:20",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F93097",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "Fort Worth",
+      "destinationIata": "DFW",
+      "scheduledTime": "18:21",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3180",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Jackson",
+      "destinationIata": "JAN",
+      "scheduledTime": "18:23",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1263",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Richmond",
+      "destinationIata": "RIC",
+      "scheduledTime": "18:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2065",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Philadelphia",
+      "destinationIata": "PHL",
+      "scheduledTime": "18:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL434",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "New York",
+      "destinationIata": "LGA",
+      "scheduledTime": "18:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1939",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Cancun",
+      "destinationIata": "CUN",
+      "scheduledTime": "18:35",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL919",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Las Vegas",
+      "destinationIata": "LAS",
+      "scheduledTime": "18:35",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "WN1340",
+      "airline": "Southwest Airlines",
+      "status": "Scheduled",
+      "destination": "Baltimore/Washington",
+      "destinationIata": "BWI",
+      "scheduledTime": "18:35",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1457",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Tampa",
+      "destinationIata": "TPA",
+      "scheduledTime": "18:40",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2498",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "New York",
+      "destinationIata": "EWR",
+      "scheduledTime": "18:40",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "WN192",
+      "airline": "Southwest Airlines",
+      "status": "Scheduled",
+      "destination": "Austin",
+      "destinationIata": "AUS",
+      "scheduledTime": "18:40",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F93458",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "New York",
+      "destinationIata": "LGA",
+      "scheduledTime": "18:41",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "B6520",
+      "airline": "Jetblue Airways",
+      "status": "Scheduled",
+      "destination": "New York",
+      "destinationIata": "JFK",
+      "scheduledTime": "18:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1861",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "San Juan",
+      "destinationIata": "SJU",
+      "scheduledTime": "18:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2984",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Norfolk",
+      "destinationIata": "ORF",
+      "scheduledTime": "18:45",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL727",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Washington",
+      "destinationIata": "DCA",
+      "scheduledTime": "18:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL996",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Los Angeles",
+      "destinationIata": "LAX",
+      "scheduledTime": "18:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "KJ247",
+      "airline": "Air Zeta",
+      "status": "Scheduled",
+      "destination": "Anchorage",
+      "destinationIata": "ANC",
+      "scheduledTime": "18:50",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2150",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Cleveland",
+      "destinationIata": "CLE",
+      "scheduledTime": "18:54",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1284",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Houston",
+      "destinationIata": "IAH",
+      "scheduledTime": "18:55",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL746",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Denver",
+      "destinationIata": "DEN",
+      "scheduledTime": "18:55",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL790",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Nashville",
+      "destinationIata": "BNA",
+      "scheduledTime": "18:55",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "WN215",
+      "airline": "Southwest Airlines",
+      "status": "Scheduled",
+      "destination": "Denver",
+      "destinationIata": "DEN",
+      "scheduledTime": "18:55",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "AA597",
+      "airline": "American Airlines",
+      "status": "Scheduled",
+      "destination": "Philadelphia",
+      "destinationIata": "PHL",
+      "scheduledTime": "18:56",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "YV6130",
+      "airline": "Mesa Airlines",
+      "status": "Scheduled",
+      "destination": "Houston",
+      "destinationIata": "IAH",
+      "scheduledTime": "18:56",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1170",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Austin",
+      "destinationIata": "AUS",
+      "scheduledTime": "18:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1545",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Columbus",
+      "destinationIata": "CMH",
+      "scheduledTime": "18:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F94036",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "Cleveland",
+      "destinationIata": "CLE",
+      "scheduledTime": "18:59",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL105",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Sao Paulo",
+      "destinationIata": "GRU",
+      "scheduledTime": "19:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2813",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Charlotte",
+      "destinationIata": "CLT",
+      "scheduledTime": "19:00",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "F91158",
+      "airline": "Frontier Airlines",
+      "status": "Scheduled",
+      "destination": "New York",
+      "destinationIata": "EWR",
+      "scheduledTime": "19:01",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "9E5203",
+      "airline": "Endeavor Air",
+      "status": "Scheduled",
+      "destination": "Knoxville",
+      "destinationIata": "TYS",
+      "scheduledTime": "19:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2598",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Fayetteville/Springdale",
+      "destinationIata": "XNA",
+      "scheduledTime": "19:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2900",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Birmingham",
+      "destinationIata": "BHM",
+      "scheduledTime": "19:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL971",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Colorado Springs",
+      "destinationIata": "COS",
+      "scheduledTime": "19:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "OO3505",
+      "airline": "SkyWest Airlines",
+      "status": "Scheduled",
+      "destination": "Shreveport",
+      "destinationIata": "SHV",
+      "scheduledTime": "19:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "OO3684",
+      "airline": "SkyWest Airlines",
+      "status": "Scheduled",
+      "destination": "Fargo",
+      "destinationIata": "FAR",
+      "scheduledTime": "19:05",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1130",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Kansas City",
+      "destinationIata": "MCI",
+      "scheduledTime": "19:06",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1473",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Greensboro/High Point",
+      "destinationIata": "GSO",
+      "scheduledTime": "19:10",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3021",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Pensacola",
+      "destinationIata": "PNS",
+      "scheduledTime": "19:10",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "QR756",
+      "airline": "Qatar Airways",
+      "status": "Scheduled",
+      "destination": "Doha",
+      "destinationIata": "DOH",
+      "scheduledTime": "19:10",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "UA2657",
+      "airline": "United Airlines",
+      "status": "Scheduled",
+      "destination": "Chicago",
+      "destinationIata": "ORD",
+      "scheduledTime": "19:11",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1262",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Detroit",
+      "destinationIata": "DTW",
+      "scheduledTime": "19:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL3093",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Louisville",
+      "destinationIata": "SDF",
+      "scheduledTime": "19:15",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1139",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Chicago",
+      "destinationIata": "ORD",
+      "scheduledTime": "19:20",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2388",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Milwaukee",
+      "destinationIata": "MKE",
+      "scheduledTime": "19:20",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1588",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Miami",
+      "destinationIata": "MIA",
+      "scheduledTime": "19:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2319",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Greenville-Spartanburg",
+      "destinationIata": "GSP",
+      "scheduledTime": "19:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL66",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Rome",
+      "destinationIata": "FCO",
+      "scheduledTime": "19:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL933",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "San Jose",
+      "destinationIata": "SJC",
+      "scheduledTime": "19:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "WN239",
+      "airline": "Southwest Airlines",
+      "status": "Scheduled",
+      "destination": "Orlando",
+      "destinationIata": "MCO",
+      "scheduledTime": "19:25",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "AA3033",
+      "airline": "American Airlines",
+      "status": "Scheduled",
+      "destination": "Chicago",
+      "destinationIata": "ORD",
+      "scheduledTime": "19:27",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2881",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Orlando",
+      "destinationIata": "MCO",
+      "scheduledTime": "19:29",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2265",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Jacksonville",
+      "destinationIata": "JAX",
+      "scheduledTime": "19:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL457",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Boston",
+      "destinationIata": "BOS",
+      "scheduledTime": "19:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL468",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "New York",
+      "destinationIata": "LGA",
+      "scheduledTime": "19:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL704",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Boise",
+      "destinationIata": "BOI",
+      "scheduledTime": "19:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL714",
+      "airline": "Delta Air Lines",
+      "status": "Scheduled",
+      "destination": "Seattle",
+      "destinationIata": "SEA",
+      "scheduledTime": "19:30",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL2241",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Tallahassee",
+      "destinationIata": "TLH",
+      "scheduledTime": "19:32",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL660",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Salt Lake City",
+      "destinationIata": "SLC",
+      "scheduledTime": "19:32",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL1309",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Washington",
+      "destinationIata": "IAD",
+      "scheduledTime": "19:35",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL691",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Portland",
+      "destinationIata": "PDX",
+      "scheduledTime": "19:35",
+      "departureDate": "2026-10-19"
+    },
+    {
+      "flightNumber": "DL955",
+      "airline": "Delta Air Lines",
+      "status": "Cancelled",
+      "destination": "Las Vegas",
+      "destinationIata": "LAS",
+      "scheduledTime": "19:35",
+      "departureDate": "2026-10-19"
+    }
+  ]
+}

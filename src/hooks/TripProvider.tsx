@@ -5,6 +5,7 @@ import { TripSheet } from '@/src/components/trip/TripSheet';
 import type { SaveTripInput } from '@/src/data/repositories';
 import type { Trip } from '@/src/domain';
 
+import { useDepartures } from './useDepartures';
 import { useProfile } from './useProfile';
 import { useTrip } from './useTrip';
 
@@ -21,6 +22,7 @@ const TripContext = createContext<TripSession | null>(null);
 export function TripProvider({ children }: { children: ReactNode }) {
   const { trip, loading, error, saveTrip: persistTrip } = useTrip();
   const profileState = useProfile();
+  const departures = useDepartures();
   const [requested, setRequested] = useState(false);
   const visible = requested || (!loading && trip === null);
 
@@ -53,6 +55,7 @@ export function TripProvider({ children }: { children: ReactNode }) {
           <TripSheet
             key={trip?.departureAt ?? 'new'}
             trip={trip}
+            departures={departures.value}
             defaultName={profileState.profile?.name ?? 'Jordan'}
             onSave={saveTrip}
           />

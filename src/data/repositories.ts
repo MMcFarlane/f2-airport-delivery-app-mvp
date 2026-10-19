@@ -8,6 +8,7 @@ import type {
   OrderStatus,
   Profile,
   Restaurant,
+  DepartureFlight,
   Trip,
 } from '@/src/domain';
 
@@ -86,8 +87,8 @@ export type ProfileRepository = {
 };
 
 export type FlightRepository = {
-  lookup(flightNumber: string): Promise<NotConfigured>;
-  listDepartures(): Promise<NotConfigured>;
+  lookup(flightNumber: string): Promise<DepartureFlight | null>;
+  listDepartures(): Promise<DepartureFlight[]>;
 };
 
 export type DataSource = {

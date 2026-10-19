@@ -134,6 +134,7 @@ export type {
   OrderStatus,
   Profile,
   ProfileNotifications,
+  DepartureFlight,
   Restaurant,
   Trip,
 } from './types';

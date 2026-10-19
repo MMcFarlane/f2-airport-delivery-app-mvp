@@ -41,7 +41,7 @@ async function compose(): Promise<DataSource> {
     cart: new SqliteCartRepository(db, source),
     orders: new SqliteOrderRepository(db),
     profile: new SqliteProfileRepository(db),
-    flights: new SqliteFlightRepository(),
+    flights: new SqliteFlightRepository(db),
   };
 }
 

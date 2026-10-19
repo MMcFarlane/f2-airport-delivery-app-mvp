@@ -1,6 +1,6 @@
 # Phase 3b — SkyLink
 
-Status: Not started.
+Status: Done. One 12-hour ATL board is seeded locally and SkyLink calls stay disabled. The trip sheet lists those departures, fills the departure time from the flight you pick, and stores that snapshot on the trip. The gate stays editable because the board has no gate. Opening the database rolls `departure_date` forward to the current airport day.
 
 Depends on [03-trip-and-time-window.md](03-trip-and-time-window.md).
 
@@ -10,22 +10,17 @@ The trip sheet can fill departure time and gate from a live ATL flight. The reso
 
 ## Client
 
-`src/data/skylink/` implements `FlightRepository`.
+`src/data/skylink/` maps the seeded board. `SqliteFlightRepository` reads it. The app does not call SkyLink while `skylinkCallsDisabled` is set.
 
-- `GET https://data.skylinkapi.com/v3.1/flight_status/{flight_number}`
-- `GET https://data.skylinkapi.com/v3.1/schedules/departures?iata=ATL`
+The one-time seed was `GET https://data.skylinkapi.com/v3.1/schedules/departures?iata=ATL` with header `x-api-key`. `SKYLINK_API_KEY` stays in `.env.local`. Do not commit it. `flight_status` is unused while calls are disabled, so the board has no gate.
 
-Header: `x-api-key`. Read `SKYLINK_API_KEY` from env. Do not commit it.
-
-Map into a domain flight: flight number, airline, status, departure instant, gate. Prefer `actual_time`, then `scheduled_time`. Parse SkyLink's `11 Feb` style dates in `America/New_York`. Empty gate or terminal strings are unknown, not errors.
-
-Schedule rows use title-case keys (`Time`, `Flight`, `Status`, `Airline`).
+Parse SkyLink's `11 Feb` style dates in `America/New_York`. Schedule rows use title-case keys (`Time`, `Flight`, `Status`, `Airline`).
 
 ## Sheet behavior
 
-Add a flight-number field and a short list of upcoming ATL departures next to the manual fields from Phase 3. Choosing a flight fills departure and fills gate when SkyLink has one. The gate field stays editable when the gate is empty.
+Add a flight-number field and a short list of the seeded ATL departures next to the manual fields from Phase 3. Choosing a flight fills the departure time. The gate field stays editable.
 
-Persist the snapshot on the trip. Later screens use that stored departure instant.
+Persist flight number, airline, status, and the departure instant on the trip. Later screens use that stored departure instant. A number that is not on the board shows a short inline message and leaves manual save working.
 
 ## Fallbacks
 
@@ -33,7 +28,7 @@ Missing key, HTTP 404, or a network failure leaves the manual name, gate, and de
 
 ## Done when
 
-With a key, looking up an operating flight fills the sheet and a reload still shows that trip offline. Without a key, manual save still works.
+Picking a seeded flight fills the sheet, and a reload still shows that trip offline. A missing flight or an empty board leaves manual save working.
 
 ## Out of scope
 
