@@ -1,3 +1,4 @@
+import { usePathname } from 'expo-router';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -19,12 +20,13 @@ type TripSession = {
 
 const TripContext = createContext<TripSession | null>(null);
 
-export function TripProvider({ children }: { children: ReactNode }) {
+export function TripProvider({ children, sheetEnabled = true }: { children: ReactNode; sheetEnabled?: boolean }) {
   const { trip, loading, error, saveTrip: persistTrip } = useTrip();
   const profileState = useProfile();
   const departures = useDepartures();
   const [requested, setRequested] = useState(false);
-  const visible = requested || (!loading && trip === null);
+  const pathname = usePathname();
+  const visible = sheetEnabled && pathname !== '/welcome' && (requested || (!loading && trip === null));
 
   const saveTrip = useCallback(
     async (input: SaveTripInput) => {
