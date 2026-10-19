@@ -115,6 +115,8 @@ export type Order = {
   id: string;
   restaurantId: string;
   restaurantName: string;
+  restaurantInitials: string;
+  restaurantColor: string;
   status: OrderStatus;
   code: string;
   gate: string;

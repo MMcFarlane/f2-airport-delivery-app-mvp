@@ -24,7 +24,7 @@ type AppTabBarProps = {
     index: number;
     routes: { key: string; name: string }[];
   };
-  descriptors: Record<string, { options: { title?: string } }>;
+  descriptors: Record<string, { options: { title?: string; hidden?: boolean } }>;
 };
 
 export function AppTabBar({ state, descriptors }: AppTabBarProps) {
@@ -33,6 +33,7 @@ export function AppTabBar({ state, descriptors }: AppTabBarProps) {
   return (
     <View style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 10) }]}>
       {state.routes.map((route, index) => {
+        if (!hrefs[route.name] || descriptors[route.key]?.options.hidden) return null;
         const focused = state.index === index;
         const label = descriptors[route.key]?.options.title ?? route.name;
         const icon = icons[route.name] ?? 'ellipse';

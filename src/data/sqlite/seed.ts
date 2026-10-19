@@ -533,4 +533,65 @@ export async function seedFixtures(db: SQLiteDatabase): Promise<void> {
       );
     }
   }
+
+  await insertDemoActiveOrder(db);
+}
+
+/** Artboard in-progress card. A newer checkout order replaces it on the Orders tab. */
+const demoActiveOrder: SeedOrder = {
+  id: 'order-runway-burger-active',
+  restaurantId: 'runway-burger',
+  code: '7K4Q',
+  gate: 'B14',
+  totalCents: 1450,
+  placedAt: '2026-10-17T14:16:00-04:00',
+  summary: 'Double smash burger',
+  lines: [
+    {
+      itemId: 'double-smash-burger',
+      name: 'Double smash burger',
+      priceCents: 1450,
+      quantity: 1,
+      prepMinutes: 12,
+    },
+  ],
+};
+
+export async function insertDemoActiveOrder(db: SQLiteDatabase): Promise<void> {
+  const existing = await db.getFirstAsync<{ id: string }>(`SELECT id FROM orders WHERE id = ?`, demoActiveOrder.id);
+  if (existing) return;
+
+  const restaurant = await db.getFirstAsync<{ name: string }>(
+    `SELECT name FROM restaurants WHERE id = ?`,
+    demoActiveOrder.restaurantId,
+  );
+  if (!restaurant) return;
+
+  await db.runAsync(
+    `INSERT INTO orders (
+      id, restaurant_id, restaurant_name, status, code, gate, passenger_name,
+      total_cents, placed_at, summary, delivered_at
+    ) VALUES (?, ?, ?, 'being_prepared', ?, ?, 'Jordan', ?, ?, ?, NULL)`,
+    demoActiveOrder.id,
+    demoActiveOrder.restaurantId,
+    restaurant.name,
+    demoActiveOrder.code,
+    demoActiveOrder.gate,
+    demoActiveOrder.totalCents,
+    demoActiveOrder.placedAt,
+    demoActiveOrder.summary,
+  );
+
+  for (const line of demoActiveOrder.lines) {
+    await db.runAsync(
+      `INSERT INTO order_lines (order_id, item_id, name, price_cents, quantity, prep_minutes)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      demoActiveOrder.id,
+      line.itemId,
+      line.name,
+      line.priceCents,
+      line.quantity,
+      line.prepMinutes,
+    );
+  }
 }

@@ -5,6 +5,12 @@ import type { CreateOrderInput, OrderRepository } from '@/src/data/repositories'
 
 import { mapOrder, type OrderLineRow, type OrderRow } from './mappers';
 
+const ORDER_SELECT = `
+  SELECT orders.*, restaurants.initials AS restaurant_initials, restaurants.color AS restaurant_color
+  FROM orders
+  LEFT JOIN restaurants ON restaurants.id = orders.restaurant_id
+`;
+
 const NEXT_STATUS: Record<OrderStatus, OrderStatus> = {
   received: 'being_prepared',
   being_prepared: 'courier_on_the_way',
@@ -19,7 +25,7 @@ export class SqliteOrderRepository implements OrderRepository {
   constructor(private readonly db: SQLiteDatabase) {}
 
   async listOrders() {
-    const orders = await this.db.getAllAsync<OrderRow>(`SELECT * FROM orders ORDER BY placed_at DESC`);
+    const orders = await this.db.getAllAsync<OrderRow>(`${ORDER_SELECT} ORDER BY orders.placed_at DESC`);
     const lines = await this.db.getAllAsync<OrderLineRow>(
       `SELECT order_id, item_id, name, price_cents, quantity, prep_minutes FROM order_lines ORDER BY id`,
     );
@@ -27,7 +33,7 @@ export class SqliteOrderRepository implements OrderRepository {
   }
 
   async getOrder(id: string) {
-    const order = await this.db.getFirstAsync<OrderRow>(`SELECT * FROM orders WHERE id = ?`, id);
+    const order = await this.db.getFirstAsync<OrderRow>(`${ORDER_SELECT} WHERE orders.id = ?`, id);
     if (!order) return null;
     const lines = await this.db.getAllAsync<OrderLineRow>(
       `SELECT order_id, item_id, name, price_cents, quantity, prep_minutes FROM order_lines WHERE order_id = ? ORDER BY id`,

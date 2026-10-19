@@ -7,18 +7,21 @@ type HomeHeaderProps = {
   greeting: string;
   name: string;
   cartCount: number;
+  onAccount: () => void;
   onSearch: () => void;
   onCart: () => void;
 };
 
-export function HomeHeader({ greeting, name, cartCount, onSearch, onCart }: HomeHeaderProps) {
+export function HomeHeader({ greeting, name, cartCount, onAccount, onSearch, onCart }: HomeHeaderProps) {
   const cartLabel = cartCount === 1 ? 'Cart, 1 item' : `Cart, ${cartCount} items`;
 
   return (
     <View style={styles.row}>
       <View style={styles.copy}>
         <Text style={styles.greeting}>{greeting}</Text>
-        <Text style={styles.name}>{name}</Text>
+        <Pressable accessibilityRole="button" accessibilityLabel="Account" onPress={onAccount}>
+          <Text style={styles.name}>{name}</Text>
+        </Pressable>
       </View>
       <Pressable
         accessibilityRole="button"

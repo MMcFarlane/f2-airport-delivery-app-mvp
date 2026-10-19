@@ -3,10 +3,10 @@ import { openDatabaseAsync, type SQLiteDatabase } from 'expo-sqlite';
 import { catalogSource } from '@/src/config/catalog';
 
 import { SCHEMA_SQL } from './schema';
-import { seedFixtures } from './seed';
+import { insertDemoActiveOrder, seedFixtures } from './seed';
 import { importPlacesCatalog } from './import-places';
 
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 2;
 
 export async function openDatabase(): Promise<SQLiteDatabase> {
   const db = await openDatabaseAsync('airport.db');
@@ -31,6 +31,8 @@ async function migrate(db: SQLiteDatabase): Promise<void> {
       await db.execAsync(SCHEMA_SQL);
       await seedFixtures(db);
     });
+  } else if (current < 2) {
+    await insertDemoActiveOrder(db);
   }
 
   await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);

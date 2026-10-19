@@ -126,7 +126,7 @@ Browse stays the active tab on the three list screens. Orders stays active on Or
 | 5. Browse lists | [phases/05-browse.md](phases/05-browse.md) | Done |
 | 6. Menu and item | [phases/06-menu-and-item.md](phases/06-menu-and-item.md) | Done |
 | 7. Cart, pay, code | [phases/07-cart-pay-code.md](phases/07-cart-pay-code.md) | Done |
-| 8. Orders and account | [phases/08-orders-and-account.md](phases/08-orders-and-account.md) | Not started |
+| 8. Orders and account | [phases/08-orders-and-account.md](phases/08-orders-and-account.md) | Done |
 | 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Not started |
 
 ## External APIs

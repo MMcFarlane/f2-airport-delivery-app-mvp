@@ -1,6 +1,6 @@
 # Phase 8 — Orders and account
 
-Status: Not started.
+Status: Done. The Orders tab shows the newest in-progress order (the Phase 7 checkout, or the seeded Runway Burger card when none exists) and Advance moves it from received through at the gate. Past orders match the artboard. Reorder adds only lines that still fit the current window. Account stays at `/account`, opened from the home name, and dietary chips, notification toggles, and profile edits persist in SQLite. The fourth tab stays Cart.
 
 Depends on [07-cart-pay-code.md](07-cart-pay-code.md).
 

@@ -97,6 +97,20 @@ export {
   tooLateLabel,
 } from './menu';
 export type { MenuTab } from './menu';
+export {
+  PROGRESS_SEGMENTS,
+  activeOrder,
+  arrivesAtLabel,
+  canAdvanceStatus,
+  deliveredOrders,
+  inProgressLabel,
+  pastOrderMeta,
+  planReorder,
+  progressFilled,
+  reorderFootnote,
+  reorderMessage,
+} from './orders';
+export type { ReorderDecision, ReorderLine } from './orders';
 export type {
   Cart,
   CartLine,

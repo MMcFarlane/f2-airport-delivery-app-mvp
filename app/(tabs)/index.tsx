@@ -59,6 +59,7 @@ export default function HomeScreen() {
           greeting={dayPartGreeting(demoOrderingClock.hour)}
           name={name}
           cartCount={cartCount}
+          onAccount={() => router.navigate('/account' as Href)}
           onSearch={() => router.navigate('/browse')}
           onCart={() => router.navigate('/cart' as Href)}
         />

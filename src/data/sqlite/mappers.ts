@@ -81,6 +81,8 @@ export type OrderRow = {
   id: string;
   restaurant_id: string;
   restaurant_name: string;
+  restaurant_initials: string | null;
+  restaurant_color: string | null;
   status: string;
   code: string;
   gate: string;
@@ -190,6 +192,8 @@ export function mapOrder(row: OrderRow, lines: OrderLineRow[]): Order {
     id: row.id,
     restaurantId: row.restaurant_id,
     restaurantName: row.restaurant_name,
+    restaurantInitials: row.restaurant_initials || initialsFrom(row.restaurant_name),
+    restaurantColor: row.restaurant_color || '#FFFFFF',
     status: row.status as OrderStatus,
     code: row.code,
     gate: row.gate,
@@ -210,6 +214,11 @@ function mapOrderLine(row: OrderLineRow): OrderLine {
     quantity: row.quantity,
     prepMinutes: row.prep_minutes,
   };
+}
+
+function initialsFrom(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  return `${parts[0]?.[0] ?? ''}${parts[1]?.[0] ?? ''}`.toUpperCase();
 }
 
 function parseTags(value: string): string[] {
