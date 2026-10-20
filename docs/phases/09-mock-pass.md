@@ -25,7 +25,7 @@ Walk every screen against its PNG and against the rules in [../plan.md](../plan.
 - An invalid discount code
 - Reorder when the new departure makes an old item too late
 
-Then, if `SKYLINK_API_KEY` is present, look up one live ATL flight and confirm the sheet fills departure time and keeps the gate editable when SkyLink returns an empty gate.
+Then, if `SKYLINK_API_KEY` is present, pick one live ATL flight and confirm the sheet fills departure time, fills the gate when SkyLink has one, and keeps the gate editable when SkyLink sends `--`. Confirm a typed gate survives a relaunch.
 
 ## Done when
 

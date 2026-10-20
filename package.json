@@ -39,7 +39,6 @@
     "test": "tsx --test src/domain/rules.test.ts src/domain/browse.test.ts src/domain/menu.test.ts src/domain/checkout.test.ts src/domain/orders.test.ts src/data/places/upsert.test.ts src/data/skylink/board.test.ts",
     "seed:places": "tsx scripts/seed-places.ts",
     "seed:departures": "tsx scripts/seed-departures.ts",
-    "departures:roll": "tsx scripts/roll-departure-dates.ts",
     "lint": "expo lint"
   },
   "private": true

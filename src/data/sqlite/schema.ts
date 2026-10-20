@@ -120,3 +120,24 @@ CREATE TABLE IF NOT EXISTS departures (
 
 CREATE INDEX IF NOT EXISTS idx_departures_date ON departures(departure_date, scheduled_time);
 `;
+
+/** Version 4: live SkyLink board metadata, the flight gate cache, and where the trip gate came from. */
+export const SKYLINK_LIVE_SQL = `
+CREATE TABLE IF NOT EXISTS departure_board (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  fetched_at TEXT,
+  source TEXT NOT NULL CHECK (source IN ('skylink', 'bundled'))
+);
+
+CREATE TABLE IF NOT EXISTS flight_gates (
+  flight_number TEXT NOT NULL,
+  departure_date TEXT NOT NULL,
+  gate TEXT,
+  terminal TEXT,
+  status TEXT,
+  fetched_at TEXT NOT NULL,
+  PRIMARY KEY (flight_number, departure_date)
+);
+
+ALTER TABLE trip ADD COLUMN gate_source TEXT NOT NULL DEFAULT 'manual' CHECK (gate_source IN ('manual', 'skylink'));
+`;

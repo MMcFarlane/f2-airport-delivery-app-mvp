@@ -7,6 +7,7 @@ import type { SaveTripInput } from '@/src/data/repositories';
 import type { Trip } from '@/src/domain';
 
 import { useDepartures } from './useDepartures';
+import { useSavedTripGate } from './useFlightGate';
 import { useProfile } from './useProfile';
 import { useTrip } from './useTrip';
 
@@ -24,6 +25,7 @@ export function TripProvider({ children, sheetEnabled = true }: { children: Reac
   const { trip, loading, error, saveTrip: persistTrip } = useTrip();
   const profileState = useProfile();
   const departures = useDepartures();
+  useSavedTripGate(trip, persistTrip);
   const [requested, setRequested] = useState(false);
   const pathname = usePathname();
   const visible = sheetEnabled && pathname !== '/welcome' && (requested || (!loading && trip === null));

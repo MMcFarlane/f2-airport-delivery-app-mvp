@@ -5,6 +5,8 @@ export default ({ config }: ConfigContext) => ({
   extra: {
     ...config.extra,
     catalogSource: catalogSourceFromEnv(),
+    // Demo only. A public build should call SkyLink through a proxy that holds this key.
+    skylinkApiKey: process.env.SKYLINK_API_KEY?.trim() || null,
   },
 });
 

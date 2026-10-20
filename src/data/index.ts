@@ -1,9 +1,11 @@
 import { catalogSource } from '@/src/config/catalog';
+import { skylinkApiKey } from '@/src/config/skylink';
 import type { DataSource } from '@/src/data/repositories';
 
 import { SqliteCartRepository } from './sqlite/cart-repository';
 import { SqliteCatalogRepository } from './sqlite/catalog-repository';
 import { openDatabase } from './sqlite/database';
+import { refreshDepartures } from './sqlite/departures-refresh';
 import { SqliteFlightRepository } from './sqlite/flight-repository';
 import { SqliteOrderRepository } from './sqlite/order-repository';
 import { SqliteProfileRepository } from './sqlite/profile-repository';
@@ -35,13 +37,16 @@ export function createDataSource(): Promise<DataSource> {
 async function compose(): Promise<DataSource> {
   const db = await openDatabase();
   const source = catalogSource();
+  const apiKey = skylinkApiKey();
+  // Not awaited: screens open on the stored board while SkyLink answers.
+  const refreshing = refreshDepartures(db, apiKey);
   return {
     catalog: new SqliteCatalogRepository(db, source),
     trip: new SqliteTripRepository(db),
     cart: new SqliteCartRepository(db, source),
     orders: new SqliteOrderRepository(db),
     profile: new SqliteProfileRepository(db),
-    flights: new SqliteFlightRepository(db),
+    flights: new SqliteFlightRepository(db, refreshing, apiKey),
   };
 }
 

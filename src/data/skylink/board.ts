@@ -1,6 +1,6 @@
 import { airport } from '@/src/config/airport';
 import { parseClock, todayInAirport, zonedDateTime, type CalendarDay } from '@/src/domain/clock';
-import type { DepartureFlight } from '@/src/domain/types';
+import type { DepartureFlight, FlightGate } from '@/src/domain/types';
 
 export const DEPARTURE_WINDOW_HOURS = 12;
 export const SHORT_DEPARTURE_COUNT = 6;
@@ -20,10 +20,10 @@ const MONTHS: Record<string, number> = {
   dec: 12,
 };
 
+/** The bundled offline snapshot. `lastRolledOn` is the airport day its dates belong to. */
 export type DepartureCatalog = {
   seededAt: string | null;
   lastRolledOn: string | null;
-  callsDisabled: boolean;
   flights: DepartureFlight[];
 };
 
@@ -107,7 +107,7 @@ export function scheduleRowsToFlights(rows: readonly unknown[], now: Date): Depa
   for (const row of rows) {
     const flight = scheduleRowToFlight(row, today);
     if (!flight) continue;
-    const instant = departureInstant(flight);
+    const instant = flightDepartureInstant(flight);
     if (!instant || instant.getTime() < start || instant.getTime() >= end) continue;
     flights.push(flight);
   }
@@ -138,7 +138,47 @@ function scheduleRowToFlight(row: unknown, today: CalendarDay): DepartureFlight 
   };
 }
 
-function departureInstant(flight: DepartureFlight): Date | null {
+export function shouldRefresh(fetchedAt: string | null, now: Date, minutes: number): boolean {
+  if (!fetchedAt) return true;
+  const fetched = Date.parse(fetchedAt);
+  if (Number.isNaN(fetched)) return true;
+  return now.getTime() - fetched >= minutes * 60_000;
+}
+
+/** Drops flights that have already left so the picker never offers a departed flight. */
+export function upcomingDepartures(flights: readonly DepartureFlight[], now: Date): DepartureFlight[] {
+  return flights.filter((flight) => {
+    const instant = flightDepartureInstant(flight);
+    return instant !== null && instant.getTime() >= now.getTime();
+  });
+}
+
+/**
+ * Maps a SkyLink flight_status body to the ATL departure gate.
+ * A flight number can fly several legs, so only a departure from this airport counts.
+ * Live answers name the airport as "ATL • Atlanta" and send "--" for an unpublished gate.
+ */
+export function flightStatusToGate(body: unknown): FlightGate | null {
+  if (!body || typeof body !== 'object') return null;
+  const record = body as Record<string, unknown>;
+  const departure = record.departure;
+  if (!departure || typeof departure !== 'object') return null;
+  const leg = departure as Record<string, unknown>;
+  const from = text(leg.airport).split(/[\s•]+/)[0]?.toUpperCase() ?? '';
+  if (from !== airport.icao && from !== airport.iata) return null;
+  return {
+    gate: published(leg.gate)?.toUpperCase() ?? null,
+    terminal: published(leg.terminal),
+    status: published(record.status),
+  };
+}
+
+function published(value: unknown): string | null {
+  const trimmed = text(value);
+  return trimmed && !/^-+$/.test(trimmed) ? trimmed : null;
+}
+
+export function flightDepartureInstant(flight: DepartureFlight): Date | null {
   const clock = parseClock(flight.scheduledTime);
   const [year, month, day] = flight.departureDate.split('-').map(Number);
   if (!clock || !year || !month || !day) return null;

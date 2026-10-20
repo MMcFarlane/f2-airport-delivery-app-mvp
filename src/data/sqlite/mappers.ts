@@ -71,6 +71,7 @@ export type ProfileRow = {
 export type TripRow = {
   passenger_name: string;
   gate: string;
+  gate_source: string;
   departure_at: string;
   flight_number: string | null;
   airline: string | null;
@@ -180,6 +181,7 @@ export function mapTrip(row: TripRow): Trip {
   return {
     passengerName: row.passenger_name,
     gate: row.gate,
+    gateSource: row.gate_source === 'skylink' ? 'skylink' : 'manual',
     departureAt: row.departure_at,
     flightNumber: row.flight_number,
     airline: row.airline,

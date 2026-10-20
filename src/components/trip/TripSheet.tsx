@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { PrimaryButton } from '@/src/components/ui/Buttons';
@@ -11,10 +11,12 @@ import {
   timeWindow,
   todayInAirport,
   type DepartureFlight,
+  type GateSource,
   type Trip,
 } from '@/src/domain';
 import { calendarDayFromIso, findDeparture, shortDepartureList } from '@/src/data/skylink/board';
 import type { SaveTripInput } from '@/src/data/repositories';
+import { useFlightGate, type GateLookup } from '@/src/hooks/useFlightGate';
 import { colors, radii, space, type } from '@/src/theme';
 
 type TripField = 'flight' | 'name' | 'gate' | 'departure';
@@ -30,6 +32,10 @@ export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetPr
   const [day, setDay] = useState(trip ? calendarDay(new Date(trip.departureAt)) : todayInAirport());
   const [name, setName] = useState(trip?.passengerName ?? defaultName);
   const [gate, setGate] = useState(trip?.gate ?? 'B14');
+  const [gateSource, setGateSource] = useState<GateSource>(trip?.gateSource ?? 'manual');
+  // Read inside the async gate lookup, so it lives in a ref rather than state.
+  const typedGateSinceFlight = useRef(false);
+  const { lookup, check } = useFlightGate();
   const [departure, setDeparture] = useState(trip ? formatClock(new Date(trip.departureAt)) : '15:40');
   const [flightNumber, setFlightNumber] = useState(trip?.flightNumber ?? '');
   const [focused, setFocused] = useState<TripField>('gate');
@@ -50,6 +56,22 @@ export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetPr
     setDeparture(flight.scheduledTime);
     if (flightDay) setDay(flightDay);
     if (!trip && gate === 'B14') setGate('');
+    fillGateFromSkyLink(flight.flightNumber);
+  }
+
+  function fillGateFromSkyLink(number: string) {
+    typedGateSinceFlight.current = false;
+    void check(number).then((found) => {
+      if (!found?.gate || typedGateSinceFlight.current) return;
+      setGate(found.gate);
+      setGateSource('skylink');
+    });
+  }
+
+  function editGate(value: string) {
+    typedGateSinceFlight.current = true;
+    setGate(value.toUpperCase());
+    setGateSource('manual');
   }
 
   function editFlightNumber(value: string) {
@@ -61,6 +83,7 @@ export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetPr
     setDeparture(match.scheduledTime);
     if (flightDay) setDay(flightDay);
     if (!trip && gate === 'B14') setGate('');
+    if (lookup?.flightNumber !== match.flightNumber) fillGateFromSkyLink(match.flightNumber);
   }
 
   async function submit() {
@@ -72,6 +95,7 @@ export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetPr
       await onSave({
         passengerName: name.trim(),
         gate: gate.trim().toUpperCase(),
+        gateSource,
         departureAt: instant.toISOString(),
         flightNumber: match?.flightNumber ?? null,
         airline: match?.airline ?? null,
@@ -137,11 +161,11 @@ export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetPr
             })}
           </View>
         ) : null}
-        {selected ? (
-          <Text style={styles.later}>No gate on the saved board. Add it below.</Text>
+        {selected && lookup?.flightNumber === selected.flightNumber ? (
+          <Text style={styles.later}>{gateNote(lookup)}</Text>
         ) : null}
         {unknownFlight ? (
-          <Text style={styles.error}>That flight isn’t on the saved ATL board. You can still enter a gate and departure.</Text>
+          <Text style={styles.error}>That flight isn’t on the ATL departures board. You can still enter a gate and departure.</Text>
         ) : null}
 
         <View style={styles.dividerRow}>
@@ -166,7 +190,7 @@ export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetPr
             <TextInput
               accessibilityLabel="Gate"
               value={gate}
-              onChangeText={(value) => setGate(value.toUpperCase())}
+              onChangeText={editGate}
               onFocus={() => setFocused('gate')}
               autoCapitalize="characters"
               autoCorrect={false}
@@ -216,6 +240,13 @@ export function TripSheet({ trip, departures, defaultName, onSave }: TripSheetPr
       </View>
     </View>
   );
+}
+
+function gateNote(lookup: GateLookup): string {
+  if (lookup.state === 'checking') return 'Checking gate…';
+  if (lookup.state === 'none' || !lookup.gate?.gate) return 'Gate not published yet. Enter it if you know it.';
+  const terminal = lookup.gate.terminal ? ` · Terminal ${lookup.gate.terminal}` : '';
+  return `Gate ${lookup.gate.gate} from SkyLink${terminal}`;
 }
 
 const styles = StyleSheet.create({

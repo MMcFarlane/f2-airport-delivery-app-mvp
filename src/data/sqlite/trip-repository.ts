@@ -9,24 +9,26 @@ export class SqliteTripRepository implements TripRepository {
 
   async getTrip() {
     const row = await this.db.getFirstAsync<TripRow>(
-      `SELECT passenger_name, gate, departure_at, flight_number, airline, flight_status FROM trip WHERE id = 1`,
+      `SELECT passenger_name, gate, gate_source, departure_at, flight_number, airline, flight_status FROM trip WHERE id = 1`,
     );
     return row ? mapTrip(row) : null;
   }
 
   async saveTrip(input: SaveTripInput) {
     await this.db.runAsync(
-      `INSERT INTO trip (id, passenger_name, gate, departure_at, flight_number, airline, flight_status)
-       VALUES (1, ?, ?, ?, ?, ?, ?)
+      `INSERT INTO trip (id, passenger_name, gate, gate_source, departure_at, flight_number, airline, flight_status)
+       VALUES (1, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT(id) DO UPDATE SET
          passenger_name = excluded.passenger_name,
          gate = excluded.gate,
+         gate_source = excluded.gate_source,
          departure_at = excluded.departure_at,
          flight_number = excluded.flight_number,
          airline = excluded.airline,
          flight_status = excluded.flight_status`,
       input.passengerName,
       input.gate,
+      input.gateSource ?? 'manual',
       input.departureAt,
       input.flightNumber ?? null,
       input.airline ?? null,

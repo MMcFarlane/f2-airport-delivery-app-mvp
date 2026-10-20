@@ -9,12 +9,15 @@ import type {
   Profile,
   Restaurant,
   DepartureFlight,
+  FlightGate,
+  GateSource,
   Trip,
 } from '@/src/domain';
 
 export type SaveTripInput = {
   passengerName: string;
   gate: string;
+  gateSource?: GateSource;
   departureAt: string;
   flightNumber?: string | null;
   airline?: string | null;
@@ -89,6 +92,8 @@ export type ProfileRepository = {
 export type FlightRepository = {
   lookup(flightNumber: string): Promise<DepartureFlight | null>;
   listDepartures(): Promise<DepartureFlight[]>;
+  /** The ATL departure gate from SkyLink. Null when there is no key, no ATL leg, or no answer. */
+  departureGate(flightNumber: string): Promise<FlightGate | null>;
 };
 
 export type DataSource = {

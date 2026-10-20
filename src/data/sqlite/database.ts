@@ -2,19 +2,20 @@ import { openDatabaseAsync, type SQLiteDatabase } from 'expo-sqlite';
 
 import { catalogSource } from '@/src/config/catalog';
 
-import { importDepartures } from './import-departures';
+import { prepareDepartures } from './departures-refresh';
 import { importPlacesCatalog } from './import-places';
-import { DEPARTURES_TABLE_SQL, SCHEMA_SQL } from './schema';
+import { DEPARTURES_TABLE_SQL, SCHEMA_SQL, SKYLINK_LIVE_SQL } from './schema';
 import { insertDemoActiveOrder, seedFixtures } from './seed';
 
-const DATABASE_VERSION = 3;
+const DATABASE_VERSION = 4;
 
 export async function openDatabase(): Promise<SQLiteDatabase> {
   const db = await openDatabaseAsync('airport.db');
   await db.execAsync('PRAGMA journal_mode = WAL');
   await db.execAsync('PRAGMA foreign_keys = ON');
   await migrate(db);
-  await importDepartures(db);
+  // Local only. The SkyLink refresh starts in createDataSource() so launch never waits on the network.
+  await prepareDepartures(db);
   if (catalogSource() === 'places') {
     await importPlacesCatalog(db);
   }
@@ -35,6 +36,11 @@ async function migrate(db: SQLiteDatabase): Promise<void> {
   } else {
     if (current < 2) await insertDemoActiveOrder(db);
     if (current < 3) await db.execAsync(DEPARTURES_TABLE_SQL);
+  }
+  if (current < 4) {
+    await db.withTransactionAsync(async () => {
+      await db.execAsync(SKYLINK_LIVE_SQL);
+    });
   }
 
   await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);

@@ -76,13 +76,23 @@ export type Profile = {
   notifications: ProfileNotifications;
 };
 
+export type GateSource = 'manual' | 'skylink';
+
 export type Trip = {
   passengerName: string;
   gate: string;
+  gateSource: GateSource;
   departureAt: string;
   flightNumber: string | null;
   airline: string | null;
   flightStatus: string | null;
+};
+
+/** Empty SkyLink gate and terminal strings become null. */
+export type FlightGate = {
+  gate: string | null;
+  terminal: string | null;
+  status: string | null;
 };
 
 export type DepartureFlight = {

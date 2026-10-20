@@ -31,7 +31,7 @@ Home matches `artboards/home/Departure board@1x.png`, except its fourth tab. Tha
 
 - Local fixture catalog that matches the artboards (Runway Burger, Gate Café, Jetstream Juice, FLY10, Visa ending 4242, three past orders).
 - Optional Google Places seed for real ATL restaurant identity.
-- Optional SkyLink lookup so a flight number fills departure time and gate.
+- Live SkyLink ATL departures board on launch, and a gate lookup that fills the gate when it has been published.
 - Simulated pay, a local confirmation code, and a demo control that advances order status.
 
 ## What this build leaves out
@@ -69,7 +69,7 @@ flowchart LR
 - `src/domain/` holds the time-window and pricing rules. The same functions run on fixture rows, Places-backed rows, or a future API payload.
 - `src/data/repositories.ts` defines `CatalogRepository`, `TripRepository`, `CartRepository`, `OrderRepository`, `ProfileRepository`, and `FlightRepository`. Methods return domain types, never SQL rows or HTTP shapes.
 - `src/data/sqlite/` implements the stored repositories with `expo-sqlite`.
-- `src/data/skylink/` implements `FlightRepository` against SkyLink v3.1.
+- `src/data/skylink/` holds the SkyLink v3.1 client and mapping. `SqliteFlightRepository` stores the live board and gate answers in SQLite and serves `FlightRepository` from there.
 - `src/data/index.ts` is the only composition root: `createDataSource()`. Screens and hooks import that. They do not import `expo-sqlite`.
 - Missing keys do not crash the app. No Places data means the fixture catalog. No SkyLink key means manual gate and departure only.
 - `CATALOG_SOURCE=fixtures` or `places` selects the catalog. Fixtures are the default.
@@ -89,7 +89,7 @@ Taken from the mocks. A 15:40 departure is the reference case.
 - Gate delivery fee is $2.49.
 - Tax is 8% of discounted food only. Fee and tip are not taxed.
 - Tip presets are $2, $3, $5, and Other. The default is $3.
-- A looked-up flight stores flight number, airline, status, departure instant, and gate on the local trip. An empty SkyLink gate stays editable. The time window uses the stored departure instant, so it still works if the network drops.
+- A looked-up flight stores flight number, airline, status, departure instant, and gate on the local trip. A gate from SkyLink is marked `skylink`; a typed gate is `manual` and is never replaced. An unpublished SkyLink gate stays editable. The time window uses the stored departure instant, so it still works if the network drops.
 
 Reference cart math from the mock: subtotal $21.00, FLY10 on the $14.50 burger is -$1.45, gate fee $2.49, tax $1.56, tip $3.00, total $26.60.
 
@@ -138,9 +138,11 @@ Home stays active on Home. Browse stays active on the hub and the three list scr
 
 Google Places is a seed script, not a call from the phone. It writes restaurant name, place id, address, lat/lng, rating, photo, and type. It does not supply menus, prices, or prep times.
 
-SkyLink is a live lookup on the trip sheet:
+SkyLink is live, with a 5,000 calls a month budget:
 
-- `GET https://data.skylinkapi.com/v3.1/flight_status/{flight_number}` with header `x-api-key`
-- `GET https://data.skylinkapi.com/v3.1/schedules/departures?iata=ATL`
+- `GET https://data.skylinkapi.com/v3.1/schedules/departures?iata=ATL` runs on launch, at most every 15 minutes. It replaces the stored 12-hour board. Launch never waits on it; only the trip sheet's flight list does.
+- `GET https://data.skylinkapi.com/v3.1/flight_status/{flight_number}` runs when a board flight is picked, and on launch for a saved trip whose gate came from SkyLink. Answers are cached for 5 minutes.
 
-Gate and terminal are often empty strings. Treat `""` as unknown. Prefer `actual_time`, then `scheduled_time`. Dates look like `11 Feb` and have no year. Parse them in `America/New_York`, using today's year, and the next calendar year only when that month-day is already past.
+Both send header `x-api-key`. Every launch deletes departures and gate answers from past airport days, so the tables hold one day at most. With no stored board and no network, the bundled `src/data/skylink/departures.json` snapshot fills the list.
+
+Live `flight_status` names the airport as `ATL • Atlanta` and sends `--` for an unpublished gate or terminal. Treat `--` and `""` as unknown. The board uses `scheduled_time`; departure time is not moved from `actual_time`. Dates look like `11 Feb` and have no year. Parse them in `America/New_York`, using today's year, and the next calendar year only when that month-day is already past.

@@ -135,6 +135,8 @@ export type {
   Profile,
   ProfileNotifications,
   DepartureFlight,
+  FlightGate,
+  GateSource,
   Restaurant,
   Trip,
 } from './types';
