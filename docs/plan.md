@@ -8,6 +8,8 @@ Repository: https://github.com/MMcFarlane/f2-airport-delivery-app-mvp
 
 Working branch: `main`.
 
+The app has no product name yet. The iOS `bundleIdentifier` and Android `package` in `app.json` are the placeholder `com.anonymous.f2airportdeliveryapp`, used for development builds (`expo-dev-client`, `npx expo run:ios|android`). Choose the real identifier before any store or EAS submission. Changing it later installs as a different app.
+
 ## Product
 
 A passenger opens the app, sets who they are and when they fly, and only sees food that can be cooked and delivered before they board. After payment they get a 4-character code to give the courier. The order is stored locally as sent to the restaurant.
