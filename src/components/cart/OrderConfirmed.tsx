@@ -113,6 +113,15 @@ export function OrderConfirmed({ id }: { id: string }) {
           style={({ pressed }) => [styles.trackButton, pressed && styles.pressed]}>
           <Text style={styles.trackLabel}>Track order</Text>
         </Pressable>
+        {order.status !== 'delivered' ? (
+          <Pressable
+            accessibilityRole="link"
+            accessibilityLabel="Open courier view"
+            onPress={() => router.push(`/courier/${order.id}` as Href)}
+            style={styles.courierLink}>
+            <Text style={styles.courierLabel}>Open courier view</Text>
+          </Pressable>
+        ) : null}
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Back to home"
@@ -290,6 +299,15 @@ const styles = StyleSheet.create({
   trackLabel: {
     ...type.button,
     color: colors.accent,
+  },
+  courierLink: {
+    minHeight: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  courierLabel: {
+    ...type.label,
+    textDecorationLine: 'underline',
   },
   home: {
     minHeight: 56,

@@ -141,3 +141,11 @@ CREATE TABLE IF NOT EXISTS flight_gates (
 
 ALTER TABLE trip ADD COLUMN gate_source TEXT NOT NULL DEFAULT 'manual' CHECK (gate_source IN ('manual', 'skylink'));
 `;
+
+/** Version 5: where the passenger was at checkout, for the courier view. */
+export const PASSENGER_LOCATION_SQL = `
+ALTER TABLE orders ADD COLUMN passenger_latitude REAL;
+ALTER TABLE orders ADD COLUMN passenger_longitude REAL;
+ALTER TABLE orders ADD COLUMN passenger_accuracy_m REAL;
+ALTER TABLE orders ADD COLUMN located_at TEXT;
+`;

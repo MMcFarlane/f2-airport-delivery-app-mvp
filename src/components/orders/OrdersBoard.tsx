@@ -188,6 +188,14 @@ function ActiveCard({
           <View key={index} style={[styles.segment, index < filled && styles.segmentOn]} />
         ))}
       </View>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Courier view"
+        onPress={() => router.push(`/courier/${order.id}` as Href)}
+        style={styles.courier}>
+        <Ionicons name="navigate-outline" size={16} color={colors.accent} />
+        <Text style={styles.advanceLabel}>Courier view</Text>
+      </Pressable>
     </View>
   );
 }
@@ -325,6 +333,13 @@ const styles = StyleSheet.create({
     ...type.badge,
     color: colors.accent,
     letterSpacing: 0.4,
+  },
+  courier: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    gap: space.xs,
+    minHeight: 32,
   },
   activeBody: {
     flexDirection: 'row',

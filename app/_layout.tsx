@@ -48,6 +48,7 @@ function RootNavigator() {
           <Stack.Screen name="restaurant/[id]" />
           <Stack.Screen name="item/[id]" />
           <Stack.Screen name="order/[id]" />
+          <Stack.Screen name="courier/[id]" />
         </Stack.Protected>
         <Stack.Screen name="welcome" options={{ contentStyle: { backgroundColor: colors.ink } }} />
       </Stack>

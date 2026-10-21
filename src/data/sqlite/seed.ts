@@ -9,6 +9,9 @@ type SeedRestaurant = {
   location: string;
   fastestPrepMinutes: number;
   openUntil: string | null;
+  /** Approximate spots along Concourse B (and A) for the courier map. Gate positions are not surveyed. */
+  latitude: number;
+  longitude: number;
   position: number;
 };
 
@@ -59,6 +62,8 @@ const restaurants: SeedRestaurant[] = [
     location: 'Near B12',
     fastestPrepMinutes: 5,
     openUntil: null,
+    latitude: 33.63975,
+    longitude: -84.43582,
     position: 1,
   },
   {
@@ -70,6 +75,8 @@ const restaurants: SeedRestaurant[] = [
     location: 'Near B16',
     fastestPrepMinutes: 6,
     openUntil: null,
+    latitude: 33.63925,
+    longitude: -84.43582,
     position: 2,
   },
   {
@@ -81,6 +88,8 @@ const restaurants: SeedRestaurant[] = [
     location: 'Concourse B, near gate B9',
     fastestPrepMinutes: 8,
     openUntil: '22:00',
+    latitude: 33.64195,
+    longitude: -84.436,
     position: 3,
   },
   {
@@ -92,6 +101,8 @@ const restaurants: SeedRestaurant[] = [
     location: 'Near B20',
     fastestPrepMinutes: 11,
     openUntil: null,
+    latitude: 33.63875,
+    longitude: -84.43582,
     position: 4,
   },
   {
@@ -103,6 +114,8 @@ const restaurants: SeedRestaurant[] = [
     location: 'Food court',
     fastestPrepMinutes: 13,
     openUntil: null,
+    latitude: 33.6408,
+    longitude: -84.4356,
     position: 5,
   },
   {
@@ -114,6 +127,8 @@ const restaurants: SeedRestaurant[] = [
     location: 'Food court',
     fastestPrepMinutes: 14,
     openUntil: null,
+    latitude: 33.64072,
+    longitude: -84.4362,
     position: 6,
   },
   {
@@ -125,6 +140,8 @@ const restaurants: SeedRestaurant[] = [
     location: 'Concourse A',
     fastestPrepMinutes: 24,
     openUntil: null,
+    latitude: 33.6404,
+    longitude: -84.43925,
     position: 7,
   },
 ];
@@ -452,7 +469,7 @@ export async function seedFixtures(db: SQLiteDatabase): Promise<void> {
         id, source, place_id, name, initials, color, cuisine, location,
         fastest_prep_minutes, open_until, address, latitude, longitude, rating,
         photo_reference, primary_type, position
-      ) VALUES (?, 'fixtures', NULL, ?, ?, ?, ?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, NULL, ?)`,
+      ) VALUES (?, 'fixtures', NULL, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, NULL, NULL, NULL, ?)`,
       restaurant.id,
       restaurant.name,
       restaurant.initials,
@@ -461,6 +478,8 @@ export async function seedFixtures(db: SQLiteDatabase): Promise<void> {
       restaurant.location,
       restaurant.fastestPrepMinutes,
       restaurant.openUntil,
+      restaurant.latitude,
+      restaurant.longitude,
       restaurant.position,
     );
   }
@@ -556,6 +575,18 @@ const demoActiveOrder: SeedOrder = {
     },
   ],
 };
+
+/** Version 5 gives restaurants seeded before the courier map their coordinates. Nothing else changes. */
+export async function setFixtureCoordinates(db: SQLiteDatabase): Promise<void> {
+  for (const restaurant of restaurants) {
+    await db.runAsync(
+      `UPDATE restaurants SET latitude = ?, longitude = ? WHERE id = ? AND source = 'fixtures' AND latitude IS NULL`,
+      restaurant.latitude,
+      restaurant.longitude,
+      restaurant.id,
+    );
+  }
+}
 
 export async function insertDemoActiveOrder(db: SQLiteDatabase): Promise<void> {
   const existing = await db.getFirstAsync<{ id: string }>(`SELECT id FROM orders WHERE id = ?`, demoActiveOrder.id);

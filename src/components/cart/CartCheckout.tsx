@@ -37,6 +37,7 @@ import { errorMessage } from '@/src/hooks/error-message';
 import { useCart } from '@/src/hooks/useCart';
 import { useOrders } from '@/src/hooks/useOrders';
 import { useOrderingWindow } from '@/src/hooks/useOrderingWindow';
+import { capturePassengerLocation } from '@/src/hooks/usePassengerLocation';
 import { useProfile } from '@/src/hooks/useProfile';
 import { useTripSession } from '@/src/hooks/TripProvider';
 import { colors, space, type } from '@/src/theme';
@@ -54,6 +55,7 @@ export function CartCheckout() {
   const [tipOpen, setTipOpen] = useState(false);
   const [tipDraft, setTipDraft] = useState<string | null>(null);
   const [paying, setPaying] = useState(false);
+  const [locating, setLocating] = useState(false);
   const [pendingLine, setPendingLine] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [cardOpen, setCardOpen] = useState(false);
@@ -119,6 +121,10 @@ export function CartCheckout() {
     setPaying(true);
     setActionError(null);
     try {
+      // A denied or missing fix still places the order; the courier view falls back to the gate.
+      setLocating(true);
+      const passengerLocation = await capturePassengerLocation();
+      setLocating(false);
       const order = await createOrder({
         restaurantId: lines[0].restaurantId,
         gate: trip.gate,
@@ -133,11 +139,13 @@ export function CartCheckout() {
           quantity: line.quantity,
           prepMinutes: line.prepMinutes,
         })),
+        passengerLocation,
       });
       await clear();
       router.push(`/order/${order.id}` as Href);
     } catch (caught) {
       setActionError(errorMessage(caught));
+      setLocating(false);
       setPaying(false);
     }
   }
@@ -310,8 +318,9 @@ export function CartCheckout() {
             disabled={!canPay}
             onPress={() => void pay()}
             style={({ pressed }) => [styles.pay, !canPay && styles.payDisabled, pressed && canPay && styles.pressed]}>
-            <Text style={styles.payLabel}>{paying ? 'Paying…' : quote ? `Pay ${formatCents(quote.totalCents)}` : 'Pay'}</Text>
+            <Text style={styles.payLabel}>{locating ? 'Locating you…' : paying ? 'Paying…' : quote ? `Pay ${formatCents(quote.totalCents)}` : 'Pay'}</Text>
           </Pressable>
+          <Text style={styles.locationNote}>We share your location with the courier so they can find you at the gate.</Text>
         </View>
       ) : null}
 
@@ -831,6 +840,13 @@ const styles = StyleSheet.create({
     ...type.button,
     color: colors.accent,
     fontSize: 17,
+  },
+  locationNote: {
+    ...type.body,
+    color: colors.muted,
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: -space.xs,
   },
   pressed: {
     opacity: 0.88,

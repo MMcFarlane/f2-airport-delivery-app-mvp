@@ -131,12 +131,26 @@ export type OrderLine = {
   prepMinutes: number;
 };
 
+export type Coordinates = {
+  latitude: number;
+  longitude: number;
+};
+
+/** A phone location fix. Stays on the device with the order. */
+export type PassengerFix = Coordinates & {
+  accuracyMeters: number | null;
+  at: string;
+};
+
 export type Order = {
   id: string;
   restaurantId: string;
   restaurantName: string;
   restaurantInitials: string;
   restaurantColor: string;
+  restaurantLocation: string | null;
+  restaurantCoordinates: Coordinates | null;
+  passengerLocation: PassengerFix | null;
   status: OrderStatus;
   code: string;
   gate: string;

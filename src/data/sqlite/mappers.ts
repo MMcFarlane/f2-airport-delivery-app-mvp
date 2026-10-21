@@ -84,6 +84,13 @@ export type OrderRow = {
   restaurant_name: string;
   restaurant_initials: string | null;
   restaurant_color: string | null;
+  restaurant_location: string | null;
+  restaurant_latitude: number | null;
+  restaurant_longitude: number | null;
+  passenger_latitude: number | null;
+  passenger_longitude: number | null;
+  passenger_accuracy_m: number | null;
+  located_at: string | null;
   status: string;
   code: string;
   gate: string;
@@ -196,6 +203,20 @@ export function mapOrder(row: OrderRow, lines: OrderLineRow[]): Order {
     restaurantName: row.restaurant_name,
     restaurantInitials: row.restaurant_initials || initialsFrom(row.restaurant_name),
     restaurantColor: row.restaurant_color || '#FFFFFF',
+    restaurantLocation: row.restaurant_location,
+    restaurantCoordinates:
+      row.restaurant_latitude !== null && row.restaurant_longitude !== null
+        ? { latitude: row.restaurant_latitude, longitude: row.restaurant_longitude }
+        : null,
+    passengerLocation:
+      row.passenger_latitude !== null && row.passenger_longitude !== null && row.located_at
+        ? {
+            latitude: row.passenger_latitude,
+            longitude: row.passenger_longitude,
+            accuracyMeters: row.passenger_accuracy_m,
+            at: row.located_at,
+          }
+        : null,
     status: row.status as OrderStatus,
     code: row.code,
     gate: row.gate,

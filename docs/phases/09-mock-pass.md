@@ -2,7 +2,7 @@
 
 Status: Not started.
 
-Depends on [08a-browse-hub.md](08a-browse-hub.md).
+Depends on [08b-courier-map.md](08b-courier-map.md).
 
 ## Goal
 
@@ -24,6 +24,9 @@ Walk every screen against its PNG and against the rules in [../plan.md](../plan.
 - A departure so soon that nothing in the window fits
 - An invalid discount code
 - Reorder when the new departure makes an old item too late
+- Courier view with location allowed: map, both pins, line, distance, and "Live location"
+- Courier view after denying location at Pay: the order still places and the pin falls back to the gate's concourse
+- Courier view has no tab bar, and the web build shows the summary card
 
 Then, if `SKYLINK_API_KEY` is present, pick one live ATL flight and confirm the sheet fills departure time, fills the gate when SkyLink has one, and keeps the gate editable when SkyLink sends `--`. Confirm a typed gate survives a relaunch.
 

@@ -35,10 +35,11 @@ Home matches `artboards/home/Departure board@1x.png`, except its fourth tab. Tha
 - Optional Google Places seed for real ATL restaurant identity.
 - Live SkyLink ATL departures board on launch, and a gate lookup that fills the gate when it has been published.
 - Simulated pay, a local confirmation code, and a demo control that advances order status.
+- A demo Courier view: a Google Map from the restaurant to the passenger's phone location, captured at checkout and watched live, with the gate as fallback.
 
 ## What this build leaves out
 
-Boarding-pass scan, real card charges, accounts, push or SMS, a restaurant inbox, and live courier GPS.
+Boarding-pass scan, real card charges, accounts, push or SMS, a restaurant inbox, live courier GPS, and sending the passenger's location to a separate courier device (that needs a server).
 
 ## Airport
 
@@ -75,7 +76,7 @@ flowchart LR
 - `src/data/index.ts` is the only composition root: `createDataSource()`. Screens and hooks import that. They do not import `expo-sqlite`.
 - Missing keys do not crash the app. No Places data means the fixture catalog. No SkyLink key means manual gate and departure only.
 - `CATALOG_SOURCE=fixtures` or `places` selects the catalog. Fixtures are the default.
-- Keys live in a gitignored env file: `GOOGLE_PLACES_API_KEY`, `SKYLINK_API_KEY`. The Places key stays in the seed script, off the device. The SkyLink key is read by the app for this demo. A later proxy should hold it before any public build. Never commit either key.
+- Keys live in a gitignored env file: `GOOGLE_PLACES_API_KEY`, `SKYLINK_API_KEY`, `GOOGLE_MAPS_API_KEY`. The Places key stays in the seed script, off the device. The Maps key is built into the native app by the `react-native-maps` config plugin. The current Maps key is temporarily shared with another app and must be replaced with a dedicated, restricted key by Friday, October 23, 2026 (see [phases/08b-courier-map.md](phases/08b-courier-map.md)). No key means Apple Maps on iOS and a summary card on Android and web. The SkyLink key is read by the app for this demo. A later proxy should hold it before any public build. Never commit either key.
 
 ## Domain rules
 
@@ -99,7 +100,7 @@ Reference cart math from the mock: subtotal $21.00, FLY10 on the $14.50 burger i
 
 Tabs: Home, Browse, Orders, Account.
 
-Cart is not a tab. The header bag on Home and Featured items opens it, as does the menu View cart bar. Cart, the menu, item detail, and confirmation have no tab bar. The trip sheet covers the tab bar.
+Cart is not a tab. The header bag on Home and Featured items opens it, as does the menu View cart bar. Cart, the menu, item detail, confirmation, and the Courier view have no tab bar. The trip sheet covers the tab bar.
 
 | Screen | Artboard |
 | --- | --- |
@@ -134,6 +135,7 @@ Home stays active on Home. Browse stays active on the hub and the three list scr
 | 7. Cart, pay, code | [phases/07-cart-pay-code.md](phases/07-cart-pay-code.md) | Done |
 | 8. Orders and account | [phases/08-orders-and-account.md](phases/08-orders-and-account.md) | Done |
 | 8a. Browse hub | [phases/08a-browse-hub.md](phases/08a-browse-hub.md) | Done |
+| 8b. Courier map | [phases/08b-courier-map.md](phases/08b-courier-map.md) | Done in code; device check pending |
 | 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Not started |
 
 ## External APIs

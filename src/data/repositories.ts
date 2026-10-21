@@ -6,6 +6,7 @@ import type {
   Order,
   OrderLine,
   OrderStatus,
+  PassengerFix,
   Profile,
   Restaurant,
   DepartureFlight,
@@ -39,6 +40,8 @@ export type CreateOrderInput = {
   summary: string;
   status?: OrderStatus;
   lines: OrderLine[];
+  /** Captured at checkout so the courier view can find the passenger. Null when location is off. */
+  passengerLocation?: PassengerFix | null;
 };
 
 export type ProfilePatch = {

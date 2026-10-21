@@ -125,6 +125,8 @@ export type { ReorderDecision, ReorderLine } from './orders';
 export type {
   Cart,
   CartLine,
+  Coordinates,
+  PassengerFix,
   DietaryPreference,
   DiscountCode,
   MenuItem,
@@ -140,3 +142,17 @@ export type {
   Restaurant,
   Trip,
 } from './types';
+export {
+  concourseCenter,
+  concourseFromGate,
+  concourseFromText,
+  courierDistanceLine,
+  courierSourceLine,
+  courierTarget,
+  distanceMeters,
+  googleMapsDirectionsUrl,
+  restaurantPoint,
+  walkMinutes,
+  WALK_METERS_PER_MINUTE,
+} from './locate';
+export type { CourierTarget, CourierTargetSource } from './locate';

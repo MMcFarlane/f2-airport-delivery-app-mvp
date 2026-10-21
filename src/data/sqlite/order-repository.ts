@@ -6,7 +6,9 @@ import type { CreateOrderInput, OrderRepository } from '@/src/data/repositories'
 import { mapOrder, type OrderLineRow, type OrderRow } from './mappers';
 
 const ORDER_SELECT = `
-  SELECT orders.*, restaurants.initials AS restaurant_initials, restaurants.color AS restaurant_color
+  SELECT orders.*, restaurants.initials AS restaurant_initials, restaurants.color AS restaurant_color,
+    restaurants.location AS restaurant_location, restaurants.latitude AS restaurant_latitude,
+    restaurants.longitude AS restaurant_longitude
   FROM orders
   LEFT JOIN restaurants ON restaurants.id = orders.restaurant_id
 `;
@@ -60,8 +62,9 @@ export class SqliteOrderRepository implements OrderRepository {
       await this.db.runAsync(
         `INSERT INTO orders (
           id, restaurant_id, restaurant_name, status, code, gate, passenger_name,
-          total_cents, placed_at, summary, delivered_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)`,
+          total_cents, placed_at, summary, delivered_at,
+          passenger_latitude, passenger_longitude, passenger_accuracy_m, located_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?)`,
         id,
         input.restaurantId,
         restaurant.name,
@@ -72,6 +75,10 @@ export class SqliteOrderRepository implements OrderRepository {
         input.totalCents,
         placedAt,
         input.summary,
+        input.passengerLocation?.latitude ?? null,
+        input.passengerLocation?.longitude ?? null,
+        input.passengerLocation?.accuracyMeters ?? null,
+        input.passengerLocation?.at ?? null,
       );
 
       for (const line of input.lines) {
