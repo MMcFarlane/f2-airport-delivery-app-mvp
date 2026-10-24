@@ -8,7 +8,7 @@ Repository: https://github.com/MMcFarlane/f2-airport-delivery-app-mvp
 
 Working branch: `main`.
 
-The app has no product name yet. The iOS `bundleIdentifier` and Android `package` in `app.json` are the placeholder `com.anonymous.f2airportdeliveryapp`, used for development builds (`expo-dev-client`, `npx expo run:ios|android`). Choose the real identifier before any store or EAS submission. Changing it later installs as a different app.
+The iOS `bundleIdentifier` and Android `package` in `app.json` are `com.f2delivers.wingsnack`. Don't change them. The first TestFlight build shipped with this ID, and a new ID installs as a different app. For the release steps, see `docs/testflight.md`.
 
 ## Product
 

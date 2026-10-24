@@ -9,7 +9,10 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.f2airportdeliveryapp"
+      "bundleIdentifier": "com.f2delivers.wingsnack",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +22,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.f2airportdeliveryapp"
+      "package": "com.f2delivers.wingsnack"
     },
     "web": {
       "bundler": "metro",
@@ -48,6 +51,24 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "catalogSource": "fixtures",
+      "skylinkApiKey": {},
+      "googleMapsConfigured": false,
+      "router": {
+        "headers": {
+          "Cross-Origin-Embedder-Policy": "credentialless",
+          "Cross-Origin-Opener-Policy": "same-origin"
+        },
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "6f7dfdea-f60a-4468-8486-b8f5d0a16f72"
+      }
+    },
+    "owner": "mmcfarlane26"
   }
 }
