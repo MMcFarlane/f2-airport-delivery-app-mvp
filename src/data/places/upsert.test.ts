@@ -3,8 +3,9 @@ import { DatabaseSync } from 'node:sqlite';
 import { describe, it } from 'node:test';
 
 import { buildRestaurant } from './build';
+import { placeOnConcourse, type ConcourseOverride } from './concourse';
 import { nodeSql } from './node-sql';
-import { applyCatalog, ensurePlacesSchema, readCatalog } from './store';
+import { applyCatalog, ensurePlacesSchema, readCatalog, removePlacesExcept } from './store';
 import type { PlaceIdentity } from './types';
 
 const chickFilA: PlaceIdentity = {
@@ -27,13 +28,19 @@ const coffee: PlaceIdentity = {
   photoReference: null,
 };
 
+function build(identity: PlaceIdentity, position: number, override?: ConcourseOverride) {
+  const placement = placeOnConcourse(identity, override);
+  assert.ok(placement);
+  return buildRestaurant(identity, position, placement);
+}
+
 describe('places seed', () => {
   it('updates identity on a second run and keeps the menu', async () => {
     const db = new DatabaseSync(':memory:');
     const sql = nodeSql(db);
     await ensurePlacesSchema(sql);
 
-    const first = buildRestaurant(chickFilA, 1);
+    const first = build(chickFilA, 1);
     await applyCatalog(sql, { restaurants: [first], items: [] });
     await sql.run(
       `INSERT INTO menu_items (
@@ -43,11 +50,16 @@ describe('places seed', () => {
       [`${first.id}-extra`, first.id],
     );
 
-    const renamed = buildRestaurant(
+    assert.equal(first.location, 'Concourse D');
+    assert.equal(first.concourseSource, 'coordinates');
+    assert.equal(first.concourseConfirmed, false);
+
+    const renamed = build(
       { ...chickFilA, name: 'South Bar', rating: 4.8, photoReference: 'places/place-a/photos/new' },
       4,
+      { concourse: 'A', nearGate: 'A10' },
     );
-    await applyCatalog(sql, { restaurants: [renamed, buildRestaurant(coffee, 2)], items: [] });
+    await applyCatalog(sql, { restaurants: [renamed, build(coffee, 2)], items: [] });
 
     const catalog = await readCatalog(sql);
     const original = catalog.restaurants.find((restaurant) => restaurant.placeId === 'place-a');
@@ -59,6 +71,11 @@ describe('places seed', () => {
     assert.equal(original?.photoReference, 'places/place-a/photos/new');
     assert.equal(original?.initials, 'OF');
     assert.equal(original?.fastestPrepMinutes, 8);
+    assert.equal(original?.location, 'Concourse A, near gate A10');
+    assert.equal(original?.position, 4);
+    assert.equal(original?.concourse, 'A');
+    assert.equal(original?.concourseSource, 'override');
+    assert.equal(original?.concourseConfirmed, true);
     assert.equal(added?.name, 'Cafe Intermezzo');
     assert.equal(menu.length, 5);
     assert.deepEqual(
@@ -72,6 +89,38 @@ describe('places seed', () => {
       ],
     );
     assert.equal(catalog.items.filter((item) => item.restaurantId === added?.id).length, 4);
+    db.close();
+  });
+
+  it('removes restaurants the latest search dropped, with their menus', async () => {
+    const db = new DatabaseSync(':memory:');
+    const sql = nodeSql(db);
+    await ensurePlacesSchema(sql);
+    await applyCatalog(sql, { restaurants: [build(chickFilA, 1), build(coffee, 2)], items: [] });
+
+    assert.equal(await removePlacesExcept(sql, ['place-b']), 1);
+
+    const catalog = await readCatalog(sql);
+    assert.deepEqual(catalog.restaurants.map((restaurant) => restaurant.placeId), ['place-b']);
+    assert.ok(catalog.items.every((item) => item.restaurantId === 'place-place-b'));
+    db.close();
+  });
+
+  it('adds the concourse columns to a seed database made before them', async () => {
+    const db = new DatabaseSync(':memory:');
+    const sql = nodeSql(db);
+    db.exec(`CREATE TABLE restaurants (
+      id TEXT PRIMARY KEY NOT NULL, source TEXT NOT NULL, place_id TEXT UNIQUE, name TEXT NOT NULL,
+      initials TEXT NOT NULL, color TEXT NOT NULL, cuisine TEXT NOT NULL, location TEXT NOT NULL,
+      fastest_prep_minutes INTEGER NOT NULL, open_until TEXT, address TEXT, latitude REAL, longitude REAL,
+      rating REAL, photo_reference TEXT, primary_type TEXT, position INTEGER NOT NULL
+    )`);
+    await ensurePlacesSchema(sql);
+    await applyCatalog(sql, { restaurants: [build(chickFilA, 1, { concourse: 'B' })], items: [] });
+
+    const [restaurant] = (await readCatalog(sql)).restaurants;
+    assert.equal(restaurant?.concourse, 'B');
+    assert.equal(restaurant?.concourseConfirmed, true);
     db.close();
   });
 });

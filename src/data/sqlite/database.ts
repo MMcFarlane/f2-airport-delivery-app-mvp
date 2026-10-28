@@ -4,10 +4,16 @@ import { catalogSource } from '@/src/config/catalog';
 
 import { prepareDepartures } from './departures-refresh';
 import { importPlacesCatalog } from './import-places';
-import { DEPARTURES_TABLE_SQL, PASSENGER_LOCATION_SQL, SCHEMA_SQL, SKYLINK_LIVE_SQL } from './schema';
+import {
+  DEPARTURES_TABLE_SQL,
+  PASSENGER_LOCATION_SQL,
+  RESTAURANT_CONCOURSE_SQL,
+  SCHEMA_SQL,
+  SKYLINK_LIVE_SQL,
+} from './schema';
 import { insertDemoActiveOrder, seedFixtures, setFixtureCoordinates } from './seed';
 
-const DATABASE_VERSION = 5;
+const DATABASE_VERSION = 6;
 
 export async function openDatabase(): Promise<SQLiteDatabase> {
   const db = await openDatabaseAsync('airport.db');
@@ -46,6 +52,11 @@ async function migrate(db: SQLiteDatabase): Promise<void> {
     await db.withTransactionAsync(async () => {
       await db.execAsync(PASSENGER_LOCATION_SQL);
       await setFixtureCoordinates(db);
+    });
+  }
+  if (current < 6) {
+    await db.withTransactionAsync(async () => {
+      await db.execAsync(RESTAURANT_CONCOURSE_SQL);
     });
   }
 

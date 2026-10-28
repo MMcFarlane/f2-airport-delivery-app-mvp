@@ -1,3 +1,7 @@
+import type { Concourse } from '../../config/airport';
+
+import type { ConcourseSource } from './concourse';
+
 export type PlacesRestaurantRecord = {
   id: string;
   placeId: string;
@@ -13,6 +17,11 @@ export type PlacesRestaurantRecord = {
   rating: number | null;
   photoReference: string | null;
   primaryType: string | null;
+  concourse: Concourse | null;
+  /** How the concourse was decided. Kept for later checking, never shown in the app. */
+  concourseSource: ConcourseSource | null;
+  /** True only when a person checked the concourse. A later phase can hide the rest. */
+  concourseConfirmed: boolean;
   position: number;
 };
 

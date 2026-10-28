@@ -1,6 +1,6 @@
 # Phase 10 — Concourse-wide Places seed
 
-Status: Not started.
+Status: Done. Checked on an Android phone in Expo Go with `CATALOG_SOURCE=places` on October 28, 2026. That day's `npm run seed:places` run kept 138 restaurants: T 23 · A 18 · B 23 · C 23 · D 18 · E 19 · F 14. 68 restaurants got their concourse from the address and 70 from the coordinates. None is confirmed yet. Tests, typecheck, lint, and an iOS export with `CATALOG_SOURCE=places` pass. A simulated app import, with migration 6 run twice, loads all 138 without duplicates.
 
 Depends on [02b-places-seed.md](02b-places-seed.md) and [08b-courier-map.md](08b-courier-map.md). Comes before [11-photos.md](11-photos.md), so photos are added to the full restaurant list.
 
@@ -29,19 +29,22 @@ Merge everything by place ID. Keep the field mask to the identity fields this ph
 
 ## Keep or drop
 
-Keep a place only if both are true:
+Keep a place only if all of these are true:
 
+- Its Google `types` include `food`, `restaurant`, a `*_restaurant` type, or one of the search types. Text Search also returns shops.
 - Its coordinates fall inside an airport box built from the concourse centers, plus a 600 m margin north and south and 250 m east and west.
-- Its address mentions the airport: `6000 N Terminal Pkwy`, `Spine Rd`, `Concourse`, `Terminal`, or `Hartsfield`.
+- Its address mentions the airport: `6000 N Terminal Pkwy`, `Spine Rd`, `Concourse`, `Terminal`, `Hartsfield`, `Airport`, or a gate such as `Gate A3`.
+- Its address doesn't mark it as landside: `Pre-Security`, `Atrium` (the domestic terminal atrium), or `Park-Ride`.
+- Its name doesn't contain `Lounge` or `Club`. Airline and card lounges need their own access.
 
-Also drop anything a manual override marks as landside (before security; see below). Couriers deliver to gates, so a restaurant before security can't take part in the demo.
+A manual override always wins. It can keep a place the rules drop. It can also drop a place with `landside: true` (before security; see below), or with `exclude: true` when the place isn't somewhere to order food, such as an operator's office. Couriers deliver to gates, so a restaurant before security can't take part in the demo.
 
 ## Concourse for each restaurant
 
 Decide in this order, and record which rule decided (`concourseSource`):
 
-1. **Manual override.** `src/data/places/concourse-overrides.json` maps place ID to `{ concourse, nearGate?, landside? }`. Fill it in by checking the official dining directory on atl.com. Store only the name, concourse, and gate facts, not their images or text.
-2. **Address.** A `Concourse X` or gate pattern such as `B19` in the address.
+1. **Manual override.** `src/data/places/concourse-overrides.json` maps place ID to `{ name?, concourse, nearGate?, landside?, exclude?, checked?, note? }`. Fill it in by checking the official dining directory on atl.com. Store only the name, concourse, and gate facts, not their images or text.
+2. **Address.** `Gate B19`, `Gate A 9`, or `Concourse B30` sets the concourse and the nearby gate. `Concourse B … Gate 12` becomes B near B12. `Concourse T` or `Terminal D` sets only the concourse. Bare suite numbers such as `T10` or `TS3-3-3G` are ignored.
 3. **Coordinates.** The nearest concourse center. This choice is marked as unconfirmed.
 
 The seed then writes:
@@ -78,6 +81,13 @@ A restaurant is **confirmed** only when a person has checked it against the ATL 
 - No screen shows confirmed status. Confirmed and unconfirmed restaurants look and behave the same.
 - The seed's review list shows how many restaurants are unconfirmed. The number doesn't have to be zero.
 - `npm test`, `npx tsc --noEmit`, and `npx expo lint` pass. With `CATALOG_SOURCE=places`, Home, Browse, the menu, and the Courier view work on a development build.
+
+## Review notes from the first run
+
+- Dropped because the address had no airport words, though the names suggest they are airside: Terrapin Taphouse, Buffalo Wild Wings at B10, Boardwalk Fresh Burgers and Fries, and Atlanta Hawks Bar and Grill. To bring one back, add an override after checking atl.com.
+- Kept by coordinates on Concourse T: several places with a bare `6000 N Terminal Pkwy` address. Some may be in the landside domestic terminal. Check these first when filling in overrides.
+- The only override so far excludes Concessions International. It's an operator's listing, not a restaurant.
+- Google's results change slightly from run to run, so expect a few places to appear or disappear on each re-seed.
 
 ## Out of scope
 

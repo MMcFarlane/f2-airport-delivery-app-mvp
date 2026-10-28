@@ -32,7 +32,7 @@ Home matches `artboards/home/Departure board@1x.png`, except its fourth tab. Tha
 ## What this build includes
 
 - Local fixture catalog that matches the artboards (Runway Burger, Gate Café, Jetstream Juice, FLY10, Visa ending 4242, three past orders).
-- Optional Google Places seed for real ATL restaurant identity.
+- Optional Google Places seed for real ATL restaurants on every concourse (138 as of October 28, 2026), each placed on a concourse.
 - Live SkyLink ATL departures board on launch, and a gate lookup that fills the gate when it has been published.
 - Simulated pay, a local confirmation code, and a demo control that advances order status.
 - A demo Courier view: a Google Map from the restaurant to the passenger's phone location, captured at checkout and watched live, with the gate as fallback.
@@ -137,12 +137,12 @@ Home stays active on Home. Browse stays active on the hub and the three list scr
 | 8a. Browse hub | [phases/08a-browse-hub.md](phases/08a-browse-hub.md) | Done |
 | 8b. Courier map | [phases/08b-courier-map.md](phases/08b-courier-map.md) | Done in code; device check pending |
 | 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Dropped. The stakeholder validated the app on TestFlight |
-| 10. Concourse-wide Places seed | [phases/10-concourse-seed.md](phases/10-concourse-seed.md) | Not started |
+| 10. Concourse-wide Places seed | [phases/10-concourse-seed.md](phases/10-concourse-seed.md) | Done |
 | 11. Photos | [phases/11-photos.md](phases/11-photos.md) | Not started |
 
 ## External APIs
 
-Google Places is a seed script, not a call from the phone. It writes restaurant name, place id, address, lat/lng, rating, photo, and type. It does not supply menus, prices, or prep times.
+Google Places is a seed script, not a call from the phone. It writes restaurant name, place id, address, lat/lng, rating, type, and concourse, with how the concourse was decided and whether a person confirmed it. It stores no photo names, because Google doesn't allow caching them. It does not supply menus, prices, or prep times.
 
 SkyLink is live, with a 5,000 calls a month budget:
 

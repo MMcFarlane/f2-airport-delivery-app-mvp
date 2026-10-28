@@ -1,3 +1,4 @@
+import { concourseLocation, type ConcoursePlacement } from './concourse';
 import type { PlaceIdentity, PlacesMenuRecord, PlacesRestaurantRecord } from './types';
 
 const MARK_COLORS = ['#FFC940', '#3B6DFF', '#111111', '#D64545', '#F2B36B', '#4A4A4A', '#1F6B3A', '#7B5EA7'] as const;
@@ -91,12 +92,6 @@ export function cuisineFor(identity: PlaceIdentity): string {
     .join(' ') || 'Restaurant';
 }
 
-export function locationFor(address: string | null): string {
-  const first = address?.split(',')[0]?.trim();
-  if (!first) return 'ATL';
-  return first.length > 42 ? `${first.slice(0, 41)}…` : first;
-}
-
 export function buildMenu(restaurantId: string): PlacesMenuRecord[] {
   return MENU_TEMPLATES.map((template, position) => ({
     id: `${restaurantId}-${template.slug}`,
@@ -117,7 +112,11 @@ export function buildMenu(restaurantId: string): PlacesMenuRecord[] {
   }));
 }
 
-export function buildRestaurant(identity: PlaceIdentity, position: number): PlacesRestaurantRecord {
+export function buildRestaurant(
+  identity: PlaceIdentity,
+  position: number,
+  placement: ConcoursePlacement,
+): PlacesRestaurantRecord {
   const id = restaurantIdFor(identity.placeId);
   const menu = buildMenu(id);
   return {
@@ -127,14 +126,17 @@ export function buildRestaurant(identity: PlaceIdentity, position: number): Plac
     initials: initialsFor(identity.name),
     color: markColorFor(identity.placeId),
     cuisine: cuisineFor(identity),
-    location: locationFor(identity.address),
+    location: concourseLocation(placement.concourse, placement.nearGate),
     fastestPrepMinutes: Math.min(...menu.map((item) => item.prepMinutes)),
     address: identity.address,
-    latitude: identity.latitude,
-    longitude: identity.longitude,
+    latitude: placement.latitude,
+    longitude: placement.longitude,
     rating: identity.rating,
     photoReference: identity.photoReference,
     primaryType: identity.primaryType,
+    concourse: placement.concourse,
+    concourseSource: placement.source,
+    concourseConfirmed: placement.confirmed,
     position,
   };
 }

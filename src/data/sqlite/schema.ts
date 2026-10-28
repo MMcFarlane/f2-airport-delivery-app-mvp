@@ -149,3 +149,10 @@ ALTER TABLE orders ADD COLUMN passenger_longitude REAL;
 ALTER TABLE orders ADD COLUMN passenger_accuracy_m REAL;
 ALTER TABLE orders ADD COLUMN located_at TEXT;
 `;
+
+/** Version 6: which concourse a Places restaurant is on, and whether a person checked it. The app does not show either. */
+export const RESTAURANT_CONCOURSE_SQL = `
+ALTER TABLE restaurants ADD COLUMN concourse TEXT;
+ALTER TABLE restaurants ADD COLUMN concourse_source TEXT;
+ALTER TABLE restaurants ADD COLUMN concourse_confirmed INTEGER NOT NULL DEFAULT 0;
+`;

@@ -321,6 +321,7 @@ function restaurant(overrides: Partial<Restaurant> & Pick<Restaurant, 'id' | 'na
     rating: null,
     photoReference: null,
     primaryType: null,
+    concourseConfirmed: false,
     ...overrides,
   };
 }

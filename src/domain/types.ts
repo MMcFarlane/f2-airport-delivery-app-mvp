@@ -33,6 +33,8 @@ export type Restaurant = {
   rating: number | null;
   photoReference: string | null;
   primaryType: string | null;
+  /** A person checked this restaurant's concourse. Stored for a later filter; no screen reads it. */
+  concourseConfirmed: boolean;
 };
 
 export type MenuItem = {

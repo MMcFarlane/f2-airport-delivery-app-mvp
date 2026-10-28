@@ -1,4 +1,7 @@
+import { airport, type Concourse } from '../../config/airport';
+
 import { buildMenu } from './build';
+import type { ConcourseSource } from './concourse';
 import type { PlacesCatalog, PlacesMenuRecord, PlacesRestaurantRecord } from './types';
 
 export type Sql = {
@@ -28,7 +31,10 @@ CREATE TABLE IF NOT EXISTS restaurants (
   rating REAL,
   photo_reference TEXT,
   primary_type TEXT,
-  position INTEGER NOT NULL
+  position INTEGER NOT NULL,
+  concourse TEXT,
+  concourse_source TEXT,
+  concourse_confirmed INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS menu_items (
@@ -54,24 +60,38 @@ const UPSERT_RESTAURANT_SQL = `
 INSERT INTO restaurants (
   id, source, place_id, name, initials, color, cuisine, location,
   fastest_prep_minutes, open_until, address, latitude, longitude, rating,
-  photo_reference, primary_type, position
-) VALUES (?, 'places', ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?, ?, ?)
+  photo_reference, primary_type, position, concourse, concourse_source, concourse_confirmed
+) VALUES (?, 'places', ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ON CONFLICT(place_id) DO UPDATE SET
   name = excluded.name,
+  cuisine = excluded.cuisine,
+  location = excluded.location,
   address = excluded.address,
   latitude = excluded.latitude,
   longitude = excluded.longitude,
   rating = excluded.rating,
   photo_reference = excluded.photo_reference,
-  primary_type = excluded.primary_type
+  primary_type = excluded.primary_type,
+  position = excluded.position,
+  concourse = excluded.concourse,
+  concourse_source = excluded.concourse_source,
+  concourse_confirmed = excluded.concourse_confirmed
 `;
+
+/** Columns added after the first seed. ensurePlacesSchema adds any an older data/places.db lacks. */
+const ADDED_RESTAURANT_COLUMNS = [
+  ['concourse', 'TEXT'],
+  ['concourse_source', 'TEXT'],
+  ['concourse_confirmed', 'INTEGER NOT NULL DEFAULT 0'],
+] as const;
 
 const MENU_COUNT_SQL = `SELECT COUNT(*) AS count FROM menu_items WHERE restaurant_id = ?`;
 
 const LIST_RESTAURANTS_SQL = `
 SELECT
   id, place_id, name, initials, color, cuisine, location, fastest_prep_minutes,
-  address, latitude, longitude, rating, photo_reference, primary_type, position
+  address, latitude, longitude, rating, photo_reference, primary_type, position,
+  concourse, concourse_source, concourse_confirmed
 FROM restaurants
 WHERE source = 'places'
 ORDER BY position, name
@@ -97,10 +117,30 @@ INSERT INTO menu_items (
 `;
 
 type CountRow = { count: number | bigint };
+type ColumnRow = { name: string };
 
 export async function ensurePlacesSchema(sql: Sql): Promise<void> {
   await sql.exec('PRAGMA foreign_keys = ON');
   await sql.exec(PLACES_SCHEMA_SQL);
+  const columns = new Set((await sql.all<ColumnRow>('PRAGMA table_info(restaurants)', [])).map((row) => row.name));
+  for (const [name, definition] of ADDED_RESTAURANT_COLUMNS) {
+    if (!columns.has(name)) await sql.exec(`ALTER TABLE restaurants ADD COLUMN ${name} ${definition}`);
+  }
+}
+
+/** Seed only: deletes Places restaurants, and their menus, that the latest search did not keep. */
+export async function removePlacesExcept(sql: Sql, placeIds: readonly string[]): Promise<number> {
+  const stale = await sql.all<{ id: string; place_id: string }>(
+    `SELECT id, place_id FROM restaurants WHERE source = 'places'`,
+    [],
+  );
+  const keep = new Set(placeIds);
+  const removed = stale.filter((row) => !keep.has(row.place_id));
+  for (const row of removed) {
+    await sql.run(`DELETE FROM menu_items WHERE restaurant_id = ?`, [row.id]);
+    await sql.run(`DELETE FROM restaurants WHERE id = ?`, [row.id]);
+  }
+  return removed.length;
 }
 
 export async function applyCatalog(sql: Sql, catalog: PlacesCatalog): Promise<void> {
@@ -141,6 +181,9 @@ type PlacesRestaurantRow = {
   photo_reference: string | null;
   primary_type: string | null;
   position: number;
+  concourse: string | null;
+  concourse_source: string | null;
+  concourse_confirmed: number;
 };
 
 type PlacesMenuRow = {
@@ -177,8 +220,19 @@ function mapRestaurant(row: PlacesRestaurantRow): PlacesRestaurantRecord {
     rating: row.rating,
     photoReference: row.photo_reference,
     primaryType: row.primary_type,
+    concourse: asConcourse(row.concourse),
+    concourseSource: asConcourseSource(row.concourse_source),
+    concourseConfirmed: row.concourse_confirmed === 1,
     position: row.position,
   };
+}
+
+function asConcourse(value: string | null): Concourse | null {
+  return value !== null && value in airport.concourses ? (value as Concourse) : null;
+}
+
+function asConcourseSource(value: string | null): ConcourseSource | null {
+  return value === 'override' || value === 'address' || value === 'coordinates' ? value : null;
 }
 
 function mapItem(row: PlacesMenuRow): PlacesMenuRecord {
@@ -227,6 +281,9 @@ function restaurantParams(restaurant: PlacesRestaurantRecord): SqlValue[] {
     restaurant.photoReference,
     restaurant.primaryType,
     restaurant.position,
+    restaurant.concourse ?? null,
+    restaurant.concourseSource ?? null,
+    restaurant.concourseConfirmed ? 1 : 0,
   ];
 }
 

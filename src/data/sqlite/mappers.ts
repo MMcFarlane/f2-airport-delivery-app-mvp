@@ -29,6 +29,7 @@ export type RestaurantRow = {
   rating: number | null;
   photo_reference: string | null;
   primary_type: string | null;
+  concourse_confirmed: number | null;
 };
 
 export type MenuItemRow = {
@@ -136,6 +137,7 @@ export function mapRestaurant(row: RestaurantRow): Restaurant {
     rating: row.rating,
     photoReference: row.photo_reference,
     primaryType: row.primary_type,
+    concourseConfirmed: row.concourse_confirmed === 1,
   };
 }
 
