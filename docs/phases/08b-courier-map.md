@@ -22,21 +22,12 @@ A courier needs to find the passenger who ordered. This build has no server, so 
 - Android shows a summary card.
 - Web always shows the summary card, because `react-native-maps` has no web build (`CourierMap.web.tsx`).
 
-### Known issue: shared key (fix by Friday, October 23, 2026)
+### Resolved: shared key (replaced October 28, 2026)
 
-The `GOOGLE_MAPS_API_KEY` in `.env.local` is temporary. It is the "Maps Platform API Key" from the personal Google Cloud project `total-ensign-465616-f9` ("n8n-workflow-automations"). Another app also uses it, for directions and a map of venue locations. As checked on October 20, 2026:
+Until October 28, 2026, `GOOGLE_MAPS_API_KEY` was a temporary key shared with another app in the personal project `total-ensign-465616-f9`. It had no application restriction. It has now been replaced in `.env.local` with a dedicated key restricted to bundle ID `com.f2delivers.wingsnack`. That key lives in this app's own Google Cloud project, next to `GOOGLE_PLACES_CLIENT_KEY` (see [11-photos.md](11-photos.md)).
 
-- Maps SDK for iOS and Maps SDK for Android are enabled in that project, the key is allowed to call both, and billing is on.
-- The key has no application restriction. It allows about 30 Maps APIs, which the other app needs.
-
-Because the key is shared, do not lock it to this app's bundle ID or trim its API list: that would break the other app. Every native build of this app embeds the key, and both apps' usage bills to the same account.
-
-Replace it before the end of the week with a dedicated key:
-
-1. Create a new key, ideally in a project for this app. Allow only Maps SDK for iOS and Maps SDK for Android.
-2. Restrict it to iOS bundle ID `com.anonymous.f2airportdeliveryapp`, and to Android package `com.anonymous.f2airportdeliveryapp` with the signing SHA-1. Update both restrictions when the app gets its real identifier.
-3. Put it in `.env.local` as `GOOGLE_MAPS_API_KEY`, run `npx expo prebuild --clean`, and rebuild the development client.
-4. Do not ship or share any build made with the shared key.
+- The key is built into the native app, so the new key takes effect only after the next native build: run `npx expo prebuild --clean` and rebuild the development client, or run a new EAS build.
+- Native builds made before October 28, 2026, including the first TestFlight build, contain the old shared key. Replace them with a new build, and don't hand out the old binaries.
 
 ## Coordinates
 
