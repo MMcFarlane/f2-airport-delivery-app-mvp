@@ -1,6 +1,6 @@
 # Phase 9 — Mock pass
 
-Status: Not started.
+Status: Dropped on October 28, 2026. The stakeholder validated the app on TestFlight, so this pass won't be run. It is kept for reference. Next phase: [10-concourse-seed.md](10-concourse-seed.md).
 
 Depends on [08b-courier-map.md](08b-courier-map.md).
 

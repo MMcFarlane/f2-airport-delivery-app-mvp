@@ -136,7 +136,9 @@ Home stays active on Home. Browse stays active on the hub and the three list scr
 | 8. Orders and account | [phases/08-orders-and-account.md](phases/08-orders-and-account.md) | Done |
 | 8a. Browse hub | [phases/08a-browse-hub.md](phases/08a-browse-hub.md) | Done |
 | 8b. Courier map | [phases/08b-courier-map.md](phases/08b-courier-map.md) | Done in code; device check pending |
-| 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Not started |
+| 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Dropped. The stakeholder validated the app on TestFlight |
+| 10. Concourse-wide Places seed | [phases/10-concourse-seed.md](phases/10-concourse-seed.md) | Not started |
+| 11. Photos | [phases/11-photos.md](phases/11-photos.md) | Not started |
 
 ## External APIs
 
