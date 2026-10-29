@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Photo } from '@/src/components/ui/Photo';
 import { colors, radii, space, type } from '@/src/theme';
 
 import { PlusButton } from './PlusButton';
@@ -10,6 +11,7 @@ type FeaturedTileProps = {
   price: string;
   minutes: string;
   imageColor: string;
+  imageKey?: string | null;
   tooLate?: boolean;
   adding?: boolean;
   fill?: boolean;
@@ -23,6 +25,7 @@ export function FeaturedTile({
   price,
   minutes,
   imageColor,
+  imageKey = null,
   tooLate = false,
   adding = false,
   fill = false,
@@ -39,11 +42,11 @@ export function FeaturedTile({
         disabled={!onPress}
         onPress={onPress}
         style={({ pressed }) => [pressed && onPress && styles.pressed]}>
-        <View style={[styles.photo, { backgroundColor: imageColor }, tooLate && styles.photoLate]}>
+        <Photo color={imageColor} imageKey={imageKey} style={[styles.photo, tooLate && styles.photoLate]}>
           <View style={[styles.badge, tooLate && styles.badgeLate]}>
             <Text style={[styles.badgeText, tooLate && styles.badgeTextLate]}>{minutes}</Text>
           </View>
-        </View>
+        </Photo>
         <View style={styles.copy}>
           <Text style={styles.name} numberOfLines={2}>
             {name}

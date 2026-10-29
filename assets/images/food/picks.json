@@ -1,0 +1,672 @@
+[
+  {
+    "key": "burgers-quick",
+    "dish": "Cheeseburger",
+    "usedBy": "hamburger_restaurant, fast_food_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/cheeseburger/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/cheeseburger?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/gourmet-bacon-cheeseburger-with-fry-garnish-38895877/",
+    "photographer": "Mike C"
+  },
+  {
+    "key": "burgers-plate",
+    "dish": "Double smash burger",
+    "usedBy": "hamburger_restaurant, fast_food_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/double%20smash%20burger/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/double-smash-burger?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-of-double-beef-cheese-burger-6896381/",
+    "photographer": "Eiliv Aceron"
+  },
+  {
+    "key": "burgers-roast",
+    "dish": "Bacon burger platter",
+    "usedBy": "hamburger_restaurant, fast_food_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/bacon%20burger%20fries%20plate/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/bacon-burger-fries-plate?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-cheeseburger-with-fries-on-a-plate-39019906/",
+    "photographer": "DΛVΞ GΛRCIΛ"
+  },
+  {
+    "key": "burgers-bundle",
+    "dish": "Burger + fries combo",
+    "usedBy": "hamburger_restaurant, fast_food_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/burger%20fries%20soda/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/burger-fries-soda?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/hamburger-and-french-fries-served-in-a-restaurant-18713428/",
+    "photographer": "Jonathan Borba"
+  },
+  {
+    "key": "chicken-quick",
+    "dish": "Chicken tenders",
+    "usedBy": "chicken_restaurant, chicken_wings_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/chicken%20tenders/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chicken-tenders?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/crispy-fried-chicken-tenders-with-dipping-sauces-33068077/",
+    "photographer": "Eric Moura"
+  },
+  {
+    "key": "chicken-plate",
+    "dish": "Crispy chicken sandwich",
+    "usedBy": "chicken_restaurant, chicken_wings_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/fried%20chicken%20sandwich/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/fried-chicken-sandwich?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-crispy-chicken-sandwich-with-fries-36879182/",
+    "photographer": "Mahmut Zeytin"
+  },
+  {
+    "key": "chicken-roast",
+    "dish": "Fried chicken dinner",
+    "usedBy": "chicken_restaurant, chicken_wings_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/fried%20chicken%20dinner%20plate/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/fried-chicken-dinner-plate?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/chicken-fries-and-salad-20532527/",
+    "photographer": "Audy of Course"
+  },
+  {
+    "key": "chicken-bundle",
+    "dish": "Wings + fries bundle",
+    "usedBy": "chicken_restaurant, chicken_wings_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/chicken%20wings%20fries/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chicken-wings-fries?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/chicken-wings-and-fries-14661492/",
+    "photographer": "Lenon Mwamtobe"
+  },
+  {
+    "key": "pizza-quick",
+    "dish": "Pepperoni slice",
+    "usedBy": "pizza_restaurant, italian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/pepperoni%20pizza%20slice/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/pepperoni-pizza-slice?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/sliced-pepperoni-pizza-on-white-ceramic-plate-708587/",
+    "photographer": "Sydney Troxell"
+  },
+  {
+    "key": "pizza-plate",
+    "dish": "Margherita pizza",
+    "usedBy": "pizza_restaurant, italian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/margherita%20pizza/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/margherita-pizza?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-photo-of-pizza-8176833/",
+    "photographer": "Johnny Rizk"
+  },
+  {
+    "key": "pizza-roast",
+    "dish": "Baked lasagna",
+    "usedBy": "pizza_restaurant, italian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/lasagna/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/lasagna?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-italian-lasagna-in-black-plate-31779545/",
+    "photographer": "Adriano Bragi"
+  },
+  {
+    "key": "pizza-bundle",
+    "dish": "Slice + soda bundle",
+    "usedBy": "pizza_restaurant, italian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/pizza%20slices%20soda/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/pizza-slices-soda?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/pouring-pepsi-into-glasses-next-to-pizza-18156983/",
+    "photographer": "Tomris"
+  },
+  {
+    "key": "mexican-quick",
+    "dish": "Chicken tacos",
+    "usedBy": "mexican_restaurant, meal_takeaway, latin_american_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/chicken%20tacos/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chicken-tacos?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/a-mouthwatering-tacos-on-a-ceramic-plate-7041784/",
+    "photographer": "Styves Exantus"
+  },
+  {
+    "key": "mexican-plate",
+    "dish": "Burrito bowl",
+    "usedBy": "mexican_restaurant, meal_takeaway, latin_american_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/burrito%20bowl/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/burrito-bowl?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/meal-in-bowl-10696501/",
+    "photographer": "Nourishment DECODED"
+  },
+  {
+    "key": "mexican-roast",
+    "dish": "Carne asada platter",
+    "usedBy": "mexican_restaurant, meal_takeaway, latin_american_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/carne%20asada%20plate/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/carne-asada-plate?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-of-grilled-beef-with-onions-and-fries-28902895/",
+    "photographer": "pedro furtado"
+  },
+  {
+    "key": "mexican-bundle",
+    "dish": "Chips + guacamole bundle",
+    "usedBy": "mexican_restaurant, meal_takeaway, latin_american_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/chips%20guacamole%20salsa/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chips-guacamole-salsa?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/authentic-mexican-food-27603324/",
+    "photographer": "Snappr"
+  },
+  {
+    "key": "asian-quick",
+    "dish": "Vegetable spring rolls",
+    "usedBy": "chinese_restaurant, asian_restaurant, asian_fusion_restaurant, japanese_restaurant, sushi_restaurant, thai_restaurant, ramen_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/spring%20rolls/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/spring-rolls?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/spring-rolls-on-white-ceramic-plate-4001867/",
+    "photographer": "Dima Valkov"
+  },
+  {
+    "key": "asian-plate",
+    "dish": "Orange chicken with rice",
+    "usedBy": "chinese_restaurant, asian_restaurant, asian_fusion_restaurant, japanese_restaurant, sushi_restaurant, thai_restaurant, ramen_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/orange%20chicken%20rice/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/orange-chicken-rice?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/fried-chicken-and-white-rice-on-a-plate-12916867/",
+    "photographer": "Denys Gromov"
+  },
+  {
+    "key": "asian-roast",
+    "dish": "Teriyaki salmon bento",
+    "usedBy": "chinese_restaurant, asian_restaurant, asian_fusion_restaurant, japanese_restaurant, sushi_restaurant, thai_restaurant, ramen_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/salmon%20bento%20box/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/salmon-bento-box?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/a-rice-topping-of-roasted-salmon-with-sesame-seeds-and-scrambled-egg-in-a-take-out-container-13189287/",
+    "photographer": "FOX ^.ᆽ.^= ∫"
+  },
+  {
+    "key": "asian-bundle",
+    "dish": "Noodles + dumplings bundle",
+    "usedBy": "chinese_restaurant, asian_restaurant, asian_fusion_restaurant, japanese_restaurant, sushi_restaurant, thai_restaurant, ramen_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/noodles%20dumplings/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/noodles-dumplings?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-shot-of-cooked-food-on-the-plate-6646213/",
+    "photographer": "RDNE Stock project"
+  },
+  {
+    "key": "breakfast-quick",
+    "dish": "Bagel + cream cheese",
+    "usedBy": "breakfast_restaurant, brunch_restaurant, bagel_shop, bakery, donut_shop, cake_shop, cafe",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/bagel%20cream%20cheese/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/bagel-cream-cheese?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/bagel-with-cream-cheese-and-strawberries-12043209/",
+    "photographer": "Daka"
+  },
+  {
+    "key": "breakfast-plate",
+    "dish": "Egg + cheese croissant",
+    "usedBy": "breakfast_restaurant, brunch_restaurant, bagel_shop, bakery, donut_shop, cake_shop, cafe",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/egg%20croissant%20sandwich/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/egg-croissant-sandwich?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/croissant-with-scrambled-eggs-and-kiwi-breakfast-29616961/",
+    "photographer": "Cats Coming"
+  },
+  {
+    "key": "breakfast-roast",
+    "dish": "Pancake breakfast platter",
+    "usedBy": "breakfast_restaurant, brunch_restaurant, bagel_shop, bakery, donut_shop, cake_shop, cafe",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/pancakes%20eggs%20bacon/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/pancakes-eggs-bacon?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/breakfast-on-plate-22882256/",
+    "photographer": "Hebert Santos"
+  },
+  {
+    "key": "breakfast-bundle",
+    "dish": "Coffee + pastry bundle",
+    "usedBy": "breakfast_restaurant, brunch_restaurant, bagel_shop, bakery, donut_shop, cake_shop, cafe",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/coffee%20pastry/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/coffee-pastry?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-pastries-with-coffee-on-wooden-table-30427464/",
+    "photographer": "Kunal Lakhotia"
+  },
+  {
+    "key": "coffee-quick",
+    "dish": "Iced latte",
+    "usedBy": "coffee_shop, dessert_shop, ice_cream_shop, snack_bar, tea_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/iced%20latte/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/iced-latte?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/coffee-with-straw-24294335/",
+    "photographer": "Klárik Loránd"
+  },
+  {
+    "key": "coffee-plate",
+    "dish": "Breakfast sandwich",
+    "usedBy": "coffee_shop, dessert_shop, ice_cream_shop, snack_bar, tea_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/breakfast%20sandwich%20coffee%20shop/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/breakfast-sandwich-coffee-shop?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/a-cup-of-coffee-with-latte-art-and-a-toasted-sandwich-15951901/",
+    "photographer": "David Disponett"
+  },
+  {
+    "key": "coffee-roast",
+    "dish": "Coffee box for the team",
+    "usedBy": "coffee_shop, dessert_shop, ice_cream_shop, snack_bar, tea_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/coffee%20carafe%20cups/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/coffee-carafe-cups?orientation=landscape&license=free",
+    "url": "https://images.unsplash.com/photo-1504033238493-e87141ad2960?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+    "photographer": "Nathan Dumlao"
+  },
+  {
+    "key": "coffee-bundle",
+    "dish": "Latte + muffin bundle",
+    "usedBy": "coffee_shop, dessert_shop, ice_cream_shop, snack_bar, tea_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/latte%20muffin/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/latte-muffin?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/food-and-drink-on-a-wooden-table-4663221/",
+    "photographer": "Denys Gromov"
+  },
+  {
+    "key": "sandwiches-quick",
+    "dish": "Turkey club sandwich",
+    "usedBy": "sandwich_shop, deli, hot_dog_restaurant, food_court",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/turkey%20club%20sandwich/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/turkey-club-sandwich?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/fries-on-a-plate-20150588/",
+    "photographer": "Change C.C"
+  },
+  {
+    "key": "sandwiches-plate",
+    "dish": "Italian sub",
+    "usedBy": "sandwich_shop, deli, hot_dog_restaurant, food_court",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/italian%20sub%20sandwich/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/italian-sub-sandwich?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-italian-sub-sandwich-with-melted-cheese-37624173/",
+    "photographer": "Tochukwu Ekeh"
+  },
+  {
+    "key": "sandwiches-roast",
+    "dish": "Party sub platter",
+    "usedBy": "sandwich_shop, deli, hot_dog_restaurant, food_court",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/sandwich%20platter/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/sandwich-platter?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/assorted-sandwich-platter-with-fresh-ingredients-34618698/",
+    "photographer": "Novkov Visuals"
+  },
+  {
+    "key": "sandwiches-bundle",
+    "dish": "Sandwich + chips combo",
+    "usedBy": "sandwich_shop, deli, hot_dog_restaurant, food_court",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/sandwich%20chips/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/sandwich-chips?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/bread-sandwich-for-breakfast-25401745/",
+    "photographer": "Cesan Escuadro"
+  },
+  {
+    "key": "healthy-quick",
+    "dish": "Açaí bowl",
+    "usedBy": "salad_shop, mediterranean_restaurant, juice_shop, vegan_restaurant, vegetarian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/acai%20bowl/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/acai-bowl?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/wooden-scoop-on-bowl-1334129/",
+    "photographer": "Ella Olsson"
+  },
+  {
+    "key": "healthy-plate",
+    "dish": "Chicken grain bowl",
+    "usedBy": "salad_shop, mediterranean_restaurant, juice_shop, vegan_restaurant, vegetarian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/chicken%20grain%20bowl/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chicken-grain-bowl?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/top-view-photo-of-food-on-top-of-baking-rack-2741448/",
+    "photographer": "kei photo"
+  },
+  {
+    "key": "healthy-roast",
+    "dish": "Mezze platter",
+    "usedBy": "salad_shop, mediterranean_restaurant, juice_shop, vegan_restaurant, vegetarian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/mezze%20platter%20hummus/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/mezze-platter-hummus?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/middle-eastern-grilled-kebab-and-sides-on-platter-37417607/",
+    "photographer": "Husien Bisky"
+  },
+  {
+    "key": "healthy-bundle",
+    "dish": "Salad + smoothie bundle",
+    "usedBy": "salad_shop, mediterranean_restaurant, juice_shop, vegan_restaurant, vegetarian_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/salad%20smoothie/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/salad-smoothie?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/a-meal-and-a-drink-on-a-table-5337519/",
+    "photographer": "ROMAN ODINTSOV"
+  },
+  {
+    "key": "bar-quick",
+    "dish": "Draft beer",
+    "usedBy": "bar, brewpub, bar_and_grill, sports_bar, pub, wine_bar, cocktail_bar",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/draft%20beer%20pint/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/draft-beer-pint?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/bartender-pouring-beer-into-a-pint-glass-20883381/",
+    "photographer": "Daniel Januario"
+  },
+  {
+    "key": "bar-plate",
+    "dish": "Bar wings",
+    "usedBy": "bar, brewpub, bar_and_grill, sports_bar, pub, wine_bar, cocktail_bar",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/buffalo%20wings/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/buffalo-wings?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-photo-of-french-fries-and-fried-chicken-wings-7734563/",
+    "photographer": "Zabdi Onan Caceres"
+  },
+  {
+    "key": "bar-roast",
+    "dish": "Smoked brisket plate",
+    "usedBy": "bar, brewpub, bar_and_grill, sports_bar, pub, wine_bar, cocktail_bar",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/smoked%20brisket%20plate/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/smoked-brisket-plate?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-pastrami-sandwich-on-white-bread-40103780/",
+    "photographer": "Caleb Oquendo"
+  },
+  {
+    "key": "bar-bundle",
+    "dish": "Wings + draft bundle",
+    "usedBy": "bar, brewpub, bar_and_grill, sports_bar, pub, wine_bar, cocktail_bar",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/wings%20beer/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/wings-beer?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/table-full-of-fast-food-and-beer-19786212/",
+    "photographer": "Amar Preciado"
+  },
+  {
+    "key": "seafood-quick",
+    "dish": "Crab cake slider",
+    "usedBy": "seafood_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/crab%20cake%20slider/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/crab-cake-slider?orientation=landscape&license=free",
+    "url": "https://images.unsplash.com/photo-1630927575869-252b8d8c1c82?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+    "photographer": "Vije Vijendranath"
+  },
+  {
+    "key": "seafood-plate",
+    "dish": "Fish tacos",
+    "usedBy": "seafood_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/fish%20tacos/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/fish-tacos?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-of-a-stack-of-tacos-8448318/",
+    "photographer": "Los Muertos Crew"
+  },
+  {
+    "key": "seafood-roast",
+    "dish": "Low country boil",
+    "usedBy": "seafood_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/shrimp%20boil/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/shrimp-boil?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-seafood-boil-with-corn-and-shrimp-35896424/",
+    "photographer": "Mike C"
+  },
+  {
+    "key": "seafood-bundle",
+    "dish": "Shrimp basket bundle",
+    "usedBy": "seafood_restaurant",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/fried%20shrimp%20basket/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/fried-shrimp-basket?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/crispy-shrimp-and-fries-basket-on-wooden-table-33261412/",
+    "photographer": "Cristian Jacinto"
+  },
+  {
+    "key": "barbecue-quick",
+    "dish": "Pulled pork slider",
+    "usedBy": "barbecue_restaurant, steak_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/pulled%20pork%20slider/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/pulled-pork-slider?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-photo-of-burgers-3753488/",
+    "photographer": "Ethan Wilkinson"
+  },
+  {
+    "key": "barbecue-plate",
+    "dish": "Brisket sandwich",
+    "usedBy": "barbecue_restaurant, steak_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/brisket%20sandwich/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/brisket-sandwich?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/vegetarian-burger-2300034/",
+    "photographer": "Adrian Dorobantu"
+  },
+  {
+    "key": "barbecue-roast",
+    "dish": "Smoked rib platter",
+    "usedBy": "barbecue_restaurant, steak_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/bbq%20ribs/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/bbq-ribs?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-bbq-ribs-with-savory-sides-34495394/",
+    "photographer": "Nobleseed Nobleseed"
+  },
+  {
+    "key": "barbecue-bundle",
+    "dish": "BBQ plate + sweet tea",
+    "usedBy": "barbecue_restaurant, steak_house",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/bbq%20plate%20sweet%20tea/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/bbq-plate-sweet-tea?orientation=landscape&license=free",
+    "url": "https://images.unsplash.com/photo-1560024818-2c6d122cfbe2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+    "photographer": "Jacob Stone"
+  },
+  {
+    "key": "grill-quick",
+    "dish": "Chicken Caesar wrap",
+    "usedBy": "restaurant, american_restaurant, and anything else",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/chicken%20caesar%20wrap/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chicken-caesar-wrap?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/meats-and-vegetables-on-black-oval-sizzling-plate-2015191/",
+    "photographer": "bams awey"
+  },
+  {
+    "key": "grill-plate",
+    "dish": "Grilled chicken plate",
+    "usedBy": "restaurant, american_restaurant, and anything else",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/grilled%20chicken%20plate/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/grilled-chicken-plate?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-grilled-chicken-meal-with-sides-37322776/",
+    "photographer": "Kemal Can"
+  },
+  {
+    "key": "grill-roast",
+    "dish": "Slow-roasted half chicken",
+    "usedBy": "restaurant, american_restaurant, and anything else",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/roasted%20half%20chicken/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/roasted-half-chicken?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/a-close-up-of-two-chicken-legs-in-a-tin-foil-27643003/",
+    "photographer": "Nano Erdozain"
+  },
+  {
+    "key": "grill-bundle",
+    "dish": "Wrap + side bundle",
+    "usedBy": "restaurant, american_restaurant, and anything else",
+    "optional": false,
+    "searchPexels": "https://www.pexels.com/search/wrap%20salad%20drink/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/wrap-salad-drink?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/healthy-vegetable-wrap-on-white-plate-30392937/",
+    "photographer": "Kritsana (Kid) Takhai"
+  },
+  {
+    "key": "fixture-double-smash-burger",
+    "dish": "double smash burger",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/double%20smash%20burger/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/double-smash-burger?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-of-double-beef-cheese-burger-6896381/",
+    "photographer": "Eiliv Aceron"
+  },
+  {
+    "key": "fixture-crispy-chicken-sandwich",
+    "dish": "crispy chicken sandwich",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/fried%20chicken%20sandwich/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/fried-chicken-sandwich?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/sandwich-and-fries-in-ceramic-plate-14332864/",
+    "photographer": "Salman Khan"
+  },
+  {
+    "key": "fixture-classic-cheeseburger",
+    "dish": "classic cheeseburger",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/cheeseburger/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/cheeseburger?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-cheeseburger-with-pickles-on-a-plate-32480062/",
+    "photographer": "Vladimir Srajber"
+  },
+  {
+    "key": "fixture-loaded-fries",
+    "dish": "loaded fries",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/loaded%20fries%20cheese/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/loaded-fries-cheese?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-loaded-fries-with-bbq-pulled-pork-37228316/",
+    "photographer": "Cristian Arteaga"
+  },
+  {
+    "key": "fixture-smoked-brisket-platter",
+    "dish": "smoked brisket platter",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/smoked%20brisket%20platter/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/smoked-brisket-platter?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/an-onion-rings-and-steak-on-a-wooden-board-9760207/",
+    "photographer": "Biel Heinrich"
+  },
+  {
+    "key": "fixture-cold-brew-croissant",
+    "dish": "cold brew croissant",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/cold%20brew%20coffee%20croissant/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/cold-brew-coffee-croissant?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-croissant-sandwich-and-iced-coffee-32078314/",
+    "photographer": "Esra Afşar"
+  },
+  {
+    "key": "fixture-acai-bowl",
+    "dish": "acai bowl",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/acai%20bowl/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/acai-bowl?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/wooden-scoop-on-bowl-1334129/",
+    "photographer": "Ella Olsson"
+  },
+  {
+    "key": "fixture-chicken-tinga-tacos",
+    "dish": "chicken tinga tacos",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/chicken%20tacos/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chicken-tacos?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/three-tacos-with-cheese-and-vegetables-on-a-wooden-cutting-board-14883843/",
+    "photographer": "Shameel mukkath"
+  },
+  {
+    "key": "fixture-spicy-tuna-poke-bowl",
+    "dish": "spicy tuna poke bowl",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/tuna%20poke%20bowl/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/tuna-poke-bowl?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/delicious-salmon-poke-bowl-with-fresh-veggies-28992216/",
+    "photographer": "pedro furtado"
+  },
+  {
+    "key": "fixture-wood-fired-pizza",
+    "dish": "wood fired pizza",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/wood%20fired%20pizza/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/wood-fired-pizza?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/pizzas-with-agurola-15953050/",
+    "photographer": "Valeria Boltneva"
+  },
+  {
+    "key": "fixture-pre-flight-combo",
+    "dish": "pre flight combo",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/burger%20fries%20soda/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/burger-fries-soda?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/close-up-shot-of-a-burger-and-fries-11462903/",
+    "photographer": "MOISES RIBEIRO"
+  },
+  {
+    "key": "fixture-breakfast-for-two",
+    "dish": "breakfast for two",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/breakfast%20pastries%20coffee/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/breakfast-pastries-coffee?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/breakfast-table-27846221/",
+    "photographer": "Jakub Zerdzicki"
+  },
+  {
+    "key": "fixture-carry-on-snack-pack",
+    "dish": "carry on snack pack",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/snack%20box%20cheese%20crackers%20fruit/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/snack-box-cheese-crackers-fruit?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/assorted-cheese-and-fruit-platter-with-crackers-39646566/",
+    "photographer": "Barbara G"
+  },
+  {
+    "key": "fixture-taco-duo",
+    "dish": "taco duo",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/tacos%20agua%20fresca/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/tacos-agua-fresca?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/mexican-restaurant-27365278/",
+    "photographer": "Snappr"
+  },
+  {
+    "key": "fixture-wings-draft",
+    "dish": "wings draft",
+    "usedBy": "fixture catalog (development only)",
+    "optional": true,
+    "searchPexels": "https://www.pexels.com/search/chicken%20wings%20beer/?orientation=landscape",
+    "searchUnsplash": "https://unsplash.com/s/photos/chicken-wings-beer?orientation=landscape&license=free",
+    "url": "https://www.pexels.com/photo/selective-focus-of-beer-glass-and-fried-chicken-20329559/",
+    "photographer": "Doğu Tuncer"
+  }
+]

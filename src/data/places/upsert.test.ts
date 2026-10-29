@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { describe, it } from 'node:test';
 
-import { buildRestaurant } from './build';
+import { buildMenu, buildRestaurant } from './build';
 import { placeOnConcourse, type ConcourseOverride } from './concourse';
 import { nodeSql } from './node-sql';
 import { applyCatalog, ensurePlacesSchema, readCatalog, removePlacesExcept } from './store';
@@ -81,14 +81,45 @@ describe('places seed', () => {
     assert.deepEqual(
       menu.map((item) => [item.name, item.prepMinutes]),
       [
-        ['Quick bite', 8],
-        ['House plate', 14],
-        ['Slow roast', 48],
-        ['Gate bundle', 12],
+        ['Chicken Caesar wrap', 8],
+        ['Grilled chicken plate', 14],
+        ['Slow-roasted half chicken', 48],
+        ['Wrap + side bundle', 12],
         ['Extra side', 6],
       ],
     );
     assert.equal(catalog.items.filter((item) => item.restaurantId === added?.id).length, 4);
+    db.close();
+  });
+
+  it('renames listed dishes in place and keeps rows added by hand', async () => {
+    const db = new DatabaseSync(':memory:');
+    const sql = nodeSql(db);
+    await ensurePlacesSchema(sql);
+    const grill = build(chickFilA, 1);
+    await applyCatalog(sql, { restaurants: [grill], items: [] });
+    await sql.run(
+      `INSERT INTO menu_items (
+        id, restaurant_id, name, description, price_cents, prep_minutes, category,
+        image_color, featured, popular, kind, badge, compare_at_cents, tags, position
+      ) VALUES (?, ?, 'Extra side', 'Added by hand', 500, 6, 'Sides', '#F0D56A', 0, 0, 'item', NULL, NULL, '[]', 9)`,
+      [`${grill.id}-extra`, grill.id],
+    );
+
+    const pizza = build({ ...chickFilA, primaryType: 'pizza_restaurant' }, 1);
+    await applyCatalog(sql, { restaurants: [pizza], items: buildMenu(pizza.id, pizza.primaryType) });
+
+    const menu = (await readCatalog(sql)).items;
+    assert.deepEqual(
+      menu.map((item) => [item.id.replace(`${grill.id}-`, ''), item.name, item.imageKey]),
+      [
+        ['quick', 'Pepperoni slice', 'pizza-quick'],
+        ['plate', 'Margherita pizza', 'pizza-plate'],
+        ['roast', 'Baked lasagna', 'pizza-roast'],
+        ['bundle', 'Slice + soda bundle', 'pizza-bundle'],
+        ['extra', 'Extra side', null],
+      ],
+    );
     db.close();
   });
 

@@ -16,6 +16,7 @@ const MENU_SELECT = `
     menu_items.prep_minutes,
     menu_items.category,
     menu_items.image_color,
+    menu_items.image_key,
     menu_items.featured,
     menu_items.popular,
     menu_items.kind,

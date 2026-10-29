@@ -1,7 +1,9 @@
-import { catalogSource } from '@/src/config/catalog';
+import { catalogSource, type CatalogSource } from '@/src/config/catalog';
+import { PLACES_PHOTO_CACHE_MINUTES, PLACES_PHOTO_MAX_WIDTH_PX, placesBundleId, placesClientKey } from '@/src/config/places';
 import { skylinkApiKey } from '@/src/config/skylink';
-import type { DataSource } from '@/src/data/repositories';
+import type { DataSource, PhotoRepository } from '@/src/data/repositories';
 
+import { noPhotos, PlacesPhotoRepository } from './places/photos-client';
 import { SqliteCartRepository } from './sqlite/cart-repository';
 import { SqliteCatalogRepository } from './sqlite/catalog-repository';
 import { openDatabase } from './sqlite/database';
@@ -47,7 +49,20 @@ async function compose(): Promise<DataSource> {
     orders: new SqliteOrderRepository(db),
     profile: new SqliteProfileRepository(db),
     flights: new SqliteFlightRepository(db, refreshing, apiKey),
+    photos: photoRepository(source),
   };
+}
+
+/** Fixture restaurants have no place IDs, so only the Places catalog asks Google for photos. */
+function photoRepository(source: CatalogSource): PhotoRepository {
+  const key = placesClientKey();
+  if (source !== 'places' || !key) return noPhotos;
+  return new PlacesPhotoRepository({
+    apiKey: key,
+    bundleId: placesBundleId(),
+    maxWidthPx: PLACES_PHOTO_MAX_WIDTH_PX,
+    cacheMinutes: PLACES_PHOTO_CACHE_MINUTES,
+  });
 }
 
 export type { DataSource } from '@/src/data/repositories';

@@ -113,6 +113,7 @@ export function RestaurantList({ initialQuery = '', initialHub = '', initialCate
           {rows.map(({ restaurant, availability }) => (
             <RestaurantCard
               key={restaurant.id}
+              placeId={restaurant.placeId}
               initials={restaurant.initials}
               markColor={restaurant.color}
               name={restaurant.name}

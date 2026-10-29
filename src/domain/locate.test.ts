@@ -10,6 +10,7 @@ import {
   courierTarget,
   distanceMeters,
   googleMapsDirectionsUrl,
+  googleMapsPlaceUrl,
   restaurantPoint,
   walkMinutes,
 } from './locate';
@@ -93,6 +94,13 @@ describe('courier location', () => {
     assert.equal(
       googleMapsDirectionsUrl(airport.concourses.B, { latitude: 33.641, longitude: -84.436 }),
       'https://www.google.com/maps/dir/?api=1&origin=33.640640,-84.435910&destination=33.641000,-84.436000&travelmode=walking',
+    );
+  });
+
+  it("links to a restaurant's Google Maps page by place id", () => {
+    assert.equal(
+      googleMapsPlaceUrl('Phillips Seafood & Co', 'ChIJu6dLPzD99IgRCEj3iZ1Sl2w'),
+      'https://www.google.com/maps/search/?api=1&query=Phillips%20Seafood%20%26%20Co&query_place_id=ChIJu6dLPzD99IgRCEj3iZ1Sl2w',
     );
   });
 });

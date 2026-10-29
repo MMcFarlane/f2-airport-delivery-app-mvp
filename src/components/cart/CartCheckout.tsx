@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PrimaryButton } from '@/src/components/ui/Buttons';
 import { LaterScreen } from '@/src/components/ui/LaterScreen';
+import { Photo } from '@/src/components/ui/Photo';
 import { Muted } from '@/src/components/ui/Screen';
 import { createDataSource } from '@/src/data';
 import {
@@ -352,7 +353,7 @@ function CartLineRow({
 }) {
   return (
     <View style={styles.line}>
-      <View style={[styles.swatch, { backgroundColor: line.imageColor }, late && styles.late]} />
+      <Photo color={line.imageColor} imageKey={line.imageKey} style={[styles.swatch, late && styles.late]} />
       <View style={styles.lineCopy}>
         <Text style={styles.lineName}>{line.name}</Text>
         <Text style={styles.lineMeta}>

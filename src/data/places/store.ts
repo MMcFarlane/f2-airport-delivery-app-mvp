@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS menu_items (
   prep_minutes INTEGER NOT NULL,
   category TEXT,
   image_color TEXT NOT NULL,
+  image_key TEXT,
   featured INTEGER NOT NULL DEFAULT 0,
   popular INTEGER NOT NULL DEFAULT 0,
   kind TEXT NOT NULL CHECK (kind IN ('item', 'special')),
@@ -79,10 +80,11 @@ ON CONFLICT(place_id) DO UPDATE SET
 `;
 
 /** Columns added after the first seed. ensurePlacesSchema adds any an older data/places.db lacks. */
-const ADDED_RESTAURANT_COLUMNS = [
-  ['concourse', 'TEXT'],
-  ['concourse_source', 'TEXT'],
-  ['concourse_confirmed', 'INTEGER NOT NULL DEFAULT 0'],
+const ADDED_COLUMNS = [
+  ['restaurants', 'concourse', 'TEXT'],
+  ['restaurants', 'concourse_source', 'TEXT'],
+  ['restaurants', 'concourse_confirmed', 'INTEGER NOT NULL DEFAULT 0'],
+  ['menu_items', 'image_key', 'TEXT'],
 ] as const;
 
 const MENU_COUNT_SQL = `SELECT COUNT(*) AS count FROM menu_items WHERE restaurant_id = ?`;
@@ -101,7 +103,7 @@ const LIST_ITEMS_SQL = `
 SELECT
   menu_items.id, menu_items.restaurant_id, menu_items.name, menu_items.description,
   menu_items.price_cents, menu_items.prep_minutes, menu_items.category, menu_items.image_color,
-  menu_items.featured, menu_items.popular, menu_items.kind, menu_items.badge,
+  menu_items.image_key, menu_items.featured, menu_items.popular, menu_items.kind, menu_items.badge,
   menu_items.compare_at_cents, menu_items.tags, menu_items.position
 FROM menu_items
 JOIN restaurants ON restaurants.id = menu_items.restaurant_id
@@ -109,11 +111,26 @@ WHERE restaurants.source = 'places'
 ORDER BY menu_items.restaurant_id, menu_items.position
 `;
 
-const INSERT_MENU_SQL = `
+const UPSERT_MENU_SQL = `
 INSERT INTO menu_items (
   id, restaurant_id, name, description, price_cents, prep_minutes, category,
-  image_color, featured, popular, kind, badge, compare_at_cents, tags, position
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  image_color, image_key, featured, popular, kind, badge, compare_at_cents, tags, position
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+ON CONFLICT(id) DO UPDATE SET
+  name = excluded.name,
+  description = excluded.description,
+  price_cents = excluded.price_cents,
+  prep_minutes = excluded.prep_minutes,
+  category = excluded.category,
+  image_color = excluded.image_color,
+  image_key = excluded.image_key,
+  featured = excluded.featured,
+  popular = excluded.popular,
+  kind = excluded.kind,
+  badge = excluded.badge,
+  compare_at_cents = excluded.compare_at_cents,
+  tags = excluded.tags,
+  position = excluded.position
 `;
 
 type CountRow = { count: number | bigint };
@@ -122,9 +139,11 @@ type ColumnRow = { name: string };
 export async function ensurePlacesSchema(sql: Sql): Promise<void> {
   await sql.exec('PRAGMA foreign_keys = ON');
   await sql.exec(PLACES_SCHEMA_SQL);
-  const columns = new Set((await sql.all<ColumnRow>('PRAGMA table_info(restaurants)', [])).map((row) => row.name));
-  for (const [name, definition] of ADDED_RESTAURANT_COLUMNS) {
-    if (!columns.has(name)) await sql.exec(`ALTER TABLE restaurants ADD COLUMN ${name} ${definition}`);
+  for (const [table, name, definition] of ADDED_COLUMNS) {
+    const columns = await sql.all<ColumnRow>(`PRAGMA table_info(${table})`, []);
+    if (!columns.some((column) => column.name === name)) {
+      await sql.exec(`ALTER TABLE ${table} ADD COLUMN ${name} ${definition}`);
+    }
   }
 }
 
@@ -143,15 +162,21 @@ export async function removePlacesExcept(sql: Sql, placeIds: readonly string[]):
   return removed.length;
 }
 
+/**
+ * Upserts restaurants. Menu rows the catalog lists are upserted by id, so renamed dishes update in place.
+ * A restaurant the catalog lists without items keeps its stored menu, or gets the demo menu if it has none.
+ */
 export async function applyCatalog(sql: Sql, catalog: PlacesCatalog): Promise<void> {
   for (const restaurant of catalog.restaurants) {
     await sql.run(UPSERT_RESTAURANT_SQL, restaurantParams(restaurant));
-    const count = await sql.get<CountRow>(MENU_COUNT_SQL, [restaurant.id]);
-    if (Number(count?.count ?? 0) > 0) continue;
     const items = catalog.items.filter((item) => item.restaurantId === restaurant.id);
-    const menu = items.length > 0 ? items : buildMenu(restaurant.id);
+    if (items.length === 0) {
+      const count = await sql.get<CountRow>(MENU_COUNT_SQL, [restaurant.id]);
+      if (Number(count?.count ?? 0) > 0) continue;
+    }
+    const menu = items.length > 0 ? items : buildMenu(restaurant.id, restaurant.primaryType);
     for (const item of menu) {
-      await sql.run(INSERT_MENU_SQL, menuParams(item));
+      await sql.run(UPSERT_MENU_SQL, menuParams(item));
     }
   }
 }
@@ -195,6 +220,7 @@ type PlacesMenuRow = {
   prep_minutes: number;
   category: string | null;
   image_color: string;
+  image_key: string | null;
   featured: number;
   popular: number;
   kind: string;
@@ -245,6 +271,7 @@ function mapItem(row: PlacesMenuRow): PlacesMenuRecord {
     prepMinutes: row.prep_minutes,
     category: row.category,
     imageColor: row.image_color,
+    imageKey: row.image_key,
     featured: row.featured === 1,
     popular: row.popular === 1,
     kind: row.kind === 'special' ? 'special' : 'item',
@@ -297,6 +324,7 @@ function menuParams(item: PlacesMenuRecord): SqlValue[] {
     item.prepMinutes,
     item.category,
     item.imageColor,
+    item.imageKey ?? null,
     item.featured ? 1 : 0,
     item.popular ? 1 : 0,
     item.kind,

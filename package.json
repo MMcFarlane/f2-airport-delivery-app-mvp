@@ -8,6 +8,7 @@
     "expo-constants": "~58.0.12",
     "expo-dev-client": "~58.0.14",
     "expo-font": "~58.0.8",
+    "expo-image": "~58.0.18",
     "expo-linking": "~58.0.13",
     "expo-location": "~58.0.18",
     "expo-router": "~58.0.23",
@@ -39,9 +40,10 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "test": "tsx --test src/domain/rules.test.ts src/domain/browse.test.ts src/domain/menu.test.ts src/domain/checkout.test.ts src/domain/orders.test.ts src/domain/locate.test.ts src/data/places/concourse.test.ts src/data/places/upsert.test.ts src/data/skylink/board.test.ts",
+    "test": "tsx --test src/domain/rules.test.ts src/domain/browse.test.ts src/domain/menu.test.ts src/domain/checkout.test.ts src/domain/orders.test.ts src/domain/locate.test.ts src/data/places/concourse.test.ts src/data/places/menus.test.ts src/data/places/photos-client.test.ts src/data/places/upsert.test.ts src/data/skylink/board.test.ts scripts/food-photo-links.test.ts",
     "seed:places": "tsx scripts/seed-places.ts",
     "seed:departures": "tsx scripts/seed-departures.ts",
+    "fetch:food-photos": "tsx scripts/fetch-food-photos.ts",
     "lint": "expo lint"
   },
   "private": true

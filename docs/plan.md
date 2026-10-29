@@ -33,6 +33,7 @@ Home matches `artboards/home/Departure board@1x.png`, except its fourth tab. Tha
 
 - Local fixture catalog that matches the artboards (Runway Burger, Gate Café, Jetstream Juice, FLY10, Visa ending 4242, three past orders).
 - Optional Google Places seed for real ATL restaurants on every concourse (138 as of October 28, 2026), each placed on a concourse.
+- Photos: Google Places covers for real restaurants, loaded only when a card is on screen, with the author credit and a View on Google Maps link; bundled stock photos for every dish (52 dish photos, 15 fixture photos).
 - Live SkyLink ATL departures board on launch, and a gate lookup that fills the gate when it has been published.
 - Simulated pay, a local confirmation code, and a demo control that advances order status.
 - A demo Courier view: a Google Map from the restaurant to the passenger's phone location, captured at checkout and watched live, with the gate as fallback.
@@ -76,7 +77,7 @@ flowchart LR
 - `src/data/index.ts` is the only composition root: `createDataSource()`. Screens and hooks import that. They do not import `expo-sqlite`.
 - Missing keys do not crash the app. No Places data means the fixture catalog. No SkyLink key means manual gate and departure only.
 - `CATALOG_SOURCE=fixtures` or `places` selects the catalog. Fixtures are the default.
-- Keys live in a gitignored env file: `GOOGLE_PLACES_API_KEY`, `SKYLINK_API_KEY`, `GOOGLE_MAPS_API_KEY`. The Places key stays in the seed script, off the device. The Maps key is built into the native app by the `react-native-maps` config plugin. The Maps key is a dedicated key restricted to `com.f2delivers.wingsnack`. It replaced a temporarily shared key on October 28, 2026 (see [phases/08b-courier-map.md](phases/08b-courier-map.md)). No key means Apple Maps on iOS and a summary card on Android and web. The SkyLink key is read by the app for this demo. A later proxy should hold it before any public build. Never commit either key.
+- Keys live in a gitignored env file: `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACES_CLIENT_KEY`, `SKYLINK_API_KEY`, `GOOGLE_MAPS_API_KEY`. The Places key stays in the seed script, off the device. The Places client key is built into the app for restaurant photos and is restricted to the iOS bundle ID and the Places API. The Maps key is built into the native app by the `react-native-maps` config plugin. The Maps key is a dedicated key restricted to `com.f2delivers.wingsnack`. It replaced a temporarily shared key on October 28, 2026 (see [phases/08b-courier-map.md](phases/08b-courier-map.md)). No key means Apple Maps on iOS and a summary card on Android and web. The SkyLink key is read by the app for this demo. A later proxy should hold it before any public build. Never commit any key.
 
 ## Domain rules
 
@@ -138,11 +139,13 @@ Home stays active on Home. Browse stays active on the hub and the three list scr
 | 8b. Courier map | [phases/08b-courier-map.md](phases/08b-courier-map.md) | Done in code; device check pending |
 | 9. Mock pass | [phases/09-mock-pass.md](phases/09-mock-pass.md) | Dropped. The stakeholder validated the app on TestFlight |
 | 10. Concourse-wide Places seed | [phases/10-concourse-seed.md](phases/10-concourse-seed.md) | Done |
-| 11. Photos | [phases/11-photos.md](phases/11-photos.md) | Not started |
+| 11. Photos | [phases/11-photos.md](phases/11-photos.md) | Done |
 
 ## External APIs
 
 Google Places is a seed script, not a call from the phone. It writes restaurant name, place id, address, lat/lng, rating, type, and concourse, with how the concourse was decided and whether a person confirmed it. It stores no photo names, because Google doesn't allow caching them. It does not supply menus, prices, or prep times.
+
+Restaurant photos are the one Places call from the phone. With `CATALOG_SOURCE=places`, a restaurant card that comes on screen asks Place Details for photo names (field mask `photos`, no charge), then the first photo's URL at 800 px (Place Details Photos: 1,000 free a month, then $7 per 1,000). Answers are held for 30 minutes in memory and never stored.
 
 SkyLink is live, with a 5,000 calls a month budget:
 

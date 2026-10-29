@@ -110,6 +110,7 @@ export function SpecialsList({ initialQuery = '', initialHub = '', initialCatego
                 minutes={`${item.prepMinutes} MIN`}
                 badge={item.badge}
                 imageColor={item.imageColor}
+                imageKey={item.imageKey}
                 tooLate={tooLate}
                 adding={addingId === item.id}
                 onPress={() => router.push(`/item/${item.id}` as Href)}

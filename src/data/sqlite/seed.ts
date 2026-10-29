@@ -1,5 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
+import { FIXTURE_PHOTO_QUERIES, fixtureImageKey } from './fixture-photos';
+
 type SeedRestaurant = {
   id: string;
   name: string;
@@ -584,6 +586,18 @@ export async function setFixtureCoordinates(db: SQLiteDatabase): Promise<void> {
       restaurant.latitude,
       restaurant.longitude,
       restaurant.id,
+    );
+  }
+}
+
+/** Version 7: every fixture dish with a stock photo query gets its photo key. */
+export async function setFixtureImageKeys(db: SQLiteDatabase): Promise<void> {
+  for (const item of menuItems) {
+    if (!(item.id in FIXTURE_PHOTO_QUERIES)) continue;
+    await db.runAsync(
+      `UPDATE menu_items SET image_key = ? WHERE id = ? AND image_key IS NULL`,
+      fixtureImageKey(item.id),
+      item.id,
     );
   }
 }

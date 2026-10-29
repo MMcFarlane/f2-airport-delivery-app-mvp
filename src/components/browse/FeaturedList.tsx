@@ -95,6 +95,7 @@ export function FeaturedList({ initialQuery = '', initialHub = '' }: IncomingBro
                   price={formatCents(item.priceCents)}
                   minutes={`${item.prepMinutes} MIN`}
                   imageColor={item.imageColor}
+                  imageKey={item.imageKey}
                   tooLate={tooLate}
                   adding={addingId === item.id}
                   onPress={() => router.push(`/item/${item.id}` as Href)}

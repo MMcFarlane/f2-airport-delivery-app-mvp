@@ -15,6 +15,7 @@ type CartLineRow = {
   note: string | null;
   discount_code: string | null;
   image_color: string;
+  image_key: string | null;
 };
 
 export class SqliteCartRepository implements CartRepository {
@@ -36,6 +37,7 @@ export class SqliteCartRepository implements CartRepository {
         menu_items.price_cents,
         menu_items.prep_minutes,
         menu_items.image_color,
+        menu_items.image_key,
         cart_lines.quantity,
         cart_lines.note,
         cart_lines.discount_code
@@ -172,5 +174,6 @@ function mapLine(row: CartLineRow): CartLine {
     note: row.note,
     discountCode: row.discount_code,
     imageColor: row.image_color,
+    imageKey: row.image_key,
   };
 }

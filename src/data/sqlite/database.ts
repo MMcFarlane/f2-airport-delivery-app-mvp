@@ -6,14 +6,15 @@ import { prepareDepartures } from './departures-refresh';
 import { importPlacesCatalog } from './import-places';
 import {
   DEPARTURES_TABLE_SQL,
+  MENU_IMAGE_KEY_SQL,
   PASSENGER_LOCATION_SQL,
   RESTAURANT_CONCOURSE_SQL,
   SCHEMA_SQL,
   SKYLINK_LIVE_SQL,
 } from './schema';
-import { insertDemoActiveOrder, seedFixtures, setFixtureCoordinates } from './seed';
+import { insertDemoActiveOrder, seedFixtures, setFixtureCoordinates, setFixtureImageKeys } from './seed';
 
-const DATABASE_VERSION = 6;
+const DATABASE_VERSION = 7;
 
 export async function openDatabase(): Promise<SQLiteDatabase> {
   const db = await openDatabaseAsync('airport.db');
@@ -57,6 +58,12 @@ async function migrate(db: SQLiteDatabase): Promise<void> {
   if (current < 6) {
     await db.withTransactionAsync(async () => {
       await db.execAsync(RESTAURANT_CONCOURSE_SQL);
+    });
+  }
+  if (current < 7) {
+    await db.withTransactionAsync(async () => {
+      await db.execAsync(MENU_IMAGE_KEY_SQL);
+      await setFixtureImageKeys(db);
     });
   }
 

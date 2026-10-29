@@ -104,6 +104,11 @@ export function courierSourceLine(target: CourierTarget): string {
   }
 }
 
+/** The restaurant's Google Maps page. Built from the place id, so it costs no Places field. */
+export function googleMapsPlaceUrl(name: string, placeId: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}&query_place_id=${encodeURIComponent(placeId)}`;
+}
+
 export function googleMapsDirectionsUrl(from: Coordinates, to: Coordinates): string {
   const point = (value: Coordinates) => `${value.latitude.toFixed(6)},${value.longitude.toFixed(6)}`;
   return `https://www.google.com/maps/dir/?api=1&origin=${point(from)}&destination=${point(to)}&travelmode=walking`;

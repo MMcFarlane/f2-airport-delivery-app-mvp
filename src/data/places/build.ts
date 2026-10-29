@@ -1,66 +1,8 @@
 import { concourseLocation, type ConcoursePlacement } from './concourse';
+import { cuisineGroupFor, dishImageKey, MENU_SLOTS } from './menus';
 import type { PlaceIdentity, PlacesMenuRecord, PlacesRestaurantRecord } from './types';
 
 const MARK_COLORS = ['#FFC940', '#3B6DFF', '#111111', '#D64545', '#F2B36B', '#4A4A4A', '#1F6B3A', '#7B5EA7'] as const;
-
-const MENU_TEMPLATES = [
-  {
-    slug: 'quick',
-    name: 'Quick bite',
-    description: 'A short prep that can still make a tight departure.',
-    priceCents: 900,
-    prepMinutes: 8,
-    category: 'Quick',
-    imageColor: '#F2B36B',
-    featured: true,
-    popular: true,
-    kind: 'item' as const,
-    badge: null,
-    compareAtCents: null,
-  },
-  {
-    slug: 'plate',
-    name: 'House plate',
-    description: 'The kitchen’s standard plate, packed to travel.',
-    priceCents: 1400,
-    prepMinutes: 14,
-    category: 'Plates',
-    imageColor: '#E7C48A',
-    featured: false,
-    popular: true,
-    kind: 'item' as const,
-    badge: null,
-    compareAtCents: null,
-  },
-  {
-    slug: 'roast',
-    name: 'Slow roast',
-    description: 'A long prep that misses a tight connection.',
-    priceCents: 2100,
-    prepMinutes: 48,
-    category: 'Plates',
-    imageColor: '#D4B08A',
-    featured: false,
-    popular: false,
-    kind: 'item' as const,
-    badge: null,
-    compareAtCents: null,
-  },
-  {
-    slug: 'bundle',
-    name: 'Gate bundle',
-    description: 'A drink and a bite, packed together.',
-    priceCents: 1600,
-    prepMinutes: 12,
-    category: null,
-    imageColor: '#A8C48A',
-    featured: false,
-    popular: false,
-    kind: 'special' as const,
-    badge: 'BUNDLE',
-    compareAtCents: 1900,
-  },
-] as const;
 
 export function restaurantIdFor(placeId: string): string {
   return `place-${placeId}`;
@@ -92,24 +34,30 @@ export function cuisineFor(identity: PlaceIdentity): string {
     .join(' ') || 'Restaurant';
 }
 
-export function buildMenu(restaurantId: string): PlacesMenuRecord[] {
-  return MENU_TEMPLATES.map((template, position) => ({
-    id: `${restaurantId}-${template.slug}`,
-    restaurantId,
-    name: template.name,
-    description: template.description,
-    priceCents: template.priceCents,
-    prepMinutes: template.prepMinutes,
-    category: template.category,
-    imageColor: template.imageColor,
-    featured: template.featured,
-    popular: template.popular,
-    kind: template.kind,
-    badge: template.badge,
-    compareAtCents: template.compareAtCents,
-    tags: template.kind === 'special' ? ['Combos'] : [],
-    position: position + 1,
-  }));
+/** Four demo dishes from the restaurant's cuisine group. IDs stay `{restaurantId}-{slot}` across re-seeds. */
+export function buildMenu(restaurantId: string, primaryType: string | null): PlacesMenuRecord[] {
+  const group = cuisineGroupFor(primaryType);
+  return MENU_SLOTS.map((slot, position) => {
+    const dish = group.dishes[slot.slug];
+    return {
+      id: `${restaurantId}-${slot.slug}`,
+      restaurantId,
+      name: dish.name,
+      description: dish.description,
+      priceCents: slot.priceCents,
+      prepMinutes: slot.prepMinutes,
+      category: dish.category,
+      imageColor: slot.imageColor,
+      imageKey: dishImageKey(group.id, slot.slug),
+      featured: slot.featured,
+      popular: slot.popular,
+      kind: slot.kind,
+      badge: slot.badge,
+      compareAtCents: slot.compareAtCents,
+      tags: dish.tags,
+      position: position + 1,
+    };
+  });
 }
 
 export function buildRestaurant(
@@ -118,7 +66,7 @@ export function buildRestaurant(
   placement: ConcoursePlacement,
 ): PlacesRestaurantRecord {
   const id = restaurantIdFor(identity.placeId);
-  const menu = buildMenu(id);
+  const menu = buildMenu(id, identity.primaryType);
   return {
     id,
     placeId: identity.placeId,

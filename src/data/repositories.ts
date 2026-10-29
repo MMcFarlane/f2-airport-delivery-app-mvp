@@ -7,6 +7,7 @@ import type {
   OrderLine,
   OrderStatus,
   PassengerFix,
+  PlacePhoto,
   Profile,
   Restaurant,
   DepartureFlight,
@@ -99,6 +100,11 @@ export type FlightRepository = {
   departureGate(flightNumber: string): Promise<FlightGate | null>;
 };
 
+export type PhotoRepository = {
+  /** The restaurant's first Google Places photo for this session. Null when there is no key, network, or photo. */
+  coverFor(placeId: string): Promise<PlacePhoto | null>;
+};
+
 export type DataSource = {
   catalog: CatalogRepository;
   trip: TripRepository;
@@ -106,6 +112,7 @@ export type DataSource = {
   orders: OrderRepository;
   profile: ProfileRepository;
   flights: FlightRepository;
+  photos: PhotoRepository;
 };
 
 export type { CatalogSource };

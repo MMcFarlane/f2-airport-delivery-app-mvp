@@ -335,6 +335,7 @@ function item(
     description: 'Packed for the gate',
     category: null,
     imageColor: '#F2B36B',
+    imageKey: null,
     featured: true,
     popular: false,
     kind: 'item',

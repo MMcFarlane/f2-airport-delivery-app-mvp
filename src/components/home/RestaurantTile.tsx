@@ -1,9 +1,14 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Photo } from '@/src/components/ui/Photo';
+import { useSeenOnScreen } from '@/src/components/ui/viewport';
+import { useRestaurantCover } from '@/src/hooks/useRestaurantCover';
 import { colors, type } from '@/src/theme';
 import { markInk, markNeedsBorder } from '@/src/theme/contrast';
 
 type RestaurantTileProps = {
+  /** Places restaurants show their Google cover once the tile is on screen. */
+  placeId?: string | null;
   initials: string;
   markColor: string;
   name: string;
@@ -12,8 +17,18 @@ type RestaurantTileProps = {
   onPress: () => void;
 };
 
-export function RestaurantTile({ initials, markColor, name, minutes, tooLate = false, onPress }: RestaurantTileProps) {
+export function RestaurantTile({
+  placeId = null,
+  initials,
+  markColor,
+  name,
+  minutes,
+  tooLate = false,
+  onPress,
+}: RestaurantTileProps) {
   const ink = markInk(markColor);
+  const { ref, onLayout, seen } = useSeenOnScreen(placeId !== null);
+  const cover = useRestaurantCover(placeId, seen);
 
   return (
     <Pressable
@@ -21,8 +36,13 @@ export function RestaurantTile({ initials, markColor, name, minutes, tooLate = f
       accessibilityLabel={`Open ${name}`}
       onPress={onPress}
       style={({ pressed }) => [styles.tile, pressed && styles.pressed]}>
-      <View style={[styles.mark, { backgroundColor: markColor }, markNeedsBorder(markColor) && styles.lightMark]}>
-        <Text style={[styles.initials, { color: ink }]}>{initials}</Text>
+      <View ref={ref} onLayout={onLayout}>
+        <Photo
+          color={markColor}
+          remote={cover}
+          style={[styles.mark, markNeedsBorder(markColor) && !cover && styles.lightMark]}
+          fallback={<Text style={[styles.initials, { color: ink }]}>{initials}</Text>}
+        />
       </View>
       <Text style={styles.name} numberOfLines={1}>
         {name}

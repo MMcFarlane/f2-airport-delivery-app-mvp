@@ -42,6 +42,7 @@ export type MenuItemRow = {
   prep_minutes: number;
   category: string | null;
   image_color: string;
+  image_key: string | null;
   featured: number;
   popular: number;
   kind: string;
@@ -152,6 +153,7 @@ export function mapMenuItem(row: MenuItemRow): MenuItem {
     prepMinutes: row.prep_minutes,
     category: row.category,
     imageColor: row.image_color,
+    imageKey: row.image_key,
     featured: row.featured === 1,
     popular: row.popular === 1,
     kind: menuKind(row.kind),

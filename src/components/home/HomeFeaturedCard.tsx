@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Photo } from '@/src/components/ui/Photo';
 import { colors, radii, type } from '@/src/theme';
 import { markInk } from '@/src/theme/contrast';
 
@@ -10,6 +11,7 @@ type HomeFeaturedCardProps = {
   price: string;
   minutes: string;
   imageColor: string;
+  imageKey?: string | null;
   tooLate?: boolean;
   adding?: boolean;
   onPress?: () => void;
@@ -22,6 +24,7 @@ export function HomeFeaturedCard({
   price,
   minutes,
   imageColor,
+  imageKey = null,
   tooLate = false,
   adding = false,
   onPress,
@@ -38,16 +41,21 @@ export function HomeFeaturedCard({
         disabled={!onPress}
         onPress={onPress}
         style={({ pressed }) => [pressed && onPress && styles.pressed]}>
-        <View style={[styles.photo, { backgroundColor: imageColor }, tooLate && styles.photoLate]}>
+        <Photo
+          color={imageColor}
+          imageKey={imageKey}
+          style={[styles.photo, tooLate && styles.photoLate]}
+          fallback={
+            <View style={styles.caption}>
+              <Ionicons name="image-outline" size={14} color={caption} />
+              <Text style={[styles.captionText, { color: caption }]}>Photo</Text>
+            </View>
+          }>
           <View style={styles.badge}>
             <Ionicons name="time-outline" size={12} color={colors.accent} />
             <Text style={styles.badgeText}>{minutes}</Text>
           </View>
-          <View style={styles.caption}>
-            <Ionicons name="image-outline" size={14} color={caption} />
-            <Text style={[styles.captionText, { color: caption }]}>Photo</Text>
-          </View>
-        </View>
+        </Photo>
         <View style={styles.copy}>
           <Text style={styles.name} numberOfLines={2}>
             {name}

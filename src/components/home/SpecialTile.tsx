@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Photo } from '@/src/components/ui/Photo';
 import { colors, radii, space, type } from '@/src/theme';
 
 import { PlusButton } from './PlusButton';
@@ -13,6 +14,7 @@ type SpecialTileProps = {
   minutes: string;
   badge: string | null;
   imageColor: string;
+  imageKey?: string | null;
   tooLate?: boolean;
   adding?: boolean;
   fill?: boolean;
@@ -29,6 +31,7 @@ export function SpecialTile({
   minutes,
   badge,
   imageColor,
+  imageKey = null,
   tooLate = false,
   adding = false,
   fill = false,
@@ -45,13 +48,13 @@ export function SpecialTile({
         disabled={!onPress}
         onPress={onPress}
         style={({ pressed }) => [styles.open, pressed && onPress && styles.pressed]}>
-        <View style={[styles.art, { backgroundColor: imageColor }, tooLate && styles.artLate]}>
+        <Photo color={imageColor} imageKey={imageKey} style={[styles.art, tooLate && styles.artLate]}>
           {badge ? (
             <View style={styles.badge}>
               <Text style={styles.badgeText}>{badge}</Text>
             </View>
           ) : null}
-        </View>
+        </Photo>
         <View style={styles.copy}>
           <Text style={styles.name} numberOfLines={2}>
             {name}

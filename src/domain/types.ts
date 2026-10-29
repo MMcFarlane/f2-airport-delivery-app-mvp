@@ -47,6 +47,8 @@ export type MenuItem = {
   prepMinutes: number;
   category: string | null;
   imageColor: string;
+  /** A bundled food photo, or null for the colored box. */
+  imageKey: string | null;
   featured: boolean;
   popular: boolean;
   kind: MenuItemKind;
@@ -118,6 +120,16 @@ export type CartLine = {
   note: string | null;
   discountCode: string | null;
   imageColor: string;
+  imageKey: string | null;
+};
+
+/** A Google Places photo for one session. Never stored: Google does not allow caching photo names or URIs. */
+export type PlacePhoto = {
+  placeId: string;
+  uri: string;
+  width: number;
+  height: number;
+  authors: { name: string; uri: string | null }[];
 };
 
 export type Cart = {

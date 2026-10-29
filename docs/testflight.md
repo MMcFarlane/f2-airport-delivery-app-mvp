@@ -9,8 +9,10 @@ How to get a new iOS build to testers. Bundle ID: `com.f2delivers.wingsnack`. Ap
    ```bash
    npx eas-cli@latest env:set --name GOOGLE_MAPS_API_KEY --value <key> --environment production --visibility sensitive
    npx eas-cli@latest env:set --name SKYLINK_API_KEY --value <key> --environment production --visibility sensitive
-   npx eas-cli@latest env:set --name CATALOG_SOURCE --value fixtures --environment production --visibility plaintext
+   npx eas-cli@latest env:set --name GOOGLE_PLACES_CLIENT_KEY --value <key> --environment production --visibility sensitive
+   npx eas-cli@latest env:set --name CATALOG_SOURCE --value places --environment production --visibility plaintext
    ```
+   `CATALOG_SOURCE` was `fixtures` until October 28, 2026. It is `places` from Phase 11 on, so builds show real ATL restaurants and their photos.
    `GOOGLE_PLACES_API_KEY` stays local. Only `scripts/seed-places.ts` reads it.
 3. During the first build, answer **Yes** to the certificate, provisioning profile and App Store Connect API key prompts. The API key role is **App Manager**. Answer **No** to push notifications.
 

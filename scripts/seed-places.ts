@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 
 import { airport, type Concourse } from '../src/config/airport';
-import { buildRestaurant } from '../src/data/places/build';
+import { buildMenu, buildRestaurant } from '../src/data/places/build';
 import {
   CONCOURSE_ORDER,
   concourseRank,
@@ -45,6 +45,8 @@ const TEXT_PAGES = 3;
 const DATABASE_PATH = resolve('data/places.db');
 const CATALOG_PATH = resolve('src/data/places/catalog.json');
 const OVERRIDES_PATH = resolve('src/data/places/concourse-overrides.json');
+/** Offline: rebuilds the four demo dishes for the restaurants already seeded. Rows added by hand stay. */
+const REBUILD_MENUS = process.argv.includes('--rebuild-menus');
 
 const MISSING_KEY_MESSAGE = [
   'GOOGLE_PLACES_API_KEY is not set.',
@@ -53,19 +55,48 @@ const MISSING_KEY_MESSAGE = [
 
 type Kept = { identity: PlaceIdentity; placement: ConcoursePlacement };
 
-loadEnvFile(resolve('.env'));
-loadEnvFile(resolve('.env.local'), true);
-
-const apiKey = process.env.GOOGLE_PLACES_API_KEY?.trim();
-if (!apiKey) {
-  console.error(MISSING_KEY_MESSAGE);
-  process.exit(1);
+if (REBUILD_MENUS) {
+  void rebuildMenus().catch((caught: unknown) => {
+    console.error(caught instanceof Error ? caught.message : 'Rebuilding the menus failed.');
+    process.exit(1);
+  });
+} else {
+  loadEnvFile(resolve('.env'));
+  loadEnvFile(resolve('.env.local'), true);
+  seedFromPlaces();
 }
 
-void main(apiKey).catch((caught: unknown) => {
-  console.error(caught instanceof Error ? caught.message : 'The Places seed failed.');
-  process.exit(1);
-});
+function seedFromPlaces(): void {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY?.trim();
+  if (!apiKey) {
+    console.error(MISSING_KEY_MESSAGE);
+    process.exit(1);
+  }
+
+  void main(apiKey).catch((caught: unknown) => {
+    console.error(caught instanceof Error ? caught.message : 'The Places seed failed.');
+    process.exit(1);
+  });
+}
+
+async function rebuildMenus(): Promise<void> {
+  if (!existsSync(DATABASE_PATH)) {
+    console.error('data/places.db does not exist yet. Run npm run seed:places first.');
+    process.exit(1);
+  }
+  const database = new DatabaseSync(DATABASE_PATH);
+  const sql = nodeSql(database);
+  await ensurePlacesSchema(sql);
+  const { restaurants } = await readCatalog(sql);
+  await applyCatalog(sql, {
+    restaurants,
+    items: restaurants.flatMap((restaurant) => buildMenu(restaurant.id, restaurant.primaryType)),
+  });
+  const catalog = await readCatalog(sql);
+  database.close();
+  writeFileSync(CATALOG_PATH, `${JSON.stringify(catalog, null, 2)}\n`);
+  console.log(`Rebuilt the demo menus for ${catalog.restaurants.length} restaurants from src/data/places/menus.ts.`);
+}
 
 async function main(key: string): Promise<void> {
   const found = new Map<string, PlaceIdentity>();

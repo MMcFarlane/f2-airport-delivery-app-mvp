@@ -5,6 +5,7 @@ import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LaterScreen } from '@/src/components/ui/LaterScreen';
+import { hasFoodImage, Photo } from '@/src/components/ui/Photo';
 import { createDataSource } from '@/src/data';
 import {
   cartArrival,
@@ -114,7 +115,7 @@ export function ItemDetail({ id }: { id: string }) {
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}>
-        <View style={[styles.photo, { backgroundColor: item.imageColor, paddingTop: insets.top + 8 }]}>
+        <Photo color={item.imageColor} imageKey={item.imageKey} style={[styles.photo, { paddingTop: insets.top + 8 }]}>
           <Pressable
             accessibilityRole="button"
             accessibilityLabel="Back"
@@ -122,11 +123,13 @@ export function ItemDetail({ id }: { id: string }) {
             style={({ pressed }) => [styles.back, pressed && styles.pressed]}>
             <Ionicons name="chevron-back" size={22} color={colors.ink} />
           </Pressable>
-          <View style={styles.photoCaption}>
-            <Ionicons name="image-outline" size={16} color={ink} />
-            <Text style={[styles.photoCaptionText, { color: ink }]}>Item photo</Text>
-          </View>
-        </View>
+          {hasFoodImage(item.imageKey) ? null : (
+            <View style={styles.photoCaption}>
+              <Ionicons name="image-outline" size={16} color={ink} />
+              <Text style={[styles.photoCaptionText, { color: ink }]}>Item photo</Text>
+            </View>
+          )}
+        </Photo>
 
         <View style={styles.prepWrap}>
           <View style={styles.prep}>

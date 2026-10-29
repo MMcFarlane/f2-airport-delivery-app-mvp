@@ -1,9 +1,15 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { useRestaurantCover } from '@/src/hooks/useRestaurantCover';
 import { colors, radii, space, type } from '@/src/theme';
 import { markInk, markNeedsBorder } from '@/src/theme/contrast';
 
+import { Photo } from './Photo';
+import { useSeenOnScreen } from './viewport';
+
 type RestaurantCardProps = {
+  /** Places restaurants show their Google cover once the card is on screen. */
+  placeId?: string | null;
   initials: string;
   markColor: string;
   name: string;
@@ -15,6 +21,7 @@ type RestaurantCardProps = {
 };
 
 export function RestaurantCard({
+  placeId = null,
   initials,
   markColor,
   name,
@@ -26,6 +33,8 @@ export function RestaurantCard({
 }: RestaurantCardProps) {
   const quietBadge = statusTone !== 'ok';
   const lateCopy = statusTone !== 'ok';
+  const { ref, onLayout, seen } = useSeenOnScreen(placeId !== null);
+  const cover = useRestaurantCover(placeId, seen);
 
   return (
     <Pressable
@@ -34,8 +43,13 @@ export function RestaurantCard({
       disabled={!onPress}
       onPress={onPress}
       style={({ pressed }) => [styles.card, pressed && onPress && styles.pressed]}>
-      <View style={[styles.mark, { backgroundColor: markColor }, markNeedsBorder(markColor) && styles.lightMark]}>
-        <Text style={[styles.initials, { color: markInk(markColor) }]}>{initials}</Text>
+      <View ref={ref} onLayout={onLayout}>
+        <Photo
+          color={markColor}
+          remote={cover}
+          style={[styles.mark, markNeedsBorder(markColor) && !cover && styles.lightMark]}
+          fallback={<Text style={[styles.initials, { color: markInk(markColor) }]}>{initials}</Text>}
+        />
       </View>
       <View style={styles.copy}>
         <Text style={styles.name}>{name}</Text>

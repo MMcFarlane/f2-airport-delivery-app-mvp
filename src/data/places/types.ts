@@ -34,6 +34,7 @@ export type PlacesMenuRecord = {
   prepMinutes: number;
   category: string | null;
   imageColor: string;
+  imageKey: string | null;
   featured: boolean;
   popular: boolean;
   kind: 'item' | 'special';

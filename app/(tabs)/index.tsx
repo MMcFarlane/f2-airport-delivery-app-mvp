@@ -10,6 +10,7 @@ import { HomeSpecialCard } from '@/src/components/home/HomeSpecialCard';
 import { RestaurantTile } from '@/src/components/home/RestaurantTile';
 import { TripBoard } from '@/src/components/home/TripBoard';
 import { Muted } from '@/src/components/ui/Screen';
+import { notifyViewportChanged } from '@/src/components/ui/viewport';
 import { cartItemCount, dayPartGreeting, demoOrderingClock, formatCents, type MenuItem } from '@/src/domain';
 import { errorMessage } from '@/src/hooks/error-message';
 import { useCart } from '@/src/hooks/useCart';
@@ -54,7 +55,11 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        onScroll={notifyViewportChanged}
+        scrollEventThrottle={100}>
         <HomeHeader
           greeting={dayPartGreeting(demoOrderingClock.hour)}
           name={name}
@@ -89,6 +94,7 @@ export default function HomeScreen() {
                 return (
                   <RestaurantTile
                     key={restaurant.id}
+                    placeId={restaurant.placeId}
                     initials={restaurant.initials}
                     markColor={restaurant.color}
                     name={restaurant.name}
@@ -111,6 +117,7 @@ export default function HomeScreen() {
                     price={formatCents(item.priceCents)}
                     minutes={`${item.prepMinutes} MIN`}
                     imageColor={item.imageColor}
+                    imageKey={item.imageKey}
                     tooLate={tooLate}
                     adding={addingId === item.id}
                     onPress={() => router.push(`/item/${item.id}` as Href)}
@@ -132,6 +139,7 @@ export default function HomeScreen() {
                     minutes={`${item.prepMinutes} MIN`}
                     badge={item.badge}
                     imageColor={item.imageColor}
+                    imageKey={item.imageKey}
                     tooLate={tooLate}
                     onPress={() => router.push(`/item/${item.id}` as Href)}
                   />

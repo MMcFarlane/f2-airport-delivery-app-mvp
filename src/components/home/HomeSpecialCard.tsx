@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { Photo } from '@/src/components/ui/Photo';
 import { colors, radii, space, type } from '@/src/theme';
 
 type HomeSpecialCardProps = {
@@ -9,6 +10,7 @@ type HomeSpecialCardProps = {
   minutes: string;
   badge: string | null;
   imageColor: string;
+  imageKey?: string | null;
   tooLate?: boolean;
   onPress?: () => void;
 };
@@ -20,6 +22,7 @@ export function HomeSpecialCard({
   minutes,
   badge,
   imageColor,
+  imageKey = null,
   tooLate = false,
   onPress,
 }: HomeSpecialCardProps) {
@@ -30,13 +33,13 @@ export function HomeSpecialCard({
       disabled={!onPress}
       onPress={onPress}
       style={({ pressed }) => [styles.card, pressed && onPress && styles.pressed]}>
-      <View style={[styles.art, { backgroundColor: imageColor }, tooLate && styles.artLate]}>
+      <Photo color={imageColor} imageKey={imageKey} style={[styles.art, tooLate && styles.artLate]}>
         {badge ? (
           <View style={styles.badge}>
             <Text style={styles.badgeText}>{badge}</Text>
           </View>
         ) : null}
-      </View>
+      </Photo>
       <View style={styles.copy}>
         <Text style={styles.name} numberOfLines={2}>
           {name}

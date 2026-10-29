@@ -5,6 +5,7 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { FilterChip } from '@/src/components/ui/FilterChip';
+import { notifyViewportChanged } from '@/src/components/ui/viewport';
 import { colors, radii, space, type } from '@/src/theme';
 
 export type BrowseChip = {
@@ -51,6 +52,8 @@ export function BrowseChrome({
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
+        onScroll={notifyViewportChanged}
+        scrollEventThrottle={100}
         contentContainerStyle={styles.content}>
         <View style={styles.header}>
           <Pressable

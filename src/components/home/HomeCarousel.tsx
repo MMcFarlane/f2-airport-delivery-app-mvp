@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { notifyViewportChanged } from '@/src/components/ui/viewport';
 import { colors, space, type } from '@/src/theme';
 
 type HomeCarouselProps = {
@@ -22,6 +23,8 @@ export function HomeCarousel({ title, onSeeAll, children }: HomeCarouselProps) {
         horizontal
         nestedScrollEnabled
         showsHorizontalScrollIndicator={false}
+        onScroll={notifyViewportChanged}
+        scrollEventThrottle={100}
         contentContainerStyle={styles.row}>
         {children}
       </ScrollView>

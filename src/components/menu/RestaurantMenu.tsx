@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router, useFocusEffect, type Href } from 'expo-router';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useAddItem } from '@/src/components/browse/useAddItem';
 import { PlusButton } from '@/src/components/home/PlusButton';
 import { LaterScreen } from '@/src/components/ui/LaterScreen';
+import { Photo } from '@/src/components/ui/Photo';
 import { Muted } from '@/src/components/ui/Screen';
 import { createDataSource } from '@/src/data';
 import {
@@ -18,6 +19,7 @@ import {
   fittingPrepRange,
   formatCents,
   formatClock,
+  googleMapsPlaceUrl,
   itemsForMenuTab,
   menuTabs,
   openUntilLabel,
@@ -25,10 +27,12 @@ import {
   toGateChip,
   tooLateLabel,
   type MenuItem,
+  type PlacePhoto,
 } from '@/src/domain';
 import { useAsyncValue } from '@/src/hooks/useAsyncValue';
 import { useCart } from '@/src/hooks/useCart';
 import { useOrderingWindow } from '@/src/hooks/useOrderingWindow';
+import { useRestaurantCover } from '@/src/hooks/useRestaurantCover';
 import { useTripSession } from '@/src/hooks/TripProvider';
 import { colors, radii, space, type } from '@/src/theme';
 import { markInk, markNeedsBorder } from '@/src/theme/contrast';
@@ -56,6 +60,7 @@ export function RestaurantMenu({ id }: { id: string }) {
     return restaurant ? { restaurant, items } : null;
   }, null);
   const percents = useDiscountPercents(cart?.lines ?? []);
+  const cover = useRestaurantCover(loaded.value?.restaurant.placeId ?? null);
 
   if (loaded.loading) return <LaterScreen title="Menu" body="Loading this menu." />;
   if (loaded.error) return <LaterScreen title="Menu" body={loaded.error} />;
@@ -87,7 +92,7 @@ export function RestaurantMenu({ id }: { id: string }) {
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: count > 0 ? 128 : 32 }}>
-        <View style={[styles.cover, { backgroundColor: restaurant.color, paddingTop: insets.top + 8 }]}>
+        <Photo color={restaurant.color} remote={cover} style={[styles.cover, { paddingTop: insets.top + 8 }]}>
           <View style={styles.header}>
             <RoundButton label="Back" light={lightCover} onPress={goBack}>
               <Ionicons name="chevron-back" size={22} color={colors.ink} />
@@ -121,8 +126,12 @@ export function RestaurantMenu({ id }: { id: string }) {
               />
             </View>
           ) : null}
-          <Text style={[styles.coverCaption, { color: ink }]}>Cover photo</Text>
-        </View>
+          {cover ? (
+            <PhotoCredit photo={cover} />
+          ) : (
+            <Text style={[styles.coverCaption, { color: ink }]}>Cover photo</Text>
+          )}
+        </Photo>
 
         <View style={styles.identity}>
           <View
@@ -145,6 +154,18 @@ export function RestaurantMenu({ id }: { id: string }) {
               <View style={styles.hoursChip}>
                 <Text style={styles.hoursText}>{openUntilLabel(restaurant.openUntil)}</Text>
               </View>
+            ) : null}
+            {restaurant.placeId ? (
+              <Pressable
+                accessibilityRole="link"
+                accessibilityLabel={`View ${restaurant.name} on Google Maps`}
+                onPress={() => {
+                  if (restaurant.placeId) void Linking.openURL(googleMapsPlaceUrl(restaurant.name, restaurant.placeId));
+                }}
+                style={({ pressed }) => [styles.hoursChip, styles.mapChip, pressed && styles.pressed]}>
+                <Ionicons name="map-outline" size={14} color={colors.ink} />
+                <Text style={styles.hoursText}>View on Google Maps</Text>
+              </Pressable>
             ) : null}
           </View>
         </View>
@@ -243,7 +264,7 @@ function MenuRow({
             {tooLate ? <Text style={styles.late}>{lateCopy}</Text> : null}
           </View>
         </View>
-        <View style={[styles.photo, { backgroundColor: item.imageColor }, tooLate && styles.photoLate]} />
+        <Photo color={item.imageColor} imageKey={item.imageKey} style={[styles.photo, tooLate && styles.photoLate]} />
       </Pressable>
       <View style={styles.add}>
         <PlusButton
@@ -253,6 +274,26 @@ function MenuRow({
         />
       </View>
     </View>
+  );
+}
+
+/** Google requires the photographer's name and Google Maps wherever a Places photo is shown. */
+function PhotoCredit({ photo }: { photo: PlacePhoto }) {
+  const author = photo.authors[0];
+  const label = author ? `Photo: ${author.name} · Google Maps` : 'Photo: Google Maps';
+  return (
+    <Pressable
+      accessibilityRole={author?.uri ? 'link' : 'text'}
+      accessibilityLabel={label}
+      disabled={!author?.uri}
+      onPress={() => {
+        if (author?.uri) void Linking.openURL(author.uri);
+      }}
+      style={styles.credit}>
+      <Text style={styles.creditText} numberOfLines={1}>
+        {label}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -352,6 +393,25 @@ const styles = StyleSheet.create({
     ...type.body,
     color: colors.ink,
     paddingVertical: 12,
+  },
+  credit: {
+    alignSelf: 'flex-end',
+    maxWidth: '100%',
+    backgroundColor: 'rgba(17, 17, 17, 0.62)',
+    borderRadius: radii.badge,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  creditText: {
+    ...type.body,
+    fontSize: 12,
+    lineHeight: 16,
+    color: colors.surface,
+  },
+  mapChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
   },
   coverCaption: {
     alignSelf: 'flex-end',

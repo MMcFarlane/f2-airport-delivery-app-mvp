@@ -156,3 +156,8 @@ ALTER TABLE restaurants ADD COLUMN concourse TEXT;
 ALTER TABLE restaurants ADD COLUMN concourse_source TEXT;
 ALTER TABLE restaurants ADD COLUMN concourse_confirmed INTEGER NOT NULL DEFAULT 0;
 `;
+
+/** Version 7: the bundled stock photo for a dish. */
+export const MENU_IMAGE_KEY_SQL = `
+ALTER TABLE menu_items ADD COLUMN image_key TEXT;
+`;

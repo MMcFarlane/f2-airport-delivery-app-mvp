@@ -1,6 +1,6 @@
 # Phase 11 — Restaurant and food photos
 
-Status: Not started.
+Status: Done (October 28, 2026). All 52 dish photos and 15 fixture photos are picked and bundled, checked on Android in Expo Go, and approved by the stakeholder. EAS production `CATALOG_SOURCE` is `places`, and the TestFlight build with photos follows `docs/testflight.md`. One accepted exception to "no brand logos": `bar-bundle` shows a Heineken bottle, and the development-only `fixture-pre-flight-combo` (Coca-Cola) and `fixture-wings-draft` (Bomonti) show logos. Swap them before any public release.
 
 Depends on [10-concourse-seed.md](10-concourse-seed.md). Phase 9, the mock pass, was dropped after the stakeholder validated the app on TestFlight.
 
@@ -113,6 +113,19 @@ Each restaurant cover viewed in a session costs one free Details call and one ph
 - Tests for cuisine grouping, template selection, `--rebuild-menus`, and the photo client's parsing and error fallback pass in `npm test`. `npx tsc --noEmit` and `npx expo lint` pass.
 - A TestFlight build made with the production EAS env shows both kinds of photo. Follow [../testflight.md](../testflight.md).
 - `plan.md` is updated in four places: "What this build includes", the keys paragraph (the Places client key now ships), External APIs (runtime photo calls), and the phase table.
+
+## Build notes (October 28, 2026)
+
+Where the build differs from the plan above, or adds to it:
+
+- **Photos load only when on screen.** Home and Browse render all 138 restaurants at once, so a cover on every card would cost about 138 photo requests per session. `useSeenOnScreen` (`src/components/ui/viewport.ts`) waits until a tile or card is within 120 px of the screen before asking for its cover. Scroll views call `notifyViewportChanged`. A cover is fetched once per restaurant per 30 minutes and shared between Home, Browse, and the menu (`PlacesPhotoRepository`).
+- **One photo size.** Covers and cards share one 800 px photo, so each restaurant costs one media call, not two.
+- **Restaurant tiles and cards show the cover in place of the initials mark.** The initials come back if there is no key, no network, or no photo.
+- **13 cuisine groups** in `src/data/places/menus.ts`, including `healthy` and `grill` (the default for `restaurant` and `american_restaurant`). In groups where a 48-minute dish would be odd, the long-prep slot is a large order such as "Coffee box for the team" or "Party sub platter".
+- **`--rebuild-menus` runs offline.** It rebuilds the four dishes for the restaurants already in `data/places.db` without calling Google, so the restaurant list doesn't change. Menu rows from `catalog.json` are upserted by id, so devices that imported the old menus get the new dishes in place, and cart lines keep working.
+- **App database version 7** adds `menu_items.image_key` and sets `fixture-{id}` keys on the fixture dishes.
+- **Stock photos are picked by hand, with no API.** Pexels paused new API keys on September 30, 2026, with no restart date. Downloading from the Pexels and Unsplash websites is still allowed under the same free licenses. `npm run fetch:food-photos` creates or updates `assets/images/food/picks.json`, with one entry per photo key: the dish, which Places types use it, and Pexels and Unsplash search links (landscape, and Unsplash+ hidden). Paste a link into `url`: either a pexels.com photo page, or for Unsplash the image address (right-click the photo, then **Copy Image Address**). Unsplash page links aren't accepted, because they can't be turned into a download reliably without the API. Unsplash+ photos are refused because they need a paid license. Then re-run the script. It downloads each new or changed pick at about 1200 px (roughly 130–220 KB). It writes `credits.json`, `CREDITS.md`, and the generated registry `src/components/ui/food-images.ts`. Clearing a `url` deletes that photo. The 52 dish photos are required. The 15 fixture photos are optional, because they only appear in the development catalog. When picking, skip photos with brand logos, recognizable faces, or a dish that doesn't match the name. A trial pick for "Pepperoni slice" was really a cheese slice next to a branded cup.
+- **Release checklist:** run `npx eas-cli@latest env:set --name CATALOG_SOURCE --value places --environment production --visibility plaintext`, then follow `docs/testflight.md`. That build also replaces the old shared Maps key in TestFlight.
 
 ## Out of scope
 

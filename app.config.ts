@@ -15,6 +15,8 @@ export default ({ config }: ConfigContext) => {
       catalogSource: catalogSourceFromEnv(),
       // Demo only. A public build should call SkyLink through a proxy that holds this key.
       skylinkApiKey: process.env.SKYLINK_API_KEY?.trim() || null,
+      // Restaurant cover photos. Restricted to the iOS bundle ID; the app sends that ID on every platform.
+      placesClientKey: process.env.GOOGLE_PLACES_CLIENT_KEY?.trim() || null,
       // Only whether a key exists. The key itself is baked into the native build by the plugin above.
       googleMapsConfigured: googleMapsApiKey !== null,
     },
